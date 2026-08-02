@@ -1,0 +1,39 @@
+---
+{
+  "schema_version": "authorship/3.1.0",
+  "tlab_version": "0.8.1",
+  "base_commit_sha": "7a39740e3d1607b88758d7f6c7988754a3e114d8",
+  "prompts": {},
+  "changes": [
+    {
+      "new_path": "IDEAS.md",
+      "additions": {
+        "human": 3
+      }
+    },
+    {
+      "new_path": "docs/.templates/adr.md",
+      "additions": {
+        "human": 21
+      }
+    },
+    {
+      "new_path": "docs/.templates/context.md",
+      "additions": {
+        "human": 9
+      }
+    },
+    {
+      "new_path": "docs/.templates/rfc.md",
+      "additions": {
+        "human": 18
+      }
+    },
+    {
+      "new_path": "docs/architecture.md",
+      "additions": {
+        "human": 12
+      }
+    }
+  ]
+}
