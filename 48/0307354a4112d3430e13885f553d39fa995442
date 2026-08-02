@@ -1,0 +1,16 @@
+---
+{
+  "schema_version": "authorship/3.1.0",
+  "tlab_version": "0.8.1",
+  "base_commit_sha": "480307354a4112d3430e13885f553d39fa995442",
+  "prompts": {},
+  "changes": [
+    {
+      "old_path": "docs/reference/docent-implementation-spec.md",
+      "new_path": "docs/reference/docent-implementation-spec.md",
+      "additions": {
+        "human": 2
+      }
+    }
+  ]
+}
