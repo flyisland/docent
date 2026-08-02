@@ -1,0 +1,81 @@
+---
+{
+  "schema_version": "authorship/3.1.0",
+  "tlab_version": "0.8.1",
+  "base_commit_sha": "30ca0fcdd933715eedcceefeb7426ff9eec42ab5",
+  "prompts": {},
+  "changes": [
+    {
+      "new_path": ".gitignore",
+      "additions": {
+        "human": 1
+      }
+    },
+    {
+      "new_path": "AGENTS.md",
+      "additions": {
+        "human": 28
+      }
+    },
+    {
+      "new_path": "CONTEXT.md",
+      "additions": {
+        "human": 36
+      }
+    },
+    {
+      "new_path": "Cargo.lock",
+      "additions": {
+        "human": 7
+      }
+    },
+    {
+      "new_path": "Cargo.toml",
+      "additions": {
+        "human": 6
+      }
+    },
+    {
+      "new_path": "docs/adrs/README.md",
+      "additions": {
+        "human": 5
+      }
+    },
+    {
+      "new_path": "docs/adrs/adr-001-initial-architecture.md",
+      "additions": {
+        "human": 49
+      }
+    },
+    {
+      "new_path": "docs/reference/docent-implementation-plan.md",
+      "additions": {
+        "human": 122
+      }
+    },
+    {
+      "new_path": "docs/reference/docent-implementation-spec.md",
+      "additions": {
+        "human": 381
+      }
+    },
+    {
+      "new_path": "docs/reference/software-project-documentation-specification.md",
+      "additions": {
+        "human": 948
+      }
+    },
+    {
+      "new_path": "docs/rfcs/README.md",
+      "additions": {
+        "human": 1
+      }
+    },
+    {
+      "new_path": "src/main.rs",
+      "additions": {
+        "human": 3
+      }
+    }
+  ]
+}
