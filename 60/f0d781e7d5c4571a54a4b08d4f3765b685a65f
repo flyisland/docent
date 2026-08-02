@@ -1,0 +1,85 @@
+---
+{
+  "schema_version": "authorship/3.1.0",
+  "tlab_version": "0.8.1",
+  "base_commit_sha": "60f0d781e7d5c4571a54a4b08d4f3765b685a65f",
+  "prompts": {},
+  "changes": [
+    {
+      "new_path": "src/rules/document_id_format.rs",
+      "additions": {
+        "human": 89
+      }
+    },
+    {
+      "new_path": "src/rules/document_id_unique.rs",
+      "additions": {
+        "human": 72
+      }
+    },
+    {
+      "old_path": "docs/reference/docent-implementation-spec.md",
+      "new_path": "docs/reference/docent-implementation-spec.md",
+      "additions": {
+        "human": 12
+      }
+    },
+    {
+      "old_path": "docs/reference/software-project-documentation-specification.md",
+      "new_path": "docs/reference/software-project-documentation-specification.md",
+      "additions": {
+        "human": 1
+      },
+      "deletions": {
+        "human": 1
+      }
+    },
+    {
+      "old_path": "src/model/adr.rs",
+      "new_path": "src/model/adr.rs",
+      "additions": {
+        "human": 2
+      },
+      "deletions": {
+        "human": 2
+      }
+    },
+    {
+      "old_path": "src/model/mod.rs",
+      "new_path": "src/model/mod.rs",
+      "additions": {
+        "human": 6
+      },
+      "deletions": {
+        "human": 1
+      }
+    },
+    {
+      "old_path": "src/model/rfc.rs",
+      "new_path": "src/model/rfc.rs",
+      "additions": {
+        "human": 2
+      },
+      "deletions": {
+        "human": 2
+      }
+    },
+    {
+      "old_path": "src/rules/mod.rs",
+      "new_path": "src/rules/mod.rs",
+      "additions": {
+        "human": 4
+      }
+    },
+    {
+      "old_path": "tests/cli.rs",
+      "new_path": "tests/cli.rs",
+      "additions": {
+        "human": 38
+      },
+      "deletions": {
+        "human": 4
+      }
+    }
+  ]
+}
