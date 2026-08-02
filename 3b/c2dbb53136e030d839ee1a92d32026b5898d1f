@@ -1,0 +1,67 @@
+src/commands/init.rs
+  s_2f09ff755f909d::t_f0b0b11e6bd442 11
+---
+{
+  "schema_version": "authorship/3.1.0",
+  "tlab_version": "0.8.1",
+  "base_commit_sha": "3bc2dbb53136e030d839ee1a92d32026b5898d1f",
+  "prompts": {},
+  "sessions": {
+    "s_2f09ff755f909d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_03ec8ff1affe47UrVqWxY35nKs",
+        "model": "deepseek-v4-flash-free"
+      },
+      "human_author": "flyisland <island.chen@outlook.com>",
+      "custom_attributes": {
+        "tlab.session_started_at": "2026-08-02T06:59:53Z",
+        "tlab.token_usage.output_tokens": "2475",
+        "tlab.token_usage.cache_read_tokens": "299008",
+        "tlab.token_usage.cache_creation_tokens": "0",
+        "tlab.token_usage.input_tokens": "23269"
+      }
+    }
+  },
+  "changes": [
+    {
+      "old_path": "docs/architecture.md",
+      "new_path": "docs/architecture.md",
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_2f09ff755f909d",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/commands/init.rs",
+      "new_path": "src/commands/init.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_2f09ff755f909d",
+            "lines": 1
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_2f09ff755f909d",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "tests/cli.rs",
+      "new_path": "tests/cli.rs",
+      "additions": {
+        "human": 22
+      }
+    }
+  ]
+}
