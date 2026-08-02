@@ -194,6 +194,10 @@ $ docent init
 
 **Exit code**: 0 = no errors (warnings are allowed); 1 = at least one error present.
 
+A source the rules would otherwise read is never silently skipped: if `docs/rfcs`, `docs/adrs`, `docs/architecture.md`, or `AGENTS.md` is absent, the `required-source-missing` warning (see Section 5) fires for it.
+
+Violations are reported grouped in the same order as `docent status` (Section 4.3) displays its lines: RFC files, ADR files, `docs/architecture.md`, `AGENTS.md`, then code files. Within a group, violations sort by file path, then line, then rule ID.
+
 **Example human-mode output**:
 
 ```
@@ -224,10 +228,18 @@ Architecture overview   1 module-table mismatch against the code directory
 
 Terminology (CONTEXT)   2 Avoid-term violations
 
+Violations by rule      3 total
+  context-avoid-term-violation           2
+  rfc-stale-draft                        1
+
 Last lint run        2 errors, 1 warning (2026-08-01 09:15)
 ```
 
 If `docent lint` has never been run, the last line reads `docent lint has never been run`.
+
+After the `Terminology (CONTEXT)` line, `docent status` prints a `Violations by rule` breakdown: a total plus one line per lint rule that has at least one violation, sorted by count descending.
+
+Each line distinguishes a source that exists from one that does not. If the source is missing, the line reports `not found (<path>)` instead of a zero count — `IDEAS.md` (file), `docs/rfcs` (directory), `docs/adrs` (directory), `docs/architecture.md` (file), and `CONTEXT.md` (file) respectively. A present-but-empty directory still reports a zero count, never "not found".
 
 ## 5. Lint rule catalog
 
@@ -274,6 +286,12 @@ The following rules correspond to the automatable group in the spec document's "
 - **Description**: does the module list in `docs/architecture.md`'s module table match the actual code directory structure (bidirectionally: exists in code but not recorded in the overview; recorded in the overview but the code directory no longer exists)?
 - **Algorithm**: parse the module table defined in Section 3.5, extract the paths in the "Module" column, and diff against first/second-level directories at the project root (the exact scan depth is left to the Agent's judgment based on project convention — recommend making it debuggable via the `--rule` flag to observe actual matching behavior).
 - **Severity**: warning (there are legitimate exceptions — tooling directories, script directories don't need to appear in the module table — the false-positive rate may be relatively high; start as a warning and consider promoting it once real-world usage is observed)
+- **--fix**: not supported.
+
+### `required-source-missing`
+- **Description**: does the project have the source directories/files that the lint rules otherwise read? Missing sources must be reported explicitly rather than silently producing zero violations.
+- **Algorithm**: for each required source — `docs/rfcs` (directory), `docs/adrs` (directory), `docs/architecture.md` (file), `AGENTS.md` (file) — check existence and emit one warning per absent source.
+- **Severity**: warning (a project that has not been `docent init`-ed yet is missing structure, not in a broken state; a present-but-empty directory is not flagged).
 - **--fix**: not supported.
 
 ### `adr-pending-implementation-report`

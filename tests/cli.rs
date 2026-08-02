@@ -101,6 +101,41 @@ fn broken_project_reports_one_violation_per_rule() {
     }
 }
 
+fn doc_group(file: &str) -> u8 {
+    if file == "IDEAS.md" {
+        0
+    } else if file.starts_with("docs/rfcs") {
+        1
+    } else if file.starts_with("docs/adrs") {
+        2
+    } else if file == "docs/architecture.md" {
+        3
+    } else if file == "AGENTS.md" {
+        4
+    } else {
+        5
+    }
+}
+
+#[test]
+fn lint_output_is_grouped_in_status_order() {
+    let json = lint_json(&fixture("broken-project"));
+    for key in ["errors", "warnings"] {
+        let groups: Vec<u8> = json[key]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|v| doc_group(v["file"].as_str().unwrap()))
+            .collect();
+        assert!(
+            groups.windows(2).all(|w| w[0] <= w[1]),
+            "{} not grouped in status order (IDEAS, RFC, ADR, Architecture, AGENTS, code): {:?}",
+            key,
+            groups
+        );
+    }
+}
+
 #[test]
 fn lint_exit_code_is_one_when_errors_present() {
     let (code, _) = docent(&fixture("broken-project"), &["lint"]);
@@ -157,6 +192,89 @@ fn init_creates_template_files_and_skips_existing() {
     assert!(
         stdout.contains("skipped"),
         "second init should skip existing files: {}",
+        stdout
+    );
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
+fn status_lists_violation_counts_by_rule() {
+    let (code, stdout) = docent(&fixture("broken-project"), &["status"]);
+    assert_eq!(code, 0);
+    assert!(
+        stdout.contains("Violations by rule") && stdout.contains("10 total"),
+        "expected a per-rule breakdown: {}",
+        stdout
+    );
+    for rule in [
+        "frontmatter-schema-valid",
+        "rfc-index-sync",
+        "adr-index-sync",
+        "adr-missing-required-sections",
+        "superseded-backlink-consistency",
+        "agents-adr-reference-valid",
+        "architecture-module-sync",
+        "context-avoid-term-violation",
+        "adr-pending-implementation-report",
+        "rfc-stale-draft",
+    ] {
+        assert!(
+            stdout.contains(rule),
+            "rule {} missing from breakdown: {}",
+            rule,
+            stdout
+        );
+    }
+}
+
+#[test]
+fn lint_reports_missing_required_sources() {
+    let dir = temp_dir("lint-missing");
+    fs::create_dir_all(&dir).unwrap();
+    let json = lint_json(&dir);
+    let mut missing: Vec<String> = json["warnings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|x| x["rule"] == "required-source-missing")
+        .map(|x| x["file"].as_str().unwrap().to_string())
+        .collect();
+    missing.sort();
+    assert_eq!(
+        missing,
+        vec![
+            "AGENTS.md",
+            "docs/adrs",
+            "docs/architecture.md",
+            "docs/rfcs",
+        ]
+    );
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
+fn status_reports_missing_sources_explicitly() {
+    let dir = temp_dir("status-missing");
+    fs::create_dir_all(&dir).unwrap();
+    let (code, stdout) = docent(&dir, &["status"]);
+    assert_eq!(code, 0);
+    for needle in [
+        "not found (IDEAS.md)",
+        "not found (docs/rfcs)",
+        "not found (docs/adrs)",
+        "not found (docs/architecture.md)",
+        "not found (CONTEXT.md)",
+    ] {
+        assert!(
+            stdout.contains(needle),
+            "{} missing from output: {}",
+            needle,
+            stdout
+        );
+    }
+    assert!(
+        !stdout.contains("unclaimed entries"),
+        "counts must not be reported when the source is missing: {}",
         stdout
     );
     let _ = fs::remove_dir_all(&dir);

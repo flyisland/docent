@@ -72,6 +72,11 @@ report. The exit code is:
 [JSON output](#json-output)). The `--json` exit-code semantics are the same:
 `1` if any errors exist, `0` otherwise.
 
+Violations are grouped in the same order `docent status` displays its lines:
+RFC files, then ADR files, then `docs/architecture.md`, then `AGENTS.md`, then
+code files. Within a group they are ordered by file path, then line, then rule
+ID.
+
 `docent lint --fix` first applies every supported automatic fix, then reports
 the *post-fix* violations. It returns `0` only if no errors remain after
 fixing, so it is safe to run repeatedly:
@@ -86,6 +91,15 @@ Prints a summary of the project's documentation state: unclaimed IDEAS
 entries, RFC counts by status, ADR counts by status, and any architecture /
 terminology mismatches. Human output only; always exits `0`.
 
+Each line distinguishes a missing source from an empty one: when the relevant
+file (`IDEAS.md`, `docs/architecture.md`, `CONTEXT.md`) or directory
+(`docs/rfcs`, `docs/adrs`) does not exist, the line reports
+`not found (<path>)` instead of a misleading zero count.
+
+Below the last line, `docent status` prints a `Violations by rule` breakdown
+with a count per lint rule (rules with zero violations are omitted), sorted by
+count descending.
+
 ## The rules
 
 Each rule has a unique ID, a severity (`error` or `warning`), and an optional
@@ -99,6 +113,7 @@ Each rule has a unique ID, a severity (`error` or `warning`), and an optional
 | `rfc-index-sync` | `docs/rfcs/README.md` table disagrees with the RFC front matter | error | ✓ |
 | `superseded-backlink-consistency` | A `supersedes` reference has no matching `superseded_by` backlink | error | ✓ |
 | `agents-adr-reference-valid` | `AGENTS.md` references an ADR whose status makes that reference invalid | error | — |
+| `required-source-missing` | A required source (`docs/rfcs`, `docs/adrs`, `docs/architecture.md`, `AGENTS.md`) does not exist | warning | — |
 | `context-avoid-term-violation` | Code uses a term CONTEXT.md marks as Avoid | error | — |
 | `architecture-module-sync` | `docs/architecture.md` module table lists a directory that doesn't exist (or vice versa) | warning | — |
 | `adr-pending-implementation-report` | An Accepted ADR still records `implementation: pending` | warning | — |
@@ -163,6 +178,13 @@ docent reads the following from the project root:
 - source files (`.rs`, `.py`, `.js`, `.ts`, and other common extensions)
   under any module directory, minus `.git`, `target`, `docs`, `node_modules`,
   and `fixtures`
+
+A missing source is reported explicitly instead of silently skipped: the
+`required-source-missing` warning fires once per absent entry above
+(`docs/rfcs`, `docs/adrs`, `docs/architecture.md`, `AGENTS.md`). `IDEAS.md`
+and `CONTEXT.md` are not linted — `IDEAS.md` is only counted by `docent
+status`, and `CONTEXT.md` is optional (its absence simply disables the
+terminology rule).
 
 New RFCs / ADRs are expected to be written from the templates in
 `docs/.templates/`, which already carry a valid front matter skeleton.
