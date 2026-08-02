@@ -117,6 +117,8 @@ superseded_by: string | null  # optional, defaults to null
 related_rfc: string | null    # optional, defaults to null
 ```
 
+For both RFCs and ADRs, `title` in the front matter is the single source of truth for the document title. The filename is only a stable, human-readable path containing the document ID and an optional slug; its slug does not have to match `title` and may use a different language. Index tables and other generated representations must use the front-matter `title`.
+
 ### 3.3 Required sections in an ADR body
 
 Detect the presence of the following four sections via level-2 headings (`## `). Match either the English or Chinese form (case-insensitive, extra trailing text on the heading is allowed):
