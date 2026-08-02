@@ -1,0 +1,741 @@
+src/rules/frontmatter_schema.rs
+  s_5b172df96bc0d3::t_5ae25141d769ec 2-12,15-34,37-59
+  s_5b172df96bc0d3::t_e9c9afb7800688 1,13-14,35-36
+src/rules/adr_missing_sections.rs
+  s_5b172df96bc0d3::t_e9c9afb7800688 1,20-22,28,31,47-48,81-84
+  s_5b172df96bc0d3::t_b4409162533837 2-19,23-27,29-30,32-46,49-80,85-92
+tests/fixtures/broken-project/docs/rfcs/rfc-002-payment-retry-policy.md
+  s_5b172df96bc0d3::t_5e7421b565b512 1-14
+src/model/mod.rs
+  s_5b172df96bc0d3::t_df8058447648b0 1-5,7-161,163-201,208-258
+  s_5b172df96bc0d3::t_e9c9afb7800688 162,202-207
+  s_5b172df96bc0d3::t_f7e9b4b2fa4ff7 6
+tests/fixtures/valid-project/docs/adrs/adr-002-initial-cache-layer.md
+  s_5b172df96bc0d3::t_660fd88a091b1b 1-29
+docs/adrs/adr-001-initial-architecture.md
+  s_5b172df96bc0d3::t_710993abdea8ab 32-33
+  s_5b172df96bc0d3::t_1902463bf8f833 5
+src/rules/adr_index_sync.rs
+  s_5b172df96bc0d3::t_f44d31bfb2335b 1,3-22,24-48,55-71,93,97-98,100,105-106,120-124
+  s_5b172df96bc0d3::t_e9c9afb7800688 2,49-54,94-96,99,101-104,107-119
+  s_5b172df96bc0d3::t_c52c00d3c5d240 72-92
+  s_5b172df96bc0d3::t_29deb4af1c39d0 23
+src/output/json.rs
+  s_5b172df96bc0d3::t_49d3cfb2a22de5 1-49
+src/README.md
+  s_5b172df96bc0d3::t_d7c70ff865f160 1-54
+src/rules/agents_adr_reference.rs
+  s_5b172df96bc0d3::t_e9c9afb7800688 2
+  s_5b172df96bc0d3::t_e2a13fd35f40ed 1,3-57
+README.md
+  s_5b172df96bc0d3::t_a36f6958558009 1-189
+src/rules/fix.rs
+  s_5b172df96bc0d3::t_f3d948475e9438 199,202-206
+  s_5b172df96bc0d3::t_e9c9afb7800688 4-195
+  s_5b172df96bc0d3::t_c1baea0366ff58 200-201,207
+  s_5b172df96bc0d3::t_6e20e49776cca9 1-3
+  s_5b172df96bc0d3::t_352fa02b2b29af 196-198
+tests/fixtures/broken-project/docs/adrs/adr-002-payment-retry-policy.md
+  s_5b172df96bc0d3::t_2fb13be6355244 1-29
+tests/cli.rs
+  s_5b172df96bc0d3::t_32d49cf802e55c 57
+  s_5b172df96bc0d3::t_e9c9afb7800688 39-43,58-61,125,157-161,179-183,190-194,206-209,214-218
+  s_5b172df96bc0d3::t_63d8d634e4831e 1-16,18-38,44-56,62-124,126-132,134-156,162-178,184-189,195-205,210,212-213,219-220
+  s_5b172df96bc0d3::t_63e873b53342bd 17
+  s_5b172df96bc0d3::t_85a016af729eea 211
+  s_5b172df96bc0d3::t_5291e20533910a 133
+src/commands/init.rs
+  s_5b172df96bc0d3::t_bfb1ac64435156 13
+  s_5b172df96bc0d3::t_ed0ab4bb7bbb5a 1-4,7-12,14-49
+  s_5b172df96bc0d3::t_e9c9afb7800688 5-6
+Cargo.toml
+  s_5b172df96bc0d3::t_28fa7d63580716 7-11
+  s_5b172df96bc0d3::t_0dd7b914dfd5f9 12
+src/rules/superseded_backlink.rs
+  s_5b172df96bc0d3::t_e9c9afb7800688 2,38-41,97-100
+  s_5b172df96bc0d3::t_26cee96a83d3b0 1,3-21,23-37,42-96,101-106
+  s_5b172df96bc0d3::t_d4cf7218d40b51 22
+src/model/index.rs
+  s_5b172df96bc0d3::t_e9c9afb7800688 22,26-29,46-49,59-62,75-78
+  s_5b172df96bc0d3::t_9c0c9f68fa5c43 1-21,23-25,30-45,50-58,63-74,79-99
+src/model/adr.rs
+  s_5b172df96bc0d3::t_e9c9afb7800688 76-79
+  s_5b172df96bc0d3::t_ff1a944d49f501 1-75,80-87
+src/model/context.rs
+  s_5b172df96bc0d3::t_e9c9afb7800688 41-49,68,71-73,78,81-82
+  s_5b172df96bc0d3::t_7abc159707b385 1-40,50-67,69-70,74-77,79-80,83-84
+src/cli.rs
+  s_5b172df96bc0d3::t_e9c9afb7800688 1-33
+tests/fixtures/valid-project/payment/README.md
+  s_5b172df96bc0d3::t_1e382f66b0fe94 1-3
+src/output/human.rs
+  s_5b172df96bc0d3::t_7eca875d5548ae 48
+  s_5b172df96bc0d3::t_e9c9afb7800688 53-64
+  s_5b172df96bc0d3::t_7b3c9fac0b1ef2 3-25
+  s_5b172df96bc0d3::t_506151635f396b 1-2
+  s_5b172df96bc0d3::t_c3d3e97fee83dd 26-28,45-47
+  s_5b172df96bc0d3::t_531c83dddb0f50 49-52
+  s_5b172df96bc0d3::t_de1270cf8578aa 65-67
+tests/fixtures/broken-project/docs/rfcs/rfc-001-cache-strategy.md
+  s_5b172df96bc0d3::t_129c826627fc5f 1-14
+tests/fixtures/broken-project/docs/adrs/adr-001-payment-state-machine.md
+  s_5b172df96bc0d3::t_a5345a15880dae 1-26
+src/model/rfc.rs
+  s_5b172df96bc0d3::t_f6b25fe6e72786 1-54,59-66
+  s_5b172df96bc0d3::t_e9c9afb7800688 55-58
+src/rules/rfc_index_sync.rs
+  s_5b172df96bc0d3::t_2628421b855833 1,3-22,24-48,55-72,94,98-99,101,106-107,121-125
+  s_5b172df96bc0d3::t_991019cd8c310b 73-93
+  s_5b172df96bc0d3::t_e9c9afb7800688 2,49-54,95-97,100,102-105,108-120
+  s_5b172df96bc0d3::t_f502c4147348bc 23
+src/rules/adr_pending.rs
+  s_5b172df96bc0d3::t_3dc1c40d36322e 1,3-14,25-29
+  s_5b172df96bc0d3::t_e9c9afb7800688 2,15-24
+src/main.rs
+  s_5b172df96bc0d3::t_e19d5180938ca0 1-8,10-16
+tests/fixtures/valid-project/auth/service.rs
+  s_5b172df96bc0d3::t_ac7eae1ff5447a 1-3
+src/commands/status.rs
+  s_5b172df96bc0d3::t_e9c9afb7800688 3-86,88-89,97,116-117,130,132-133,146
+  s_5b172df96bc0d3::t_9982e1c7359042 1-2
+  s_5b172df96bc0d3::t_efcca572caf6cc 87
+  s_5b172df96bc0d3::t_879cfec8104808 90-92,94-96
+  s_5b172df96bc0d3::t_3b528120393505 98-100,113-115
+  s_5b172df96bc0d3::t_1a0c62f8622a79 118-120,127-129
+  s_5b172df96bc0d3::t_58f640a5205419 131
+  s_5b172df96bc0d3::t_6d9aa0aa0fa88c 134-136,143-145
+  s_5b172df96bc0d3::t_2c8229bca88f67 147-149
+tests/fixtures/valid-project/auth/README.md
+  s_5b172df96bc0d3::t_5ea79ff9aa6930 1-3
+src/rules/context_avoid_term.rs
+  s_5b172df96bc0d3::t_e9c9afb7800688 2,11-12,101-102
+  s_5b172df96bc0d3::t_1de8f234d22ea3 1,3-10,13-21,45,61,124,146
+  s_5b172df96bc0d3::t_d1bafeb1c55eb5 22-24,42-44
+  s_5b172df96bc0d3::t_ea6f6a2ccfa318 46-48,58-60
+  s_5b172df96bc0d3::t_b1849bb0aadd85 62-64,98-100
+  s_5b172df96bc0d3::t_2f763c5fd69b6c 103-105,121-123
+  s_5b172df96bc0d3::t_f55b1ebfae65a4 125-127,143-145
+tests/fixtures/valid-project/docs/adrs/adr-001-cache-strategy.md
+  s_5b172df96bc0d3::t_e6a53571ea1f02 1-30
+src/rules/architecture_module_sync.rs
+  s_5b172df96bc0d3::t_6be49d21d45c1b 1,3-91
+  s_5b172df96bc0d3::t_e9c9afb7800688 2
+src/rules/rfc_stale.rs
+  s_5b172df96bc0d3::t_276986a0c126ff 1,3-17,34-39
+  s_5b172df96bc0d3::t_e9c9afb7800688 2,18-33
+tests/fixtures/broken-project/docs/adrs/adr-003-payment-retry-v2.md
+  s_5b172df96bc0d3::t_0acbbdc84e6348 1-30
+src/rules/mod.rs
+  s_5b172df96bc0d3::t_e9c9afb7800688 37
+  s_5b172df96bc0d3::t_163e4a718adffc 1-36,38-39
+tests/fixtures/valid-project/docs/adrs/README.md
+  s_5b172df96bc0d3::t_4a2e0c96f28772 1-6
+---
+{
+  "schema_version": "authorship/3.1.0",
+  "tlab_version": "0.8.1",
+  "base_commit_sha": "27a507ddd770ae63067c8384309b952d807306b8",
+  "prompts": {},
+  "sessions": {
+    "s_5b172df96bc0d3": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_03f8f2b19ffeKusHbAdmv3jhIw",
+        "model": "deepseek-v4-flash-free"
+      },
+      "human_author": "flyisland <island.chen@outlook.com>",
+      "custom_attributes": {
+        "tlab.token_usage.output_tokens": "48065",
+        "tlab.token_usage.cache_creation_tokens": "0",
+        "tlab.token_usage.cache_read_tokens": "18126208",
+        "tlab.session_started_at": "2026-08-02T03:29:49Z",
+        "tlab.token_usage.input_tokens": "152133"
+      }
+    }
+  },
+  "changes": [
+    {
+      "new_path": "README.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 189
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/README.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 54
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/cli.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 33
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/commands/init.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 49
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/commands/lint.rs",
+      "additions": {
+        "human": 27
+      }
+    },
+    {
+      "new_path": "src/commands/mod.rs",
+      "additions": {
+        "human": 3
+      }
+    },
+    {
+      "new_path": "src/commands/status.rs",
+      "additions": {
+        "human": 143,
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 6
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/model/adr.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 87
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/model/context.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 84
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/model/index.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 99
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/model/mod.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 258
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/model/rfc.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 66
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/output/human.rs",
+      "additions": {
+        "human": 54,
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 16
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/output/json.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 49
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/output/mod.rs",
+      "additions": {
+        "human": 2
+      }
+    },
+    {
+      "new_path": "src/rules/adr_index_sync.rs",
+      "additions": {
+        "human": 1,
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 123
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/rules/adr_missing_sections.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 92
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/rules/adr_pending.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 29
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/rules/agents_adr_reference.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 57
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/rules/architecture_module_sync.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 91
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/rules/context_avoid_term.rs",
+      "additions": {
+        "human": 123,
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 23
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/rules/fix.rs",
+      "additions": {
+        "human": 179,
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 28
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/rules/frontmatter_schema.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 59
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/rules/mod.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 39
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/rules/rfc_index_sync.rs",
+      "additions": {
+        "human": 1,
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 124
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/rules/rfc_stale.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 39
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "src/rules/superseded_backlink.rs",
+      "additions": {
+        "human": 1,
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 105
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "tests/cli.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 220
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "tests/fixtures/broken-project/AGENTS.md",
+      "additions": {
+        "human": 5
+      }
+    },
+    {
+      "new_path": "tests/fixtures/broken-project/CONTEXT.md",
+      "additions": {
+        "human": 13
+      }
+    },
+    {
+      "new_path": "tests/fixtures/broken-project/auth/README.md",
+      "additions": {
+        "human": 3
+      }
+    },
+    {
+      "new_path": "tests/fixtures/broken-project/auth/service.rs",
+      "additions": {
+        "human": 3
+      }
+    },
+    {
+      "new_path": "tests/fixtures/broken-project/docs/adrs/README.md",
+      "additions": {
+        "human": 8
+      }
+    },
+    {
+      "new_path": "tests/fixtures/broken-project/docs/adrs/adr-001-payment-state-machine.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 26
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "tests/fixtures/broken-project/docs/adrs/adr-002-payment-retry-policy.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 29
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "tests/fixtures/broken-project/docs/adrs/adr-003-payment-retry-v2.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 30
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "tests/fixtures/broken-project/docs/adrs/adr-004-invalid-status.md",
+      "additions": {
+        "human": 29
+      }
+    },
+    {
+      "new_path": "tests/fixtures/broken-project/docs/architecture.md",
+      "additions": {
+        "human": 14
+      }
+    },
+    {
+      "new_path": "tests/fixtures/broken-project/docs/rfcs/README.md",
+      "additions": {
+        "human": 6
+      }
+    },
+    {
+      "new_path": "tests/fixtures/broken-project/docs/rfcs/rfc-001-cache-strategy.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 14
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "tests/fixtures/broken-project/docs/rfcs/rfc-002-payment-retry-policy.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 14
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "tests/fixtures/broken-project/payment/README.md",
+      "additions": {
+        "human": 3
+      }
+    },
+    {
+      "new_path": "tests/fixtures/broken-project/payment/service.rs",
+      "additions": {
+        "human": 5
+      }
+    },
+    {
+      "new_path": "tests/fixtures/valid-project/AGENTS.md",
+      "additions": {
+        "human": 10
+      }
+    },
+    {
+      "new_path": "tests/fixtures/valid-project/CONTEXT.md",
+      "additions": {
+        "human": 13
+      }
+    },
+    {
+      "new_path": "tests/fixtures/valid-project/auth/README.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 3
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "tests/fixtures/valid-project/auth/service.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 3
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "tests/fixtures/valid-project/docs/adrs/README.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 6
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "tests/fixtures/valid-project/docs/adrs/adr-001-cache-strategy.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 30
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "tests/fixtures/valid-project/docs/adrs/adr-002-initial-cache-layer.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 29
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "tests/fixtures/valid-project/docs/architecture.md",
+      "additions": {
+        "human": 13
+      }
+    },
+    {
+      "new_path": "tests/fixtures/valid-project/docs/rfcs/README.md",
+      "additions": {
+        "human": 6
+      }
+    },
+    {
+      "new_path": "tests/fixtures/valid-project/docs/rfcs/rfc-001-cache-strategy.md",
+      "additions": {
+        "human": 26
+      }
+    },
+    {
+      "new_path": "tests/fixtures/valid-project/docs/rfcs/rfc-002-payment-retry-policy.md",
+      "additions": {
+        "human": 14
+      }
+    },
+    {
+      "new_path": "tests/fixtures/valid-project/payment/README.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 3
+          }
+        ]
+      }
+    },
+    {
+      "new_path": "tests/fixtures/valid-project/payment/service.rs",
+      "additions": {
+        "human": 7
+      }
+    },
+    {
+      "old_path": "Cargo.lock",
+      "new_path": "Cargo.lock",
+      "additions": {
+        "human": 388
+      }
+    },
+    {
+      "old_path": "Cargo.toml",
+      "new_path": "Cargo.toml",
+      "additions": {
+        "human": 1,
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 5
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/adrs/adr-001-initial-architecture.md",
+      "new_path": "docs/adrs/adr-001-initial-architecture.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 3
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/main.rs",
+      "new_path": "src/main.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 15
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_5b172df96bc0d3",
+            "lines": 1
+          }
+        ]
+      }
+    }
+  ]
+}
