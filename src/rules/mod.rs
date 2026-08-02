@@ -4,6 +4,8 @@ pub mod adr_pending;
 pub mod agents_adr_reference;
 pub mod architecture_module_sync;
 pub mod context_avoid_term;
+pub mod document_id_format;
+pub mod document_id_unique;
 pub mod fix;
 pub mod frontmatter_schema;
 pub mod required_source;
@@ -21,6 +23,8 @@ pub trait Rule {
 pub fn run_all(project: &Project) -> Vec<Violation> {
     let rules: Vec<Box<dyn Rule>> = vec![
         Box::new(frontmatter_schema::FrontmatterSchemaRule),
+        Box::new(document_id_format::DocumentIdFormatRule),
+        Box::new(document_id_unique::DocumentIdUniqueRule),
         Box::new(rfc_index_sync::RfcIndexSyncRule),
         Box::new(rfc_stale::RfcStaleDraftRule),
         Box::new(adr_index_sync::AdrIndexSyncRule),

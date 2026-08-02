@@ -251,6 +251,18 @@ The following rules correspond to the automatable group in the spec document's "
 - **Severity**: error
 - **--fix**: not supported (requires human judgment about what value to fill in)
 
+### `document-id-unique`
+- **Description**: does each RFC/ADR number identify exactly one document within its directory?
+- **Algorithm**: scan RFC and ADR filenames and front matter independently; report an error when a canonical filename ID (for example, `rfc-001` from both `rfc-001-a.md` and `rfc-001-b.md`) or a front matter `id` is used by more than one document.
+- **Severity**: error
+- **--fix**: not supported (renumbering requires a human decision and relationship updates).
+
+### `document-id-format`
+- **Description**: does the project use one document-number width consistently?
+- **Algorithm**: accept three- or four-digit RFC/ADR numbers, infer the project's width from existing documents, defaulting to three digits when no documents exist, and report any project mixing both widths.
+- **Severity**: error
+- **--fix**: not supported.
+
 ### `rfc-index-sync`
 - **Description**: does the index table in `docs/rfcs/README.md` match the front matter of the actual RFC files?
 - **Algorithm**: scan `docs/rfcs/*.md` (excluding README.md), extract front matter, and diff id/title/status/date/related_adr line-by-line against the index table.

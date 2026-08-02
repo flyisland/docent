@@ -142,6 +142,42 @@ fn lint_exit_code_is_one_when_errors_present() {
     assert_eq!(code, 1);
 }
 
+#[test]
+fn lint_accepts_four_digit_ids_but_rejects_mixed_widths() {
+    let dir = temp_dir("mixed-id-width");
+    copy_tree(&fixture("valid-project"), &dir);
+    let source = dir.join("docs/rfcs/rfc-001-cache-strategy.md");
+    let content = fs::read_to_string(&source)
+        .unwrap()
+        .replace("rfc-001", "rfc-0001");
+    fs::write(dir.join("docs/rfcs/rfc-0001-cache-strategy.md"), content).unwrap();
+
+    let json = lint_json(&dir);
+    assert_eq!(count_by_rule(&json, "errors", "document-id-format"), 1);
+    assert!(!json["errors"].as_array().unwrap().iter().any(|v| {
+        v["rule"] == "frontmatter-schema-valid"
+            && v["file"] == "docs/rfcs/rfc-0001-cache-strategy.md"
+    }));
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
+fn lint_reports_duplicate_rfc_numbers() {
+    let dir = temp_dir("duplicate-rfc-id");
+    copy_tree(&fixture("valid-project"), &dir);
+    let source = dir.join("docs/rfcs/rfc-001-cache-strategy.md");
+    fs::copy(&source, dir.join("docs/rfcs/rfc-001-a.md")).unwrap();
+    fs::copy(&source, dir.join("docs/rfcs/rfc-001-b.md")).unwrap();
+
+    let json = lint_json(&dir);
+    assert_eq!(count_by_rule(&json, "errors", "document-id-unique"), 2);
+    assert!(json["errors"].as_array().unwrap().iter().any(|v| {
+        v["file"] == "docs/rfcs/rfc-001-b.md"
+            && v["message"].as_str().unwrap().contains("RFC ID rfc-001")
+    }));
+    let _ = fs::remove_dir_all(&dir);
+}
+
 fn copy_tree(src: &Path, dst: &Path) {
     fs::create_dir_all(dst).unwrap();
     for entry in fs::read_dir(src).unwrap() {
@@ -205,14 +241,12 @@ fn init_then_lint_is_clean() {
     assert_eq!(code, 0, "init failed: {}", stdout);
     let json = lint_json(&dir);
     assert_eq!(
-        json["summary"]["errors"],
-        0,
+        json["summary"]["errors"], 0,
         "init must not leave lint errors: {}",
         json
     );
     assert_eq!(
-        json["summary"]["warnings"],
-        0,
+        json["summary"]["warnings"], 0,
         "init must not leave lint warnings: {}",
         json
     );

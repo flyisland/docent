@@ -53,14 +53,14 @@ pub struct AdrFront {
     pub related_rfc: Option<String>,
 }
 
-static ID_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^adr-\d{3}$").unwrap());
+static ID_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^adr-\d{3,4}$").unwrap());
 
 impl AdrFront {
     pub fn validation_errors(&self) -> Vec<String> {
         let mut errs = Vec::new();
         if !ID_RE.is_match(&self.id) {
             errs.push(format!(
-                "id '{}' does not match the adr-\\d{{3}} form",
+                "id '{}' does not match the adr-\\d{{3}} or adr-\\d{{4}} form",
                 self.id
             ));
         }

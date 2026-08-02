@@ -677,7 +677,7 @@ Field names and value ranges should be fixed (e.g., `status` can only be one of 
 
 ### 2. Strict file naming and directory structure
 
-- Fixed filename format: `adr-008-payment-state-machine-design.md`, with a consistent three-digit number, so scripts can scan sequentially and detect gaps or collisions.
+- Fixed filename format: `adr-008-payment-state-machine-design.md`, with a consistent three- or four-digit number. A project must use one width consistently; three digits is the default, so scripts can scan sequentially and detect gaps or collisions.
 - The index table (`docs/adrs/README.md`) shouldn't be maintained by hand — generate it from each file's front matter via script, to keep the index and the body from drifting apart.
 - The module table in `docs/architecture.md` should also carry a lightweight structural marker (e.g., a module list wrapped in HTML comments, or a separate `modules.yaml`), so a script can diff it against the actual directory structure.
 

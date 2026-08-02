@@ -32,14 +32,14 @@ pub struct RfcFront {
     pub related_adr: Option<String>,
 }
 
-static ID_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^rfc-\d{3}$").unwrap());
+static ID_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^rfc-\d{3,4}$").unwrap());
 
 impl RfcFront {
     pub fn validation_errors(&self) -> Vec<String> {
         let mut errs = Vec::new();
         if !ID_RE.is_match(&self.id) {
             errs.push(format!(
-                "id '{}' does not match the rfc-\\d{{3}} form",
+                "id '{}' does not match the rfc-\\d{{3}} or rfc-\\d{{4}} form",
                 self.id
             ));
         }

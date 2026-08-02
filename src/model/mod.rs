@@ -198,8 +198,13 @@ where
 }
 
 pub fn id_from_filename(name: &str) -> Option<String> {
-    let re = Regex::new(r"^(adr|rfc)-(\d{3})").unwrap();
+    let re = Regex::new(r"^(adr|rfc)-(\d{3,4})(?:-|\\.|$)").unwrap();
     re.captures(name).map(|c| format!("{}-{}", &c[1], &c[2]))
+}
+
+pub fn id_width(id: &str) -> Option<usize> {
+    let re = Regex::new(r"^(?:adr|rfc)-(\d{3,4})$").unwrap();
+    re.captures(id).map(|c| c[1].len())
 }
 
 pub fn id_from_rel(rel: &str) -> Option<String> {
