@@ -115,9 +115,15 @@ Each rule has a unique ID, a severity (`error` or `warning`), and an optional
 | `agents-adr-reference-valid` | `AGENTS.md` references an ADR whose status makes that reference invalid | error | — |
 | `required-source-missing` | A required source (`docs/rfcs`, `docs/adrs`, `docs/architecture.md`, `AGENTS.md`) does not exist | warning | — |
 | `context-avoid-term-violation` | Code uses a term CONTEXT.md marks as Avoid | error | — |
-| `architecture-module-sync` | `docs/architecture.md` module table lists a directory that doesn't exist (or vice versa) | warning | — |
+| `architecture-module-sync` | A module table entry has no safe relative `Path`, or its declared file or directory does not exist | warning | — |
 | `adr-pending-implementation-report` | An Accepted ADR still records `implementation: pending` | warning | — |
 | `rfc-stale-draft` | An RFC has stayed in Draft past the staleness threshold | warning | — |
+
+The architecture module table uses `Module` as a stable logical name and
+`Path` as its implementation location relative to the project root. A path may
+refer to either a file or directory; it must not be absolute or traverse out of
+the project when resolved. `docent` validates only paths declared in this table and never
+infers additional modules from the directory tree.
 
 ### `--fix` scope
 

@@ -220,6 +220,9 @@ fn init_creates_template_files_and_skips_existing() {
     let adr_template = fs::read_to_string(dir.join("docs/.templates/adr.md")).unwrap();
     assert!(adr_template.contains("## Non-goals"));
 
+    let architecture = fs::read_to_string(dir.join("docs/architecture.md")).unwrap();
+    assert!(architecture.contains("| Module | Path |"));
+
     let agents = fs::read_to_string(dir.join("AGENTS.md")).unwrap();
     assert!(agents.contains("docs/.templates/"));
 
@@ -394,18 +397,57 @@ fn gitignored_build_dir_is_not_scanned() {
         "gitignored dist/ must not be scanned, tracked web/ must"
     );
 
-    let sync_msgs: Vec<String> = json["warnings"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .filter(|x| x["rule"] == "architecture-module-sync")
-        .map(|x| x["message"].as_str().unwrap_or_default().to_string())
-        .collect();
-    assert!(
-        !sync_msgs.iter().any(|m| m.contains("'dist'")),
-        "gitignored dir must not be reported as a missing module: {:?}",
-        sync_msgs
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
+fn unlisted_root_directory_is_not_reported_as_a_module() {
+    let dir = temp_dir("unlisted-root-directory");
+    copy_tree(&fixture("valid-project"), &dir);
+    fs::create_dir_all(dir.join("web")).unwrap();
+
+    let sync_count = count_by_rule(&lint_json(&dir), "warnings", "architecture-module-sync");
+    assert_eq!(
+        sync_count, 0,
+        "an unlisted directory must not be inferred to be a module"
     );
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
+fn architecture_module_path_can_name_an_implementation_file() {
+    let dir = temp_dir("architecture-module-file-path");
+    copy_tree(&fixture("valid-project"), &dir);
+    fs::create_dir_all(dir.join("src")).unwrap();
+    fs::write(dir.join("src/authoring.ts"), "").unwrap();
+    fs::write(
+        dir.join("docs/architecture.md"),
+        "# System Architecture Overview\n\n## Module breakdown\n| Module | Path | Responsibility | Detailed design | Linked ADR |\n|---|---|---|---|---|\n| authoring | src/authoring.ts | JSX authoring runtime | docs/authoring.md | — |\n",
+    )
+    .unwrap();
+
+    let sync_count = count_by_rule(&lint_json(&dir), "warnings", "architecture-module-sync");
+    assert_eq!(
+        sync_count, 0,
+        "an explicit implementation-file path must satisfy module validation"
+    );
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
+fn architecture_module_paths_require_a_logical_module_and_safe_existing_path() {
+    let dir = temp_dir("invalid-architecture-module-paths");
+    copy_tree(&fixture("valid-project"), &dir);
+    fs::create_dir_all(dir.join("src")).unwrap();
+    fs::write(dir.join("src/authoring.ts"), "").unwrap();
+    fs::write(
+        dir.join("docs/architecture.md"),
+        "# System Architecture Overview\n\n## Module breakdown\n| Module | Path | Responsibility | Detailed design | Linked ADR |\n|---|---|---|---|---|\n| | src/authoring.ts | Missing logical name | docs/authoring.md | — |\n| root | . | Repository root is not a module | docs/root.md | — |\n| empty | — | Missing path | docs/empty.md | — |\n| outside | ../outside.ts | Escapes the project | docs/outside.md | — |\n| missing | src/missing.ts | Missing source | docs/missing.md | — |\n",
+    )
+    .unwrap();
+
+    let sync_count = count_by_rule(&lint_json(&dir), "warnings", "architecture-module-sync");
+    assert_eq!(sync_count, 5);
     let _ = fs::remove_dir_all(&dir);
 }
 

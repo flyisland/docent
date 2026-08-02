@@ -151,10 +151,10 @@ When parsing, extract every word from `_Avoid_:` lines and aggregate them into a
 Identify the module table by a fixed header (the Agent may loosen this at implementation time to "contains the following column-name substrings," without requiring the exact column order):
 
 ```markdown
-| Module | Responsibility | Detailed Design | Linked ADR |
+| Module | Path | Responsibility | Detailed Design | Linked ADR |
 ```
 
-Only require the existence of a Markdown table containing a "Module" column; the values parsed from that column are compared against the actual directory structure (see the `architecture-module-sync` rule).
+Require a Markdown table containing both `Module` and `Path` columns. `Module` is a logical identifier; `Path` is a non-empty relative path to the module's implementation file or directory (see the `architecture-module-sync` rule).
 
 > Optional design suggestion (not mandatory): if the Agent finds pure-regex Markdown parsing fragile and prone to a high false-positive rate, it may consider requiring documents to carry HTML comment anchors at key structural points, e.g. `<!-- docent:non-goals -->`, to improve parsing reliability. Whether to adopt this is up to the Agent, based on implementation difficulty — but if adopted, the corresponding template in the spec document must be updated to match, and the README should note this is a docent-specific convention, not general Markdown syntax.
 
@@ -297,9 +297,9 @@ The following rules correspond to the automatable group in the spec document's "
 - **--fix**: not supported (requires a human decision on what the reference should point to instead).
 
 ### `architecture-module-sync`
-- **Description**: does the module list in `docs/architecture.md`'s module table match the actual code directory structure (bidirectionally: exists in code but not recorded in the overview; recorded in the overview but the code directory no longer exists)?
-- **Algorithm**: parse the module table defined in Section 3.5, extract the paths in the "Module" column, and diff against first/second-level directories at the project root (the exact scan depth is left to the Agent's judgment based on project convention — recommend making it debuggable via the `--rule` flag to observe actual matching behavior).
-- **Severity**: warning (there are legitimate exceptions — tooling directories, script directories don't need to appear in the module table — the false-positive rate may be relatively high; start as a warning and consider promoting it once real-world usage is observed)
+- **Description**: does every module recorded in `docs/architecture.md` declare a safe implementation path that still exists?
+- **Algorithm**: parse the module table defined in Section 3.5. For each non-empty `Module`, require a non-empty `Path` that is relative to the project root, contains no `..` component, resolves within the project root, and identifies an existing file or directory. Do not scan the filesystem for additional modules.
+- **Severity**: warning (a missing or stale path should prompt a documentation update without blocking unrelated work)
 - **--fix**: not supported.
 
 ### `required-source-missing`

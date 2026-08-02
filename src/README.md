@@ -53,8 +53,8 @@ module layout is:
 - **`id_from_rel` vs basename**: a violation `file` field carries a path
   relative to the project root, so rule code must extract the document id from
   the file *basename* (e.g. `adr-003-…`), not from the whole relative path.
-- **`rules::walk::walker` respects `.gitignore` and nothing else**: rules that
-  scan the project tree (`context-avoid-term`, `architecture-module-sync`) go
+- **`rules::walk::walker` respects `.gitignore` and nothing else**: the rule that
+  scans the project tree (`context-avoid-term`) goes
   through this shared walker, which honors the repository's own `.gitignore`
   but deliberately ignores `.git/info/exclude` and the global
   `core.excludesFile` — those are machine-local and would make results differ

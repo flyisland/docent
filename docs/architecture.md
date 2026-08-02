@@ -1,8 +1,8 @@
 # System Architecture Overview
 
 ## Module breakdown
-| Module | Responsibility | Detailed design | Linked ADR |
-|---|---|---|---|
+| Module | Path | Responsibility | Detailed design | Linked ADR |
+|---|---|---|---|---|
 
 ## Inter-module dependencies
 (Who calls whom, and whether reverse dependencies are allowed)

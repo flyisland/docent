@@ -1,26 +1,18 @@
 use crate::model::index::parse_index_table;
 use crate::model::{Project, Violation, relative_str};
 use crate::rules::Rule;
-use crate::rules::walk::walker;
-use std::path::Path;
+use std::path::{Component, Path};
 
 pub struct ArchitectureModuleSyncRule;
 
-const EXCLUDED_DIRS: [&str; 6] = [".git", "target", "docs", "tests", "node_modules", "src"];
-
-fn root_module_dirs(root: &Path) -> Vec<String> {
-    let mut dirs = Vec::new();
-    for entry in walker(root, &EXCLUDED_DIRS, Some(1)).flatten() {
-        let path = entry.path();
-        if path.parent() != Some(root) || !path.is_dir() {
-            continue;
-        }
-        if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-            dirs.push(name.to_string());
-        }
-    }
-    dirs.sort();
-    dirs
+fn is_relative_project_path(path: &Path) -> bool {
+    !path.is_absolute()
+        && path
+            .components()
+            .any(|component| matches!(component, Component::Normal(_)))
+        && !path
+            .components()
+            .any(|component| component == Component::ParentDir)
 }
 
 impl Rule for ArchitectureModuleSyncRule {
@@ -43,38 +35,85 @@ impl Rule for ArchitectureModuleSyncRule {
         let Some(mod_col) = table.col("Module") else {
             return v;
         };
+        let Some(path_col) = table.col("Path") else {
+            v.push(Violation::warning(
+                self.id(),
+                arch_rel,
+                None,
+                "The module table must include a Path column".to_string(),
+            ));
+            return v;
+        };
+        let canonical_root = project
+            .root
+            .canonicalize()
+            .unwrap_or_else(|_| project.root.clone());
 
-        let recorded: Vec<String> = table
-            .rows
-            .iter()
-            .filter_map(|r| r.get(mod_col))
-            .map(|s| s.trim().trim_end_matches('/').to_string())
-            .filter(|s| !s.is_empty())
-            .collect();
-        let dirs = root_module_dirs(&project.root);
-
-        for m in &recorded {
-            if !dirs.contains(m) {
+        for row in &table.rows {
+            let module = row
+                .get(mod_col)
+                .map(|value| value.trim())
+                .unwrap_or_default();
+            if module.is_empty() {
+                v.push(Violation::warning(
+                    self.id(),
+                    arch_rel.clone(),
+                    None,
+                    "A module table entry must declare a non-empty Module".to_string(),
+                ));
+                continue;
+            }
+            let path = row
+                .get(path_col)
+                .map(|value| value.trim())
+                .unwrap_or_default();
+            if path.is_empty() || path == "—" {
+                v.push(Violation::warning(
+                    self.id(),
+                    arch_rel.clone(),
+                    None,
+                    format!("Module '{}' must declare a non-empty relative Path", module),
+                ));
+                continue;
+            }
+            let path = Path::new(path);
+            if !is_relative_project_path(path) {
                 v.push(Violation::warning(
                     self.id(),
                     arch_rel.clone(),
                     None,
                     format!(
-                        "Module '{}' is recorded in the architecture overview, but no directory exists at the project root",
-                        m
+                        "Module '{}' declares Path '{}', which must identify a location below the project root and must not contain '..'",
+                        module,
+                        path.display()
                     ),
                 ));
+                continue;
             }
-        }
-        for d in &dirs {
-            if !recorded.contains(d) {
+            if !project.root.join(path).exists() {
                 v.push(Violation::warning(
                     self.id(),
                     arch_rel.clone(),
                     None,
                     format!(
-                        "Directory '{}' exists at the project root, but is not listed in the architecture overview",
-                        d
+                        "Module '{}' declares Path '{}', but that path does not exist",
+                        module,
+                        path.display()
+                    ),
+                ));
+                continue;
+            }
+            if let Ok(canonical_path) = project.root.join(path).canonicalize()
+                && !canonical_path.starts_with(&canonical_root)
+            {
+                v.push(Violation::warning(
+                    self.id(),
+                    arch_rel.clone(),
+                    None,
+                    format!(
+                        "Module '{}' declares Path '{}', but it resolves outside the project root",
+                        module,
+                        path.display()
                     ),
                 ));
             }
