@@ -1,30 +1,23 @@
 use crate::model::index::parse_index_table;
 use crate::model::{Project, Violation, relative_str};
 use crate::rules::Rule;
+use crate::rules::walk::walker;
+use std::path::Path;
 
 pub struct ArchitectureModuleSyncRule;
 
 const EXCLUDED_DIRS: [&str; 6] = [".git", "target", "docs", "tests", "node_modules", "src"];
 
-fn root_module_dirs(root: &std::path::Path) -> Vec<String> {
-    let entries = match std::fs::read_dir(root) {
-        Ok(e) => e,
-        Err(_) => return Vec::new(),
-    };
+fn root_module_dirs(root: &Path) -> Vec<String> {
     let mut dirs = Vec::new();
-    for entry in entries.flatten() {
+    for entry in walker(root, &EXCLUDED_DIRS, Some(1)).flatten() {
         let path = entry.path();
-        if !path.is_dir() {
+        if path.parent() != Some(root) || !path.is_dir() {
             continue;
         }
-        let name = match path.file_name().and_then(|n| n.to_str()) {
-            Some(n) => n,
-            None => continue,
-        };
-        if name.starts_with('.') || EXCLUDED_DIRS.contains(&name) {
-            continue;
+        if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
+            dirs.push(name.to_string());
         }
-        dirs.push(name.to_string());
     }
     dirs.sort();
     dirs

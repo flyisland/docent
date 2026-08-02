@@ -370,6 +370,71 @@ fn fix_regenerates_index_and_restores_zero_errors() {
 }
 
 #[test]
+fn gitignored_build_dir_is_not_scanned() {
+    let dir = temp_dir("gitignored-dist");
+    copy_tree(&fixture("valid-project"), &dir);
+    fs::create_dir_all(dir.join(".git")).unwrap();
+    fs::write(dir.join(".gitignore"), "dist/\n").unwrap();
+    fs::create_dir_all(dir.join("dist")).unwrap();
+    fs::write(dir.join("dist/bad.js"), "const PURCHASE = 1;\n").unwrap();
+    fs::create_dir_all(dir.join("web")).unwrap();
+    fs::write(dir.join("web/bad.js"), "const PURCHASE = 1;\n").unwrap();
+
+    let json = lint_json(&dir);
+    let ctx_files: Vec<String> = json["errors"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|x| x["rule"] == "context-avoid-term-violation")
+        .map(|x| x["file"].as_str().unwrap().to_string())
+        .collect();
+    assert_eq!(
+        ctx_files,
+        vec!["web/bad.js"],
+        "gitignored dist/ must not be scanned, tracked web/ must"
+    );
+
+    let sync_msgs: Vec<String> = json["warnings"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|x| x["rule"] == "architecture-module-sync")
+        .map(|x| x["message"].as_str().unwrap_or_default().to_string())
+        .collect();
+    assert!(
+        !sync_msgs.iter().any(|m| m.contains("'dist'")),
+        "gitignored dir must not be reported as a missing module: {:?}",
+        sync_msgs
+    );
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
+fn git_info_exclude_is_ignored_for_determinism() {
+    let dir = temp_dir("info-exclude");
+    copy_tree(&fixture("valid-project"), &dir);
+    fs::create_dir_all(dir.join(".git/info")).unwrap();
+    fs::write(dir.join(".git/info/exclude"), "dist/\n").unwrap();
+    fs::create_dir_all(dir.join("dist")).unwrap();
+    fs::write(dir.join("dist/bad.js"), "const PURCHASE = 1;\n").unwrap();
+
+    let json = lint_json(&dir);
+    let ctx_files: Vec<String> = json["errors"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|x| x["rule"] == "context-avoid-term-violation")
+        .map(|x| x["file"].as_str().unwrap().to_string())
+        .collect();
+    assert_eq!(
+        ctx_files,
+        vec!["dist/bad.js"],
+        "info/exclude is machine-local and must not affect lint results"
+    );
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
 fn fix_round_trips_superseded_backlinks() {
     let src = fixture("broken-project");
     let dir = temp_dir("backlink");

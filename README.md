@@ -176,8 +176,15 @@ docent reads the following from the project root:
 - `CONTEXT.md` — canonical terminology (terms and their Avoid words)
 - `AGENTS.md` — references to ADRs
 - source files (`.rs`, `.py`, `.js`, `.ts`, and other common extensions)
-  under any module directory, minus `.git`, `target`, `docs`, `node_modules`,
-  and `fixtures`
+  under any module directory, respecting the repository's own `.gitignore`
+  (and only `.gitignore` — never `.git/info/exclude` or the global
+  `core.excludesFile`, which are machine-local and would make results differ
+  between environments). Each scanning rule also keeps its own hardcoded
+  fallback list (notably `.git`, `target`, `docs`, `node_modules`, and test or
+  build fixtures) that is always excluded; outside a git repository, or when
+  the tree has no `.gitignore`, docent degrades to that fallback alone. Hidden
+  files and directories are never scanned. Note docent is not git-index aware:
+  a file that is committed but lives under a gitignored path is still skipped.
 
 A missing source is reported explicitly instead of silently skipped: the
 `required-source-missing` warning fires once per absent entry above

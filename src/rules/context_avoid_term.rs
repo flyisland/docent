@@ -1,6 +1,7 @@
 use crate::model::context::parse_context;
 use crate::model::{Project, Violation, relative_str};
 use crate::rules::Rule;
+use crate::rules::walk::walker;
 use regex::Regex;
 use std::collections::HashSet;
 use std::path::Path;
@@ -19,29 +20,12 @@ fn is_code_file(path: &Path) -> bool {
         .unwrap_or(false)
 }
 
-fn code_files_under(root: &Path, rel: &Path) -> Vec<String> {
-    let mut out = Vec::new();
-    let dir = root.join(rel);
-    let entries = match std::fs::read_dir(&dir) {
-        Ok(e) => e,
-        Err(_) => return out,
-    };
-    for entry in entries.flatten() {
-        let path = entry.path();
-        let name = match path.file_name().and_then(|n| n.to_str()) {
-            Some(n) => n,
-            None => continue,
-        };
-        if path.is_dir() {
-            if name.starts_with('.') || EXCLUDED_DIRS.contains(&name) {
-                continue;
-            }
-            out.extend(code_files_under(root, &path));
-        } else if is_code_file(&path) {
-            out.push(relative_str(&path, root));
-        }
-    }
-    out
+fn code_files(root: &Path) -> Vec<String> {
+    walker(root, &EXCLUDED_DIRS, None)
+        .flatten()
+        .filter(|e| e.path().is_file() && is_code_file(e.path()))
+        .map(|e| relative_str(e.path(), root))
+        .collect()
 }
 
 fn word_pattern(word: &str) -> String {
@@ -90,7 +74,7 @@ impl Rule for ContextAvoidTermRule {
         };
 
         let mut seen: HashSet<String> = HashSet::new();
-        for rel in code_files_under(&project.root, Path::new("")) {
+        for rel in code_files(&project.root) {
             let path = project.root.join(&rel);
             let file_content = match std::fs::read_to_string(&path) {
                 Ok(c) => c,

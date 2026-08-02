@@ -12,6 +12,7 @@ pub mod required_source;
 pub mod rfc_index_sync;
 pub mod rfc_stale;
 pub mod superseded_backlink;
+pub mod walk;
 
 use crate::model::{Project, Violation};
 

@@ -11,7 +11,8 @@ module layout is:
   (ADR / RFC front matter, indexes, `CONTEXT.md`, `docs/architecture.md`,
   `AGENTS.md`).
 - `src/rules/` — one file per lint rule, plus `fix.rs` (the bounded `--fix`
-  implementation) and `mod.rs` (rule registry / `run_all`).
+  implementation), `walk.rs` (the shared gitignore-aware tree walker used by
+  the code-scanning rules) and `mod.rs` (rule registry / `run_all`).
 - `src/output/` — `human.rs` (terminal output) and `json.rs` (the stable
   `--json` contract described in the implementation spec).
 
@@ -52,3 +53,13 @@ module layout is:
 - **`id_from_rel` vs basename**: a violation `file` field carries a path
   relative to the project root, so rule code must extract the document id from
   the file *basename* (e.g. `adr-003-…`), not from the whole relative path.
+- **`rules::walk::walker` respects `.gitignore` and nothing else**: rules that
+  scan the project tree (`context-avoid-term`, `architecture-module-sync`) go
+  through this shared walker, which honors the repository's own `.gitignore`
+  but deliberately ignores `.git/info/exclude` and the global
+  `core.excludesFile` — those are machine-local and would make results differ
+  between environments. The walker also skips hidden files and directories
+  (not just hidden directories, as the pre-walker recursion did). Outside a
+  git repository (or without a `.gitignore`) the walker degrades to each
+  rule's hardcoded `EXCLUDED_DIRS` list. Fixtures under `tests/fixtures/` are
+  plain directories with no `.git`, so gitignore rules never apply to them.

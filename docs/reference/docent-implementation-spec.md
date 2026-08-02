@@ -38,7 +38,7 @@ This document is a companion to the *Software Project Design and Documentation M
 - Suggested dependencies:
   - `serde` + `serde_yaml`: parsing front matter
   - `serde_json`: `--json` output
-  - `walkdir`: directory traversal
+  - `ignore`: directory traversal that respects the project's own `.gitignore` (used by the rules that scan the code tree)
   - `regex`: Markdown body structure detection (see Section 3)
   - Terminal color: `anstyle` or `owo-colors` (either is fine, human output mode only)
 
@@ -315,7 +315,7 @@ The following rules correspond to the automatable group in the spec document's "
 - Note: v1 does not judge "how long counts as stale" — it's purely a summary list, left for a human to act on.
 
 ### `context-avoid-term-violation`
-- **Description**: does any code file (excluding `.md` files, `docs/`, `node_modules`, `target`, and similar directories — the exact exclusion list is defined by the Agent and documented in the README) contain a word from a CONTEXT.md `_Avoid_` list?
+- **Description**: does any code file (excluding `.md` files) contain a word from a CONTEXT.md `_Avoid_` list? The scanned set respects the project's own `.gitignore` — and only `.gitignore`, never `.git/info/exclude` or the global `core.excludesFile`, since those are machine-local state that would make results differ between environments. Hidden files and directories are never scanned. The directories `.git`, `target`, `docs`, `node_modules`, and `fixtures` are always excluded as a hardcoded fallback; outside a git repository the scan degrades to that fallback list alone.
 - **Algorithm**: parse every CONTEXT.md (root plus each module), aggregate the Avoid word list, and full-text scan code files (word-boundary matching, to avoid a false positive where "Purchase" matches inside a compound word like "PurchaseOrder" — whether finer-grained semantic matching is worth the implementation cost is left to the Agent; v1 allows simple whole-word matching).
 - **Severity**: error
 - **--fix**: not supported.
