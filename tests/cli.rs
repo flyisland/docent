@@ -198,6 +198,28 @@ fn init_creates_template_files_and_skips_existing() {
 }
 
 #[test]
+fn init_then_lint_is_clean() {
+    let dir = temp_dir("init-lint");
+    fs::create_dir_all(&dir).unwrap();
+    let (code, stdout) = docent(&dir, &["init"]);
+    assert_eq!(code, 0, "init failed: {}", stdout);
+    let json = lint_json(&dir);
+    assert_eq!(
+        json["summary"]["errors"],
+        0,
+        "init must not leave lint errors: {}",
+        json
+    );
+    assert_eq!(
+        json["summary"]["warnings"],
+        0,
+        "init must not leave lint warnings: {}",
+        json
+    );
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
 fn status_lists_violation_counts_by_rule() {
     let (code, stdout) = docent(&fixture("broken-project"), &["status"]);
     assert_eq!(code, 0);

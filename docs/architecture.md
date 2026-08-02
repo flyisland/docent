@@ -3,7 +3,6 @@
 ## Module breakdown
 | Module | Responsibility | Detailed design | Linked ADR |
 |---|---|---|---|
-| module-a | One-line responsibility | module-a/README.md | adr-000 |
 
 ## Inter-module dependencies
 (Who calls whom, and whether reverse dependencies are allowed)
