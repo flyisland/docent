@@ -2,7 +2,7 @@
 id: adr-001
 title: Initial architecture selection
 status: Accepted
-implementation: pending
+implementation: implemented
 created: 2026-08-01
 updated: null
 supersedes: []
@@ -28,6 +28,8 @@ Resource constraints at decision time: the maintainer has limited bandwidth, and
 - Lint rules parse Markdown structure (headings, front matter, tables) using regular expressions and simple string matching, without a full Markdown AST parser.
 - `--json` output is treated as a stable interface contract for Coding Agents to consume; future changes may only add fields, never remove or rename existing ones.
 - The automated-fix scope of `--fix` is strictly limited to three mechanical operations: rebuilding index tables, rebuilding `index.json`, and completing Superseded bidirectional links — see Section 6 of the implementation spec for details.
+
+Implemented in `src/main.rs` (with the module layout documented in `src/README.md`).
 
 ## Non-goals
 
