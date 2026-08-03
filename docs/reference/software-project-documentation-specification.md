@@ -16,7 +16,7 @@ than silently choosing an intended state.
 ## Model and principles
 
 The core governance chain has five layers: RFC, ADR, architecture overview,
-detailed design, and Agent guardrails. `IDEAS.md` is an intake mechanism before
+detailed design, and Agent guardrails. `docs/IDEAS.md` is an intake mechanism before
 that chain, not a sixth layer. Guides, research, execution records, archives,
 and runbooks are parallel artifact classes.
 
@@ -28,9 +28,9 @@ evidence of **intended state**. Report disagreement for human resolution. An
 Agent must neither rewrite a maintained contract to legitimize a regression nor
 rewrite code merely because obsolete history disagrees.
 
-## Intake: `IDEAS.md`
+## Intake: `docs/IDEAS.md`
 
-`IDEAS.md` is a one-way funnel for unclaimed, half-formed ideas. Once claimed,
+`docs/IDEAS.md` is a one-way funnel for unclaimed, half-formed ideas. Once claimed,
 remove the entry and send it to direct implementation/design, a project PRD or
 issue, or an RFC. Keep it only while scope remains unclear. It is neither a
 backlog nor an archive.
@@ -117,7 +117,7 @@ owner. `architecture.md` must link such a document from every affected module
 path.
 
 Living design is not a backlog or phase history. Unclaimed work belongs in
-`IDEAS.md`; claimed product/interface work belongs in an RFC or project
+`docs/IDEAS.md`; claimed product/interface work belongs in an RFC or project
 PRD/issue; completed phase history belongs in an archive if retention is
 useful. Avoid “first slice”, “initial stage”, “deferred”, and “future
 capability” unless describing a current deliberate Non-goal that links to its

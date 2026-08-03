@@ -14,7 +14,7 @@ text through `docent docs show` and `docent docs export <directory-or-file>`.
 
 ## Governance and ownership
 
-`IDEAS.md` is one-way intake; remove an idea once it has a destination. RFCs
+`docs/IDEAS.md` is one-way intake; remove an idea once it has a destination. RFCs
 in `rfcs/` are proposals and seal as Accepted or Rejected. An Accepted RFC
 links its durable ADR or records `ADR not required` with a short reason. ADRs
 in `adrs/` are durable decisions. A major/directional change gets a new ADR
@@ -61,7 +61,7 @@ rationale or costly evidence; delete pure duplication when Git history is
 enough.
 
 Living design is current, not backlog or phase history. Put unclaimed future
-work in `IDEAS.md`, claimed work in an RFC or PRD/issue, and valuable completed
+work in `docs/IDEAS.md`, claimed work in an RFC or PRD/issue, and valuable completed
 history in an archive. A deliberate current Non-goal may link to the real
 owner of related planned work.
 

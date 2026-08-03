@@ -16,7 +16,7 @@ For the complete canonical specification shipped with this Docent build, run
 
 | Artifact | Authority and owner | Update rule |
 |---|---|---|
-| `IDEAS.md` | Unclaimed ideas; anyone may add | Remove an entry once it has an owner. It is intake, not a history. |
+| `docs/IDEAS.md` | Unclaimed ideas; anyone may add | Remove an entry once it has an owner. It is intake, not a history. |
 | `docs/rfcs/` | Proposal and decision discussion; RFC author owns while Draft | Seal as Accepted or Rejected. An Accepted RFC links its ADR or says why no ADR is required. |
 | `docs/adrs/` | Durable architectural decisions; human decision owner | Do not erase historical bodies. Use a new ADR and supersession links for a major/directional replacement; append a permitted minor Amendment only when the project uses that mechanism. |
 | `docs/architecture.md` | Current module map and boundaries; architecture owner | Update with module topology, responsibility, or dependency-boundary changes. |
@@ -93,6 +93,6 @@ Archive only unique rationale or costly evidence. Delete pure duplication when
 Git history is sufficient.
 
 Living design is not a backlog or phase log. Put unclaimed future work in
-`IDEAS.md`, claimed product/interface work in an RFC or project PRD/issue, and
+`docs/IDEAS.md`, claimed product/interface work in an RFC or project PRD/issue, and
 completed phase history in an archive when it is worth retaining. A current
 Non-goal may name deliberately excluded work and link its real owner.

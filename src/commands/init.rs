@@ -22,7 +22,7 @@ const CONTEXT_TEMPLATE: &str = "# {Module / project name}\n\n{One or two sentenc
 
 fn files() -> Vec<(&'static str, String)> {
     vec![
-        ("IDEAS.md", IDEAS.to_string()),
+        ("docs/IDEAS.md", IDEAS.to_string()),
         ("docs/rfcs/README.md", RFC_INDEX.to_string()),
         ("docs/adrs/README.md", ADR_INDEX.to_string()),
         ("docs/architecture.md", ARCHITECTURE.to_string()),

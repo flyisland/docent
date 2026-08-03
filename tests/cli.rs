@@ -102,7 +102,7 @@ fn broken_project_reports_one_violation_per_rule() {
 }
 
 fn doc_group(file: &str) -> u8 {
-    if file == "IDEAS.md" {
+    if file == "docs/IDEAS.md" {
         0
     } else if file.starts_with("docs/rfcs") {
         1
@@ -227,7 +227,7 @@ fn init_creates_template_files_and_skips_existing() {
     let (code, _stdout) = docent(&dir, &["init"]);
     assert_eq!(code, 0);
     for rel in [
-        "IDEAS.md",
+        "docs/IDEAS.md",
         "docs/rfcs/README.md",
         "docs/adrs/README.md",
         "docs/architecture.md",
@@ -239,6 +239,10 @@ fn init_creates_template_files_and_skips_existing() {
     ] {
         assert!(dir.join(rel).exists(), "{} was not created by init", rel);
     }
+    assert!(
+        !dir.join("IDEAS.md").exists(),
+        "init must keep idea intake under docs/"
+    );
 
     let adr_template = fs::read_to_string(dir.join("docs/.templates/adr.md")).unwrap();
     assert!(adr_template.contains("## Non-goals"));
@@ -394,7 +398,7 @@ fn status_reports_missing_sources_explicitly() {
     let (code, stdout) = docent(&dir, &["status"]);
     assert_eq!(code, 0);
     for needle in [
-        "not found (IDEAS.md)",
+        "not found (docs/IDEAS.md)",
         "not found (docs/rfcs)",
         "not found (docs/adrs)",
         "not found (docs/architecture.md)",

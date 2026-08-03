@@ -55,7 +55,7 @@ pub fn run_all(project: &Project) -> Vec<Violation> {
 }
 
 fn doc_group(file: &str) -> u8 {
-    if file == "IDEAS.md" {
+    if file == "docs/IDEAS.md" {
         0
     } else if file.starts_with("docs/rfcs") {
         1

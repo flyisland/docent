@@ -55,7 +55,7 @@ It creates:
 
 | Path | Purpose |
 |---|---|
-| `IDEAS.md` | A one-way funnel for half-formed thoughts |
+| `docs/IDEAS.md` | A one-way funnel for half-formed thoughts |
 | `docs/rfcs/README.md` | RFC index table |
 | `docs/adrs/README.md` | ADR index table |
 | `docs/architecture.md` | Architecture overview with module breakdown |
@@ -115,7 +115,7 @@ entries, RFC counts by status, ADR counts by status, and any architecture /
 terminology mismatches. Human output only; always exits `0`.
 
 Each line distinguishes a missing source from an empty one: when the relevant
-file (`IDEAS.md`, `docs/architecture.md`, `CONTEXT.md`) or directory
+file (`docs/IDEAS.md`, `docs/architecture.md`, `CONTEXT.md`) or directory
 (`docs/rfcs`, `docs/adrs`) does not exist, the line reports
 `not found (<path>)` instead of a misleading zero count.
 
@@ -218,8 +218,8 @@ docent reads the following from the project root:
 
 A missing source is reported explicitly instead of silently skipped: the
 `required-source-missing` warning fires once per absent entry above
-(`docs/rfcs`, `docs/adrs`, `docs/architecture.md`, `AGENTS.md`). `IDEAS.md`
-and `CONTEXT.md` are not linted — `IDEAS.md` is only counted by `docent
+(`docs/rfcs`, `docs/adrs`, `docs/architecture.md`, `AGENTS.md`). `docs/IDEAS.md`
+and `CONTEXT.md` are not linted — `docs/IDEAS.md` is only counted by `docent
 status`, and `CONTEXT.md` is optional (its absence simply disables the
 terminology rule).
 

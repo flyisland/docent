@@ -93,7 +93,7 @@ pub fn run() -> i32 {
         .count();
 
     let ideas_value = if ideas_missing {
-        "not found (IDEAS.md)".to_string()
+        "not found (docs/IDEAS.md)".to_string()
     } else {
         format!("{} unclaimed entries", ideas)
     };
@@ -139,7 +139,7 @@ pub fn run() -> i32 {
         )
     };
 
-    println!("{}", line("IDEAS.md", &ideas_value));
+    println!("{}", line("docs/IDEAS.md", &ideas_value));
     println!();
     println!("{}", line("RFC", &rfc_value));
     println!();

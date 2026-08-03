@@ -93,7 +93,7 @@ impl Project {
     }
 
     pub fn ideas(&self) -> PathBuf {
-        self.path("IDEAS.md")
+        self.path("docs/IDEAS.md")
     }
 }
 
