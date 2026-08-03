@@ -1,0 +1,330 @@
+CONTEXT.md
+  s_92bd3d56e83468::t_87a9ef949f5a33 27-31
+docs/reference/software-project-documentation-specification.md
+  s_92bd3d56e83468::t_99d22e7f67f321 62-68,71-72,76-80,82-84
+  s_92bd3d56e83468::t_a497fbf54f69b7 69-70,73-75
+  s_92bd3d56e83468::t_f17d51346b6724 198-200
+  s_92bd3d56e83468::t_55d8e195593e80 227-228
+docs/reference/docent-implementation-spec.md
+  s_92bd3d56e83468::t_55d8e195593e80 117-118,122-123,125-126,129,321-327,330-331
+  s_92bd3d56e83468::t_a497fbf54f69b7 124,127-128,328-329
+  s_92bd3d56e83468::t_f17d51346b6724 448
+  s_92bd3d56e83468::t_6c9d397e973ba3 332
+AGENTS.md
+  s_92bd3d56e83468::t_99d22e7f67f321 24-28
+README.md
+  s_92bd3d56e83468::t_99d22e7f67f321 139
+docs/templates/project-agents.md
+  s_92bd3d56e83468::t_99d22e7f67f321 21-24
+src/commands/init.rs
+  s_92bd3d56e83468::t_87a9ef949f5a33 19
+docs/.templates/adr.md
+  s_92bd3d56e83468::t_87a9ef949f5a33 10-11
+src/rules/amendment_backlink.rs
+  s_92bd3d56e83468::t_a497fbf54f69b7 27,35-40,100-118
+  s_92bd3d56e83468::t_d5ce50384e2143 1-26,28-34,41-99,119-124
+src/model/adr.rs
+  s_92bd3d56e83468::t_24213b74b2912d 150-200
+  s_92bd3d56e83468::t_d5ce50384e2143 41-45,59-62,93-104,110-142
+  s_92bd3d56e83468::t_a497fbf54f69b7 67-68,105-109
+  s_92bd3d56e83468::t_00b589d115c6a0 40
+tests/cli.rs
+  s_92bd3d56e83468::t_2e9189f825c232 203-208,213-270,292-294
+  s_92bd3d56e83468::t_0b9cca00bc4e9b 341-342
+  s_92bd3d56e83468::t_0b7aff1044020a 209-212
+  s_92bd3d56e83468::t_53cebf9c5df70d 271-291
+docs/adrs/adr-002-documentation-root-layout.md
+  s_92bd3d56e83468::t_87a9ef949f5a33 10-13,29-31
+docs/README.md
+  s_92bd3d56e83468::t_99d22e7f67f321 20-23
+  s_92bd3d56e83468::t_a9c1babda869f7 28-31
+docs/adrs/adr-001-initial-architecture.md
+  s_92bd3d56e83468::t_87a9ef949f5a33 10-11
+docs/templates/project-docs-readme.md
+  s_92bd3d56e83468::t_99d22e7f67f321 21
+  s_92bd3d56e83468::t_a9c1babda869f7 38-42
+src/rules/mod.rs
+  s_92bd3d56e83468::t_d5ce50384e2143 5,37
+---
+{
+  "schema_version": "authorship/3.1.0",
+  "tlab_version": "0.8.2",
+  "base_commit_sha": "deb5dac407670131525e83d11475d9ea01c2b1ce",
+  "prompts": {},
+  "sessions": {
+    "s_92bd3d56e83468": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fc547-dc9d-7a61-bf83-c0685a948af4",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "flyisland <island.chen@outlook.com>",
+      "custom_attributes": {
+        "tlab.token_usage.output_tokens": "44268",
+        "tlab.token_usage.cache_read_tokens": "6724608",
+        "tlab.session_started_at": "2026-08-03T02:50:58Z",
+        "tlab.token_usage.input_tokens": "277449",
+        "tlab.token_usage.cache_creation_tokens": "0"
+      }
+    }
+  },
+  "changes": [
+    {
+      "new_path": "src/rules/amendment_backlink.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 124
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "AGENTS.md",
+      "new_path": "AGENTS.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 5
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 3
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "CONTEXT.md",
+      "new_path": "CONTEXT.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 5
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "README.md",
+      "new_path": "README.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/.templates/adr.md",
+      "new_path": "docs/.templates/adr.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 2
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/README.md",
+      "new_path": "docs/README.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 8
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 2
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/adrs/adr-001-initial-architecture.md",
+      "new_path": "docs/adrs/adr-001-initial-architecture.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 2
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/adrs/adr-002-documentation-root-layout.md",
+      "new_path": "docs/adrs/adr-002-documentation-root-layout.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 7
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 2
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/reference/docent-implementation-spec.md",
+      "new_path": "docs/reference/docent-implementation-spec.md",
+      "additions": {
+        "human": 1,
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 22
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/reference/software-project-documentation-specification.md",
+      "new_path": "docs/reference/software-project-documentation-specification.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 27
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 9
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/templates/project-agents.md",
+      "new_path": "docs/templates/project-agents.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 4
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 4
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/templates/project-docs-readme.md",
+      "new_path": "docs/templates/project-docs-readme.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 6
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/commands/init.rs",
+      "new_path": "src/commands/init.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 1
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/model/adr.rs",
+      "new_path": "src/model/adr.rs",
+      "additions": {
+        "human": 3,
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 110
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/rules/mod.rs",
+      "new_path": "src/rules/mod.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 2
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "tests/cli.rs",
+      "new_path": "tests/cli.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 94
+          }
+        ]
+      }
+    }
+  ]
+}
