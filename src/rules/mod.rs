@@ -4,7 +4,6 @@ pub mod adr_pending;
 pub mod agents_adr_reference;
 pub mod amendment_backlink;
 pub mod architecture_module_sync;
-pub mod context_avoid_term;
 pub mod document_id_format;
 pub mod document_id_unique;
 pub mod fix;
@@ -14,7 +13,6 @@ pub mod rfc_accepted_outcome;
 pub mod rfc_index_sync;
 pub mod rfc_stale;
 pub mod superseded_backlink;
-pub mod walk;
 
 use crate::model::{Project, Violation};
 
@@ -39,7 +37,6 @@ pub fn run_all(project: &Project) -> Vec<Violation> {
         Box::new(required_source::RequiredSourceMissingRule),
         Box::new(architecture_module_sync::ArchitectureModuleSyncRule),
         Box::new(agents_adr_reference::AgentsAdrReferenceRule),
-        Box::new(context_avoid_term::ContextAvoidTermRule),
     ];
     let mut all = Vec::new();
     for r in rules {

@@ -66,7 +66,7 @@ fn broken_project_reports_one_violation_per_rule() {
     let json = lint_json(&fixture("broken-project"));
     let errors = json["summary"]["errors"].as_u64().unwrap();
     let warnings = json["summary"]["warnings"].as_u64().unwrap();
-    assert_eq!(errors, 7);
+    assert_eq!(errors, 6);
     assert_eq!(warnings, 3);
 
     let expected_errors = [
@@ -76,7 +76,6 @@ fn broken_project_reports_one_violation_per_rule() {
         "adr-missing-required-sections",
         "superseded-backlink-consistency",
         "agents-adr-reference-valid",
-        "context-avoid-term-violation",
     ];
     for rule in expected_errors {
         assert_eq!(
@@ -435,7 +434,7 @@ fn status_lists_violation_counts_by_rule() {
     let (code, stdout) = docent(&fixture("broken-project"), &["status"]);
     assert_eq!(code, 0);
     assert!(
-        stdout.contains("Violations by rule") && stdout.contains("10 total"),
+        stdout.contains("Violations by rule") && stdout.contains("9 total"),
         "expected a per-rule breakdown: {}",
         stdout
     );
@@ -447,7 +446,6 @@ fn status_lists_violation_counts_by_rule() {
         "superseded-backlink-consistency",
         "agents-adr-reference-valid",
         "architecture-module-sync",
-        "context-avoid-term-violation",
         "adr-pending-implementation-report",
         "rfc-stale-draft",
     ] {
@@ -496,7 +494,6 @@ fn status_reports_missing_sources_explicitly() {
         "not found (docs/rfcs)",
         "not found (docs/adrs)",
         "not found (docs/architecture.md)",
-        "not found (CONTEXT.md)",
     ] {
         assert!(
             stdout.contains(needle),
@@ -547,30 +544,18 @@ fn fix_regenerates_index_and_restores_zero_errors() {
 }
 
 #[test]
-fn gitignored_build_dir_is_not_scanned() {
-    let dir = temp_dir("gitignored-dist");
+fn terminology_entries_do_not_affect_lint_results() {
+    let dir = temp_dir("terminology-entries-do-not-affect-lint");
     copy_tree(&fixture("valid-project"), &dir);
-    fs::create_dir_all(dir.join(".git")).unwrap();
-    fs::write(dir.join(".gitignore"), "dist/\n").unwrap();
-    fs::create_dir_all(dir.join("dist")).unwrap();
-    fs::write(dir.join("dist/bad.js"), "const PURCHASE = 1;\n").unwrap();
-    fs::create_dir_all(dir.join("web")).unwrap();
-    fs::write(dir.join("web/bad.js"), "const PURCHASE = 1;\n").unwrap();
+    fs::write(
+        dir.join("payment/service.rs"),
+        "pub const PURCHASE: u8 = 1;\n",
+    )
+    .unwrap();
 
     let json = lint_json(&dir);
-    let ctx_files: Vec<String> = json["errors"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .filter(|x| x["rule"] == "context-avoid-term-violation")
-        .map(|x| x["file"].as_str().unwrap().to_string())
-        .collect();
-    assert_eq!(
-        ctx_files,
-        vec!["web/bad.js"],
-        "gitignored dist/ must not be scanned, tracked web/ must"
-    );
-
+    assert_eq!(json["summary"]["errors"], 0);
+    assert_eq!(json["summary"]["warnings"], 0);
     let _ = fs::remove_dir_all(&dir);
 }
 
@@ -622,31 +607,6 @@ fn architecture_module_paths_require_a_logical_module_and_safe_existing_path() {
 
     let sync_count = count_by_rule(&lint_json(&dir), "warnings", "architecture-module-sync");
     assert_eq!(sync_count, 5);
-    let _ = fs::remove_dir_all(&dir);
-}
-
-#[test]
-fn git_info_exclude_is_ignored_for_determinism() {
-    let dir = temp_dir("info-exclude");
-    copy_tree(&fixture("valid-project"), &dir);
-    fs::create_dir_all(dir.join(".git/info")).unwrap();
-    fs::write(dir.join(".git/info/exclude"), "dist/\n").unwrap();
-    fs::create_dir_all(dir.join("dist")).unwrap();
-    fs::write(dir.join("dist/bad.js"), "const PURCHASE = 1;\n").unwrap();
-
-    let json = lint_json(&dir);
-    let ctx_files: Vec<String> = json["errors"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .filter(|x| x["rule"] == "context-avoid-term-violation")
-        .map(|x| x["file"].as_str().unwrap().to_string())
-        .collect();
-    assert_eq!(
-        ctx_files,
-        vec!["dist/bad.js"],
-        "info/exclude is machine-local and must not affect lint results"
-    );
     let _ = fs::remove_dir_all(&dir);
 }
 

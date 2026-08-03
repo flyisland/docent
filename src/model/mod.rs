@@ -1,5 +1,4 @@
 pub mod adr;
-pub mod context;
 pub mod index;
 pub mod rfc;
 
@@ -86,10 +85,6 @@ impl Project {
 
     pub fn agents(&self) -> PathBuf {
         self.path("AGENTS.md")
-    }
-
-    pub fn context(&self) -> PathBuf {
-        self.path("CONTEXT.md")
     }
 
     pub fn ideas(&self) -> PathBuf {

@@ -96,9 +96,8 @@ report. The exit code is:
 `1` if any errors exist, `0` otherwise.
 
 Violations are grouped in the same order `docent status` displays its lines:
-RFC files, then ADR files, then `docs/architecture.md`, then `AGENTS.md`, then
-code files. Within a group they are ordered by file path, then line, then rule
-ID.
+RFC files, then ADR files, then `docs/architecture.md`, then `AGENTS.md`.
+Within a group they are ordered by file path, then line, then rule ID.
 
 `docent lint --fix` first applies every supported automatic fix, then reports
 the *post-fix* violations. It returns `0` only if no errors remain after
@@ -111,11 +110,11 @@ until docent lint --fix --json | jq -e '.summary.errors == 0'; do :; done
 ### `docent status`
 
 Prints a summary of the project's documentation state: unclaimed IDEAS
-entries, RFC counts by status, ADR counts by status, and any architecture /
-terminology mismatches. Human output only; always exits `0`.
+entries, RFC counts by status, ADR counts by status, and architecture
+mismatches. Human output only; always exits `0`.
 
 Each line distinguishes a missing source from an empty one: when the relevant
-file (`docs/IDEAS.md`, `docs/architecture.md`, `CONTEXT.md`) or directory
+file (`docs/IDEAS.md`, `docs/architecture.md`) or directory
 (`docs/rfcs`, `docs/adrs`) does not exist, the line reports
 `not found (<path>)` instead of a misleading zero count.
 
@@ -139,7 +138,6 @@ Each rule has a unique ID, a severity (`error` or `warning`), and an optional
 | `amendment-backlink-consistency` | A partial ADR amendment lacks a matching `amends`/`amended_by` relation or targets a non-Accepted ADR | error | — |
 | `agents-adr-reference-valid` | `AGENTS.md` references an ADR whose status makes that reference invalid | error | — |
 | `required-source-missing` | A required source (`docs/rfcs`, `docs/adrs`, `docs/architecture.md`, `AGENTS.md`) does not exist | warning | — |
-| `context-avoid-term-violation` | Code uses a term CONTEXT.md marks as Avoid | error | — |
 | `architecture-module-sync` | A module table entry has no safe relative `Path`, or its declared file or directory does not exist | warning | — |
 | `adr-pending-implementation-report` | An Accepted ADR still records `implementation: pending` | warning | — |
 | `rfc-stale-draft` | An RFC has stayed in Draft past the staleness threshold | warning | — |
@@ -165,8 +163,7 @@ Everything else is deliberately left to human judgment.
 ## JSON output
 
 `docent lint --json` emits the following structure. The `line` field is a
-number when the location can be pinpointed (e.g. a term violation in code),
-and `null` otherwise.
+number when the location can be pinpointed, and `null` otherwise.
 
 ```json
 {
@@ -204,25 +201,13 @@ docent reads the following from the project root:
 - `docs/adrs/*.md` (excluding `README.md`) — ADR front matter
 - `docs/rfcs/README.md` and `docs/adrs/README.md` — the index tables
 - `docs/architecture.md` — the module breakdown table
-- `CONTEXT.md` — canonical terminology (terms and their Avoid words)
 - `AGENTS.md` — references to ADRs
-- source files (`.rs`, `.py`, `.js`, `.ts`, and other common extensions)
-  under any module directory, respecting the repository's own `.gitignore`
-  (and only `.gitignore` — never `.git/info/exclude` or the global
-  `core.excludesFile`, which are machine-local and would make results differ
-  between environments). Each scanning rule also keeps its own hardcoded
-  fallback list (notably `.git`, `target`, `docs`, `node_modules`, and test or
-  build fixtures) that is always excluded; outside a git repository, or when
-  the tree has no `.gitignore`, docent degrades to that fallback alone. Hidden
-  files and directories are never scanned. Note docent is not git-index aware:
-  a file that is committed but lives under a gitignored path is still skipped.
 
 A missing source is reported explicitly instead of silently skipped: the
 `required-source-missing` warning fires once per absent entry above
 (`docs/rfcs`, `docs/adrs`, `docs/architecture.md`, `AGENTS.md`). `docs/IDEAS.md`
-and `CONTEXT.md` are not linted — `docs/IDEAS.md` is only counted by `docent
-status`, and `CONTEXT.md` is optional (its absence simply disables the
-terminology rule).
+is only counted by `docent status`. `CONTEXT.md` remains terminology guidance
+for people and Agents; Docent does not lint it.
 
 New RFCs / ADRs are expected to be written from the templates in
 `docs/.templates/`, which already carry a valid front matter skeleton.

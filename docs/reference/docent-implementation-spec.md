@@ -154,7 +154,9 @@ Any missing section → lint error.
 _Avoid_: {word1}, {word2}    # Optional line, comma-separated
 ```
 
-When parsing, extract every word from `_Avoid_:` lines and aggregate them into a "banned word list," used by the `context-avoid-term-violation` rule.
+`CONTEXT.md` is terminology guidance for people and Agents. Docent does not
+parse or lint its terms because whether a term incorrectly refers to a concept
+is context-dependent and cannot be mechanically verified.
 
 ### 3.5 The module table in architecture.md
 
@@ -223,7 +225,7 @@ standalone binary has no reliable readable source path.
 
 A source the rules would otherwise read is never silently skipped: if `docs/rfcs`, `docs/adrs`, `docs/architecture.md`, or `AGENTS.md` is absent, the `required-source-missing` warning (see Section 5) fires for it.
 
-Violations are reported grouped in the same order as `docent status` (Section 4.3) displays its lines: RFC files, ADR files, `docs/architecture.md`, `AGENTS.md`, then code files. Within a group, violations sort by file path, then line, then rule ID.
+Violations are reported grouped in the same order as `docent status` (Section 4.3) displays its lines: RFC files, ADR files, `docs/architecture.md`, then `AGENTS.md`. Within a group, violations sort by file path, then line, then rule ID.
 
 **Example human-mode output**:
 
@@ -232,10 +234,9 @@ $ docent lint
 ✗ docs/adrs/adr-011-xxx.md         [adr-missing-required-sections] Missing Non-goals section
 ✗ docs/adrs/adr-005-xxx.md         [superseded-backlink-consistency] Superseded by adr-011, but status is not marked Superseded
 ✗ AGENTS.md:23                     [agents-adr-reference-valid] References adr-002, but that ADR's status is Deprecated
-✗ src/billing/invoice.ts:42        [context-avoid-term-violation] Uses "Purchase" (CONTEXT.md marks this Avoid — use "Order")
 ⚠ docs/rfcs/rfc-004-xxx.md         [rfc-stale-draft] Status has been Draft for over 60 days without an update
 
-4 errors, 1 warning
+3 errors, 1 warning
 ```
 
 ### 4.3 `docent status`
@@ -253,20 +254,17 @@ ADR                 12 Accepted · 2 Superseded
 
 Architecture overview   1 module-table mismatch against the code directory
 
-Terminology (CONTEXT)   2 Avoid-term violations
-
-Violations by rule      3 total
-  context-avoid-term-violation           2
+Violations by rule      1 total
   rfc-stale-draft                        1
 
-Last lint run        2 errors, 1 warning (2026-08-01 09:15)
+Last lint run        3 errors, 1 warning (2026-08-01 09:15)
 ```
 
 If `docent lint` has never been run, the last line reads `docent lint has never been run`.
 
-After the `Terminology (CONTEXT)` line, `docent status` prints a `Violations by rule` breakdown: a total plus one line per lint rule that has at least one violation, sorted by count descending.
+After the architecture line, `docent status` prints a `Violations by rule` breakdown: a total plus one line per lint rule that has at least one violation, sorted by count descending.
 
-Each line distinguishes a source that exists from one that does not. If the source is missing, the line reports `not found (<path>)` instead of a zero count — `docs/IDEAS.md` (file), `docs/rfcs` (directory), `docs/adrs` (directory), `docs/architecture.md` (file), and `CONTEXT.md` (file) respectively. A present-but-empty directory still reports a zero count, never "not found".
+Each line distinguishes a source that exists from one that does not. If the source is missing, the line reports `not found (<path>)` instead of a zero count — `docs/IDEAS.md` (file), `docs/rfcs` (directory), `docs/adrs` (directory), and `docs/architecture.md` (file). A present-but-empty directory still reports a zero count, never "not found".
 
 ## 5. Lint rule catalog
 
@@ -359,12 +357,6 @@ The following rules correspond to the automatable group in the spec document's "
 - **--fix**: not supported.
 - Note: v1 does not judge "how long counts as stale" — it's purely a summary list, left for a human to act on.
 
-### `context-avoid-term-violation`
-- **Description**: does any code file (excluding `.md` files) contain a word from a CONTEXT.md `_Avoid_` list? The scanned set respects the project's own `.gitignore` — and only `.gitignore`, never `.git/info/exclude` or the global `core.excludesFile`, since those are machine-local state that would make results differ between environments. Hidden files and directories are never scanned. The directories `.git`, `target`, `docs`, `node_modules`, and `fixtures` are always excluded as a hardcoded fallback; outside a git repository the scan degrades to that fallback list alone.
-- **Algorithm**: parse every CONTEXT.md (root plus each module), aggregate the Avoid word list, and full-text scan code files (word-boundary matching, to avoid a false positive where "Purchase" matches inside a compound word like "PurchaseOrder" — whether finer-grained semantic matching is worth the implementation cost is left to the Agent; v1 allows simple whole-word matching).
-- **Severity**: error
-- **--fix**: not supported.
-
 ### `rfc-stale-draft`
 - **Description**: an RFC with `status: Draft` whose `updated` field (or `created`, if `updated` is absent) is more than 60 days old.
 - **Severity**: warning
@@ -422,7 +414,7 @@ Outside these three categories, **no rule supports** `--fix`, even when an opera
 }
 ```
 
-The `line` field is a number when the location can be pinpointed to a specific line (e.g., `context-avoid-term-violation`); rules that can't be tied to a specific line (e.g., index desync) use `null`. Once published, this JSON structure is treated as a stable interface — future changes may only add optional fields, never remove or rename existing ones, since Agents will rely on this structure to drive their automation loop.
+The `line` field is a number when the location can be pinpointed to a specific line; rules that can't be tied to a specific line (e.g., index desync or terminology conflicts) use `null`. Once published, this JSON structure is treated as a stable interface — future changes may only add optional fields, never remove or rename existing ones, since Agents will rely on this structure to drive their automation loop.
 
 ## 8. Testing recommendations
 
@@ -445,7 +437,7 @@ Don't implement every rule in one pass. Work through the phases below in order; 
 **P1**
 - `docent lint --json`
 - `docent lint --fix` (scope defined in Section 6)
-- Add the remaining rules: `agents-adr-reference-valid`, `amendment-backlink-consistency`, `architecture-module-sync`, `context-avoid-term-violation`, `adr-pending-implementation-report`, `rfc-stale-draft`
+- Add the remaining rules: `agents-adr-reference-valid`, `amendment-backlink-consistency`, `architecture-module-sync`, `adr-pending-implementation-report`, `rfc-stale-draft`
 
 **P2 (as needed, may be deferred)**
 - `design-doc-existence`

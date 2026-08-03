@@ -80,16 +80,10 @@ pub fn run() -> i32 {
     }
 
     let arch_missing = not_found(&project.architecture());
-    let context_missing = not_found(&project.context());
-
     let violations = rules::run_all(&project);
     let arch_count = violations
         .iter()
         .filter(|v| v.rule == "architecture-module-sync")
-        .count();
-    let term_count = violations
-        .iter()
-        .filter(|v| v.rule == "context-avoid-term-violation")
         .count();
 
     let ideas_value = if ideas_missing {
@@ -125,20 +119,6 @@ pub fn run() -> i32 {
             }
         )
     };
-    let term_value = if context_missing {
-        "not found (CONTEXT.md)".to_string()
-    } else {
-        format!(
-            "{} Avoid-term {}",
-            term_count,
-            if term_count == 1 {
-                "violation"
-            } else {
-                "violations"
-            }
-        )
-    };
-
     println!("{}", line("docs/IDEAS.md", &ideas_value));
     println!();
     println!("{}", line("RFC", &rfc_value));
@@ -161,9 +141,6 @@ pub fn run() -> i32 {
     }
     println!();
     println!("{}", line("Architecture overview", &arch_value));
-    println!();
-    println!("{}", line("Terminology (CONTEXT)", &term_value));
-
     let mut rule_counts: std::collections::BTreeMap<&str, usize> =
         std::collections::BTreeMap::new();
     for v in &violations {
