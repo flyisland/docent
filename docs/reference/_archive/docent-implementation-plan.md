@@ -1,10 +1,17 @@
 ---
-description: 'The execution order for implementing docent, used alongside the Software Project Design and Documentation Management Specification and the docent Implementation Spec'
-status: draft
+description: 'Historical execution order for docent v1; archived after the v1 delivery plan was completed'
+status: archived
+archived: 2026-08-03
+archive_reason: 'v1 delivery is complete; current behavior is governed by the implementation spec and ADR-001'
 type: implementation-plan
 ---
 
 # docent Implementation Plan
+
+> **Archived 2026-08-03.** This plan guided delivery of docent v1 and is kept
+> as historical context only. Do not use it to direct new work; use the
+> [implementation spec](../docent-implementation-spec.md), ADRs, and the
+> current code instead.
 
 This document gives the implementation order, with a clear Definition of Done for each phase. Work through it in order — **don't skip a phase and jump ahead** — especially Phase 0, which is the foundation every later phase's self-verification depends on.
 

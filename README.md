@@ -55,6 +55,7 @@ It creates:
 | `docs/rfcs/README.md` | RFC index table |
 | `docs/adrs/README.md` | ADR index table |
 | `docs/architecture.md` | Architecture overview with module breakdown |
+| `docs/README.md` | Self-contained documentation lifecycle and archiving guide |
 | `AGENTS.md` | Coding-agent constraints, wired to the docs |
 | `docs/.templates/rfc.md` | RFC front matter + section template |
 | `docs/.templates/adr.md` | ADR front matter + section template |

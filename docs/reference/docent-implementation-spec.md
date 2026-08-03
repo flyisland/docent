@@ -170,6 +170,7 @@ $ docent init
 ✓ created docs/rfcs/README.md
 ✓ created docs/adrs/README.md
 ✓ created docs/architecture.md
+✓ created docs/README.md
 ✓ created AGENTS.md
 ✓ created docs/.templates/rfc.md
 ✓ created docs/.templates/adr.md
@@ -182,6 +183,7 @@ $ docent init
 **Template content requirements**:
 - `docs/.templates/adr.md` must pre-fill the four-section heading skeleton from Section 3.3 and the front matter skeleton (fields from Section 3.2, values left blank or as placeholders).
 - `docs/.templates/rfc.md` and `docs/.templates/context.md` should likewise pre-fill a skeleton per the schemas in Sections 3.1 and 3.4.
+- `docs/README.md` must be self-contained: it defines the project documentation lifecycle and archiving rule without depending on an external reference document. It must cover the roles of `IDEAS.md`, RFCs, ADRs, the architecture overview, module design documents, `AGENTS.md`, and `CONTEXT.md`.
 - The `AGENTS.md` template must include this fixed reminder: "Before creating or editing any RFC, ADR, or CONTEXT.md, read the corresponding template under `docs/.templates/` first. After finishing, run `docent lint` until it reports no errors."
 
 ### 4.2 `docent lint`

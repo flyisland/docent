@@ -202,13 +202,14 @@ fn temp_dir(tag: &str) -> PathBuf {
 fn init_creates_template_files_and_skips_existing() {
     let dir = temp_dir("init");
     fs::create_dir_all(&dir).unwrap();
-    let (code, stdout) = docent(&dir, &["init"]);
+    let (code, _stdout) = docent(&dir, &["init"]);
     assert_eq!(code, 0);
     for rel in [
         "IDEAS.md",
         "docs/rfcs/README.md",
         "docs/adrs/README.md",
         "docs/architecture.md",
+        "docs/README.md",
         "AGENTS.md",
         "docs/.templates/rfc.md",
         "docs/.templates/adr.md",
@@ -226,12 +227,27 @@ fn init_creates_template_files_and_skips_existing() {
     let agents = fs::read_to_string(dir.join("AGENTS.md")).unwrap();
     assert!(agents.contains("docs/.templates/"));
 
+    let docs_guide_path = dir.join("docs/README.md");
+    let docs_guide = fs::read_to_string(&docs_guide_path).unwrap();
+    assert!(docs_guide.contains("## Documentation lifecycle"));
+    assert!(docs_guide.contains("## Archiving"));
+    assert!(
+        !docs_guide.contains("Software Project Design and Documentation Management Specification"),
+        "the generated guide must be self-contained"
+    );
+
+    fs::write(&docs_guide_path, "# Project-specific documentation guide\n").unwrap();
     let (code, stdout) = docent(&dir, &["init"]);
     assert_eq!(code, 0);
     assert!(
         stdout.contains("skipped"),
         "second init should skip existing files: {}",
         stdout
+    );
+    assert_eq!(
+        fs::read_to_string(&docs_guide_path).unwrap(),
+        "# Project-specific documentation guide\n",
+        "init must not overwrite an existing documentation guide"
     );
     let _ = fs::remove_dir_all(&dir);
 }
