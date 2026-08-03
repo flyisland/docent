@@ -53,7 +53,7 @@ fn json_output_has_required_structure() {
     assert!(json.get("errors").is_some_and(|v| v.is_array()));
     assert!(json.get("warnings").is_some_and(|v| v.is_array()));
     assert!(json.get("summary").is_some());
-    assert_eq!(json["errors"][0]["rule"].as_str().is_some(), true);
+    assert!(json["errors"][0]["rule"].as_str().is_some());
     let line = &json["errors"][0]["line"];
     assert!(
         line.is_null() || line.is_number(),
@@ -178,6 +178,28 @@ fn lint_reports_duplicate_rfc_numbers() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+#[test]
+fn lint_requires_an_explicit_no_adr_outcome_for_accepted_rfcs() {
+    let dir = temp_dir("accepted-rfc-outcome");
+    copy_tree(&fixture("valid-project"), &dir);
+    let path = dir.join("docs/rfcs/rfc-001-cache-strategy.md");
+    let without_adr = fs::read_to_string(&path)
+        .unwrap()
+        .replace("related_adr: adr-001", "related_adr: null");
+    fs::write(&path, without_adr).unwrap();
+    let json = lint_json(&dir);
+    assert_eq!(count_by_rule(&json, "errors", "rfc-accepted-outcome"), 1);
+
+    let with_outcome = format!(
+        "{}\n\n## Outcome\n\nADR not required: bounded feature contract.\n",
+        fs::read_to_string(&path).unwrap()
+    );
+    fs::write(&path, with_outcome).unwrap();
+    let json = lint_json(&dir);
+    assert_eq!(count_by_rule(&json, "errors", "rfc-accepted-outcome"), 0);
+    let _ = fs::remove_dir_all(&dir);
+}
+
 fn copy_tree(src: &Path, dst: &Path) {
     fs::create_dir_all(dst).unwrap();
     for entry in fs::read_dir(src).unwrap() {
@@ -229,14 +251,18 @@ fn init_creates_template_files_and_skips_existing() {
 
     let docs_guide_path = dir.join("docs/README.md");
     let docs_guide = fs::read_to_string(&docs_guide_path).unwrap();
-    assert!(docs_guide.contains("## Documentation lifecycle"));
-    assert!(docs_guide.contains("## Archiving"));
-    assert!(
-        !docs_guide.contains("Software Project Design and Documentation Management Specification"),
-        "the generated guide must be self-contained"
-    );
+    assert!(docs_guide.contains("## Core governance chain"));
+    assert!(docs_guide.contains("## Current state, archives, and deletion"));
+    assert!(docs_guide.contains("managed_by: docent"));
+    assert!(docs_guide.contains("policy_version: 2"));
+    assert!(docs_guide.contains("file-backed module"));
+    assert!(docs_guide.contains("actual state"));
+    assert!(docs_guide.contains("ADR not required"));
+    assert!(docs_guide.contains("docent docs show"));
 
     fs::write(&docs_guide_path, "# Project-specific documentation guide\n").unwrap();
+    let agents_path = dir.join("AGENTS.md");
+    fs::write(&agents_path, "# Project-specific Agent rules\n").unwrap();
     let (code, stdout) = docent(&dir, &["init"]);
     assert_eq!(code, 0);
     assert!(
@@ -249,6 +275,40 @@ fn init_creates_template_files_and_skips_existing() {
         "# Project-specific documentation guide\n",
         "init must not overwrite an existing documentation guide"
     );
+    assert_eq!(
+        fs::read_to_string(&agents_path).unwrap(),
+        "# Project-specific Agent rules\n",
+        "init must not overwrite existing Agent rules"
+    );
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
+fn docs_show_and_export_are_identical_and_export_never_overwrites() {
+    let dir = temp_dir("docs-export");
+    fs::create_dir_all(&dir).unwrap();
+    let (show_code, shown) = docent(&dir, &["docs", "show"]);
+    assert_eq!(show_code, 0);
+    assert!(shown.contains("Canonical source: Docent bundled specification"));
+    assert!(shown.contains("policy version: 2"));
+    assert!(shown.contains("# Software Project Design and Documentation Management Specification"));
+
+    let export_dir = dir.join("nested/reference");
+    let destination = export_dir.to_string_lossy().into_owned();
+    let (export_code, _) = docent(&dir, &["docs", "export", &destination]);
+    assert_eq!(export_code, 0);
+    let exported = export_dir.join("software-project-documentation-specification.md");
+    assert_eq!(fs::read_to_string(&exported).unwrap(), shown);
+
+    let extensionless_file = dir.join("policy");
+    let extensionless_file_arg = extensionless_file.to_string_lossy().into_owned();
+    let (file_code, _) = docent(&dir, &["docs", "export", "--file", &extensionless_file_arg]);
+    assert_eq!(file_code, 0);
+    assert_eq!(fs::read_to_string(&extensionless_file).unwrap(), shown);
+
+    let (second_code, _) = docent(&dir, &["docs", "export", &destination]);
+    assert_eq!(second_code, 1);
+    assert_eq!(fs::read_to_string(&exported).unwrap(), shown);
     let _ = fs::remove_dir_all(&dir);
 }
 

@@ -21,7 +21,9 @@
 ## Documentation maintenance rules
 
 - Strictly follow the documentation lifecycle defined in docs/README.md.
-- When updating an architectural decision, only the module README may be edited — erasing the body of an ADR is prohibited.
+- Major or directional architectural-decision changes require a new ADR and
+  supersession links; historical ADR bodies are not erased. Living detailed
+  designs are overwritten to match current intended behavior.
 
 ## Rule maintenance
 

@@ -34,6 +34,10 @@ docent lint --fix
 
 # 4. Summarize the current state of the documentation.
 docent status
+
+# 5. Read or explicitly export this build's complete documentation policy.
+docent docs show
+docent docs export docs/reference/
 ```
 
 All commands operate on the current working directory — run them from the
@@ -55,11 +59,29 @@ It creates:
 | `docs/rfcs/README.md` | RFC index table |
 | `docs/adrs/README.md` | ADR index table |
 | `docs/architecture.md` | Architecture overview with module breakdown |
-| `docs/README.md` | Self-contained documentation lifecycle and archiving guide |
+| `docs/README.md` | Versioned, self-contained operational documentation policy |
 | `AGENTS.md` | Coding-agent constraints, wired to the docs |
 | `docs/.templates/rfc.md` | RFC front matter + section template |
 | `docs/.templates/adr.md` | ADR front matter + section template |
 | `docs/.templates/context.md` | CONTEXT.md term template |
+
+The generated policy is project-owned and `init` never overwrites it. It
+contains the documentation lifecycle, placement, archive, and conflict rules;
+it is not a copy of Docent's complete canonical specification.
+
+### `docent docs show` and `docent docs export`
+
+`docent docs show` writes the complete canonical Software Project Design and
+Documentation Management Specification bundled into the installed binary to
+standard output. `docent docs export <directory-or-file>` explicitly writes
+the same text to a new file. A directory receives
+`software-project-documentation-specification.md`; missing parent directories
+are created. Export never overwrites an existing file and ordinary `init`
+never exports the specification. The displayed/exported content identifies the
+Docent build, policy version, and its canonical-source role.
+
+An extensionless destination is treated as a directory; use `--file` to export
+to an extensionless filename explicitly.
 
 ### `docent lint`
 
@@ -112,6 +134,7 @@ Each rule has a unique ID, a severity (`error` or `warning`), and an optional
 | `adr-missing-required-sections` | An ADR is missing a required section (Context / Decision / Non-goals / Consequences) | error | — |
 | `adr-index-sync` | `docs/adrs/README.md` table disagrees with the ADR front matter | error | ✓ |
 | `rfc-index-sync` | `docs/rfcs/README.md` table disagrees with the RFC front matter | error | ✓ |
+| `rfc-accepted-outcome` | An Accepted RFC without a linked ADR lacks an explicit no-ADR reason | error | — |
 | `superseded-backlink-consistency` | A `supersedes` reference has no matching `superseded_by` backlink | error | ✓ |
 | `agents-adr-reference-valid` | `AGENTS.md` references an ADR whose status makes that reference invalid | error | — |
 | `required-source-missing` | A required source (`docs/rfcs`, `docs/adrs`, `docs/architecture.md`, `AGENTS.md`) does not exist | warning | — |

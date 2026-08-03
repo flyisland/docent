@@ -9,6 +9,7 @@ pub mod document_id_unique;
 pub mod fix;
 pub mod frontmatter_schema;
 pub mod required_source;
+pub mod rfc_accepted_outcome;
 pub mod rfc_index_sync;
 pub mod rfc_stale;
 pub mod superseded_backlink;
@@ -27,6 +28,7 @@ pub fn run_all(project: &Project) -> Vec<Violation> {
         Box::new(document_id_format::DocumentIdFormatRule),
         Box::new(document_id_unique::DocumentIdUniqueRule),
         Box::new(rfc_index_sync::RfcIndexSyncRule),
+        Box::new(rfc_accepted_outcome::RfcAcceptedOutcomeRule),
         Box::new(rfc_stale::RfcStaleDraftRule),
         Box::new(adr_index_sync::AdrIndexSyncRule),
         Box::new(adr_missing_sections::AdrMissingSectionsRule),

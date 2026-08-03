@@ -52,3 +52,8 @@ The current rule already parses the architecture table, but compares the `Module
 Remove the current reverse check that reports every inferred directory not listed in the architecture table. Retain validation for architecture-table entries, but validate an explicitly declared relative `Path` rather than infer a root-level path from the module name. `Module` is a stable logical name, not a filesystem path.
 
 Do not implement automatic module discovery in this change. Defer it until a subsequent RFC defines an opt-in discovery contract. `Detailed design` links may inform that future proposal but are not a source of module-directory truth.
+
+## Outcome
+
+ADR not required: this RFC refines Docent's bounded validation behavior without
+making a separate durable architectural trade-off.

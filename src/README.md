@@ -4,9 +4,10 @@
 module layout is:
 
 - `src/main.rs` — entry point, calls into `cli`.
-- `src/cli.rs` — `clap` argument definitions (`init`, `lint`, `status`).
-- `src/commands/` — one file per subcommand; `lint.rs` is the only one that
-  executes rules.
+- `src/cli.rs` — `clap` argument definitions (`init`, `lint`, `status`,
+  `docs`).
+- `src/commands/` — one file per subcommand; `lint.rs` executes rules and
+  `docs.rs` owns compile-time bundled-spec rendering plus create-new export.
 - `src/model/` — project discovery and parsing of the documents docent reads
   (ADR / RFC front matter, indexes, `CONTEXT.md`, `docs/architecture.md`,
   `AGENTS.md`).

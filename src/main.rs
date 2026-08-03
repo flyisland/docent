@@ -12,6 +12,7 @@ fn main() {
         cli::Command::Init => commands::init::run(),
         cli::Command::Lint(args) => commands::lint::run(args),
         cli::Command::Status => commands::status::run(),
+        cli::Command::Docs(args) => commands::docs::run(args),
     };
     std::process::exit(code);
 }

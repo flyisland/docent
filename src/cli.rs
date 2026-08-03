@@ -19,6 +19,28 @@ pub enum Command {
     Lint(LintArgs),
     /// Summarize the current state of the project's documentation
     Status,
+    /// Read or explicitly export Docent's bundled canonical documentation specification
+    Docs(DocsArgs),
+}
+
+#[derive(Args)]
+pub struct DocsArgs {
+    #[command(subcommand)]
+    pub command: DocsCommand,
+}
+
+#[derive(Subcommand)]
+pub enum DocsCommand {
+    /// Write the complete bundled canonical specification to standard output
+    Show,
+    /// Export the complete bundled canonical specification without overwriting a file
+    Export {
+        /// Destination file (or a directory, which receives software-project-documentation-specification.md)
+        destination: std::path::PathBuf,
+        /// Treat an extensionless destination as a file rather than a directory
+        #[arg(long)]
+        file: bool,
+    },
 }
 
 #[derive(Args)]

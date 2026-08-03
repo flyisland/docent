@@ -12,3 +12,7 @@ related_adr: null
 ## Motivation
 
 Repeated expensive lookups hurt latency.
+
+## Outcome
+
+ADR not required: fixture intentionally tests other validation failures.

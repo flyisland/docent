@@ -16,3 +16,8 @@ related_adr:
 ## Technical feasibility analysis
 
 ## Decision
+
+## Outcome
+
+For an Accepted RFC, either link the durable ADR in `related_adr`, or state
+`ADR not required: <short reason>`.

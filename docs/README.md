@@ -1,50 +1,73 @@
-# Documentation Guide
+---
+managed_by: docent
+policy_version: 2
+generated_by: docent 0.1.0
+---
 
-This directory follows the lifecycle defined in the [Software Project Design
-and Documentation Management Specification](reference/software-project-documentation-specification.md).
-The specification is the project-level source for lifecycle principles; this
-guide records how that lifecycle is applied in docent.
+# Documentation Policy
 
-## Documentation lifecycle
+Docent owns the full canonical specification in
+`reference/software-project-documentation-specification.md`. This project
+policy is the operational interface: it is self-contained for daily work and
+does not replace the canonical source. The installed build exposes the full
+text through `docent docs show` and `docent docs export <directory-or-file>`.
 
-1. Capture an unformed idea in `IDEAS.md`. It is a one-way funnel: once an
-   idea has a destination, remove it from that file.
-2. Record proposals and their discussion in `rfcs/`. Close each RFC as
-   `Accepted` or `Rejected` and retain it as history.
-3. Record accepted architectural decisions in `adrs/`. ADR bodies are
-   immutable; amend a decision with a new ADR and mark the older one
-   `Superseded` or `Deprecated` as appropriate.
-4. Keep the current module map in `architecture.md` and implementation
-   details in the relevant module `README.md` or `{name}.design.md`.
-5. Keep only durable, cross-cutting constraints in the root `AGENTS.md`.
-   Canonical terminology belongs in the nearest applicable `CONTEXT.md`.
+## Governance and ownership
 
-Run `docent lint` after changing documentation that it validates.
+`IDEAS.md` is one-way intake; remove an idea once it has a destination. RFCs
+in `rfcs/` are proposals and seal as Accepted or Rejected. An Accepted RFC
+links its durable ADR or records `ADR not required` with a short reason. ADRs
+in `adrs/` are durable decisions. A major/directional change gets a new ADR
+and supersession links; never erase its history. `architecture.md` is the
+living module map, and each module README or `.design.md` is living current
+design that may be overwritten to match intended behavior. `AGENTS.md` carries
+only durable cross-cutting guardrails; `CONTEXT.md` owns canonical terminology.
+
+Run `docent lint` after changing documentation it validates.
+
+## Module and dependency placement
+
+The architecture table declares each logical `Module` and project-relative
+`Path`. A path can name a file or directory; do not infer modules from
+top-level directories or detailed-design links. Directory modules use
+`{module}/README.md`; file-backed modules use adjacent `{stem}.design.md`.
+Use module README plus mechanism sidecars when appropriate. Split mixed
+documents by ownership. `docs/design/` is only for a genuinely cross-cutting
+current contract with no honest owner, linked from every affected module path.
+
+Dependency contracts belong beside the Adapter/wrapper that contains the
+dependency. Manifests, lockfiles, and patches own exact pins, hashes, and patch
+identities. The owner design holds non-obvious behavior and upgrade contracts;
+costly evidence may live in `research/` and be linked from the design.
+`docs/dependencies/` requires multiple equal owners and no controlling seam.
+
+## Parallel artifacts, history, and conflict handling
+
+`guide/` is user guidance; `research/` is reproducible evidence; `agents/` is
+process instruction; PRD/issue storage such as optional `.scratch/` is delivery
+planning; runbooks are operational procedure. Their owner updates them for the
+relevant audience and retires them when replaced or obsolete.
+
+Code is evidence of actual state. Accepted ADRs, maintained contracts, and
+human-confirmed acceptance criteria are evidence of intended state. Report
+conflicts for human resolution; do not silently rewrite either authority.
+
+Archive completed plans, roadmaps, agendas, and legacy inputs in
+`docs/archive/` or the nearest `_archive/`, recording status, date, reason, and
+current replacement/authority where available. Active documents cannot depend
+on archives. Closed RFCs and Superseded/Deprecated ADRs stay in their own
+indexes; arbitrary history does not belong in `adrs/_archive/`. Preserve unique
+rationale or costly evidence; delete pure duplication when Git history is
+enough.
+
+Living design is current, not backlog or phase history. Put unclaimed future
+work in `IDEAS.md`, claimed work in an RFC or PRD/issue, and valuable completed
+history in an archive. A deliberate current Non-goal may link to the real
+owner of related planned work.
 
 ## Reference documents
-
-Files in `reference/` are supporting material, not an alternative decision
-record. A reference document may be current only when another maintained
-document explicitly identifies it as authoritative for its subject.
 
 | Document | Role | Status |
 |---|---|---|
 | [docent Implementation Spec](reference/docent-implementation-spec.md) | Current behavioral contract for the CLI | Active |
-| [Software Project Design and Documentation Management Specification](reference/software-project-documentation-specification.md) | Lifecycle and documentation-management principles | Active |
-
-## Archiving
-
-Do not delete a document merely because its active work is complete or its
-content no longer describes the current system. Move it to the closest
-relevant `_archive/` directory and add a short header stating its status,
-archive date, and reason. Archived documents are historical evidence, not
-current authority; maintained documents must not rely on them for an active
-contract or decision.
-
-Completed implementation plans are archived once their outcomes have been
-captured by the implementation, its tests, and the maintained contract or
-ADRs. They should not be updated to direct subsequent feature work.
-
-| Document | Archived | Reason |
-|---|---|---|
-| [docent Implementation Plan](reference/_archive/docent-implementation-plan.md) | 2026-08-03 | v1 delivery plan completed; the implementation spec and ADR-001 remain authoritative |
+| [Software Project Design and Documentation Management Specification](reference/software-project-documentation-specification.md) | Canonical lifecycle specification | Active |

@@ -183,8 +183,21 @@ $ docent init
 **Template content requirements**:
 - `docs/.templates/adr.md` must pre-fill the four-section heading skeleton from Section 3.3 and the front matter skeleton (fields from Section 3.2, values left blank or as placeholders).
 - `docs/.templates/rfc.md` and `docs/.templates/context.md` should likewise pre-fill a skeleton per the schemas in Sections 3.1 and 3.4.
-- `docs/README.md` must be self-contained: it defines the project documentation lifecycle and archiving rule without depending on an external reference document. It must cover the roles of `IDEAS.md`, RFCs, ADRs, the architecture overview, module design documents, `AGENTS.md`, and `CONTEXT.md`.
+- `docs/README.md` must be a self-contained, generated, project-level operational policy with stable `managed_by`, `policy_version`, and `generated_by` metadata. It covers authority and updates for Idea/RFC/ADR/architecture/detailed design/AGENTS, file- and directory-backed placement, dependency contracts, parallel guide/research/execution/archive categories, archive/deletion criteria, actual-versus-intended conflict handling, Accepted RFC ADR-or-no-ADR outcomes, living-design backlog/history separation, `docent lint`, and access to the complete bundled policy. `init` never rewrites it.
 - The `AGENTS.md` template must include this fixed reminder: "Before creating or editing any RFC, ADR, or CONTEXT.md, read the corresponding template under `docs/.templates/` first. After finishing, run `docent lint` until it reports no errors."
+
+### 4.2 `docent docs`
+
+`docent docs show` writes the complete canonical specification bundled at
+compile time to stdout. `docent docs export <directory-or-file>` writes the
+same rendered content to a new file, creating parent directories when needed.
+For a directory destination, use
+`software-project-documentation-specification.md`. Export uses create-new
+semantics and fails rather than overwriting an existing file. The rendered
+content identifies the canonical source role, tool version, and policy version.
+An extensionless destination is a directory unless the user passes `--file`.
+`init` does not invoke either behavior. No `path` command is exposed because a
+standalone binary has no reliable readable source path.
 
 ### 4.2 `docent lint`
 
@@ -272,6 +285,14 @@ The following rules correspond to the automatable group in the spec document's "
 - **Algorithm**: scan `docs/rfcs/*.md` (excluding README.md), extract front matter, and diff id/title/status/date/related_adr line-by-line against the index table.
 - **Severity**: error
 - **--fix**: supported — regenerate the index table directly from front matter.
+
+### `rfc-accepted-outcome`
+- **Description**: an Accepted RFC with no `related_adr` must record the
+  required `ADR not required: <reason>` outcome.
+- **Algorithm**: parse Accepted RFC front matter; when `related_adr` is absent,
+  require that exact outcome prefix in the body.
+- **Severity**: error
+- **--fix**: not supported (the reason requires human judgment).
 
 ### `adr-index-sync`
 - Same as `rfc-index-sync`, applied to ADRs instead.
