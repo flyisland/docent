@@ -1,0 +1,327 @@
+docs/adrs/adr-001-initial-architecture.md
+  s_92bd3d56e83468::t_82116adc10f33d 4,9
+  s_92bd3d56e83468::t_203afeb793f30d 7
+docs/README.md
+  s_92bd3d56e83468::t_950b65d95db43f 17,64
+docs/adrs/README.md
+  s_92bd3d56e83468::t_82116adc10f33d 5-6
+src/model/mod.rs
+  s_92bd3d56e83468::t_950b65d95db43f 96
+tests/cli.rs
+  s_92bd3d56e83468::t_6fed9e10a5c1da 242-245
+  s_92bd3d56e83468::t_950b65d95db43f 105,230,401
+docs/IDEAS.md
+  s_92bd3d56e83468::t_48f32472207547 3
+docs/reference/docent-implementation-spec.md
+  s_92bd3d56e83468::t_48f32472207547 84,169,178,237,259
+docs/templates/project-docs-readme.md
+  s_92bd3d56e83468::t_950b65d95db43f 19,96
+docs/reference/software-project-documentation-specification.md
+  s_92bd3d56e83468::t_950b65d95db43f 19,31,33,120
+README.md
+  s_92bd3d56e83468::t_950b65d95db43f 58,118,221-222
+docs/adrs/adr-002-documentation-root-layout.md
+  s_92bd3d56e83468::t_82116adc10f33d 1-41
+src/commands/init.rs
+  s_92bd3d56e83468::t_950b65d95db43f 25
+src/rules/mod.rs
+  s_92bd3d56e83468::t_950b65d95db43f 58
+src/commands/status.rs
+  s_92bd3d56e83468::t_950b65d95db43f 96,142
+---
+{
+  "schema_version": "authorship/3.1.0",
+  "tlab_version": "0.8.2",
+  "base_commit_sha": "3656f90ce1b484bf49b7a40d4055d184760dfdae",
+  "prompts": {},
+  "sessions": {
+    "s_92bd3d56e83468": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fc547-dc9d-7a61-bf83-c0685a948af4",
+        "model": "codex-auto-review"
+      },
+      "human_author": "flyisland <island.chen@outlook.com>",
+      "custom_attributes": {
+        "tlab.token_usage.cache_creation_tokens": "0",
+        "tlab.session_started_at": "2026-08-03T02:34:01Z",
+        "tlab.token_usage.input_tokens": "117541",
+        "tlab.token_usage.cache_read_tokens": "3768576",
+        "tlab.token_usage.output_tokens": "28031"
+      }
+    }
+  },
+  "changes": [
+    {
+      "new_path": "docs/adrs/adr-002-documentation-root-layout.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 41
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "IDEAS.md",
+      "new_path": "docs/IDEAS.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 1
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "README.md",
+      "new_path": "README.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 4
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 4
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/README.md",
+      "new_path": "docs/README.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 2
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 2
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/adrs/README.md",
+      "new_path": "docs/adrs/README.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 2
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/adrs/adr-001-initial-architecture.md",
+      "new_path": "docs/adrs/adr-001-initial-architecture.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 3
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 3
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/reference/docent-implementation-spec.md",
+      "new_path": "docs/reference/docent-implementation-spec.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 5
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 5
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/reference/software-project-documentation-specification.md",
+      "new_path": "docs/reference/software-project-documentation-specification.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 4
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 4
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/templates/project-docs-readme.md",
+      "new_path": "docs/templates/project-docs-readme.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 2
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 2
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/commands/init.rs",
+      "new_path": "src/commands/init.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 1
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/commands/status.rs",
+      "new_path": "src/commands/status.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 2
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 2
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/model/mod.rs",
+      "new_path": "src/model/mod.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 1
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/rules/mod.rs",
+      "new_path": "src/rules/mod.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 1
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "tests/cli.rs",
+      "new_path": "tests/cli.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 7
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_92bd3d56e83468",
+            "lines": 3
+          }
+        ]
+      }
+    }
+  ]
+}
