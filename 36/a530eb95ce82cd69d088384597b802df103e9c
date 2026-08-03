@@ -1,0 +1,261 @@
+tests/cli.rs
+  s_4be32d884c4f65::t_52b1a7d5261587 547-548
+  s_4be32d884c4f65::t_5fa3692d8d1856 550-554,557-558
+  s_4be32d884c4f65::t_a619b746e455a5 69,437
+docs/reference/docent-implementation-spec.md
+  s_4be32d884c4f65::t_5ad15aa02417e5 417
+  s_4be32d884c4f65::t_f749fd14f1ba61 157-159,228,239,257,260,265,267,440
+README.md
+  s_4be32d884c4f65::t_f749fd14f1ba61 99-100,113-114,117,209-210
+  s_4be32d884c4f65::t_bdceb1efab7d4f 166
+docs/adrs/README.md
+  s_4be32d884c4f65::t_168138447a2766 7
+docs/adrs/adr-003-terminology-linting.md
+  s_4be32d884c4f65::t_8a2cfff9244555 1-2,4-16,18-25,29-31,36-47
+  s_4be32d884c4f65::t_168138447a2766 3,17,26-28,32-35,48-50
+src/README.md
+  s_4be32d884c4f65::t_6770dfb5e32d9c 14
+  s_4be32d884c4f65::t_f749fd14f1ba61 12
+docs/adrs/adr-001-initial-architecture.md
+  s_4be32d884c4f65::t_8a2cfff9244555 11
+---
+{
+  "schema_version": "authorship/3.1.0",
+  "tlab_version": "0.8.2",
+  "base_commit_sha": "36a530eb95ce82cd69d088384597b802df103e9c",
+  "prompts": {},
+  "sessions": {
+    "s_4be32d884c4f65": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fc6c4-9839-7411-a840-d402c126ef53",
+        "model": "codex-auto-review"
+      },
+      "human_author": "flyisland <island.chen@outlook.com>",
+      "custom_attributes": {
+        "tlab.token_usage.cache_read_tokens": "2522368",
+        "tlab.token_usage.input_tokens": "113166",
+        "tlab.token_usage.output_tokens": "19041",
+        "tlab.session_started_at": "2026-08-03T08:41:43Z",
+        "tlab.token_usage.cache_creation_tokens": "0"
+      }
+    }
+  },
+  "changes": [
+    {
+      "new_path": "docs/adrs/adr-003-terminology-linting.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 50
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "Cargo.lock",
+      "new_path": "Cargo.lock",
+      "deletions": {
+        "human": 99
+      }
+    },
+    {
+      "old_path": "Cargo.toml",
+      "new_path": "Cargo.toml",
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "README.md",
+      "new_path": "README.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 8
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 23
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/adrs/README.md",
+      "new_path": "docs/adrs/README.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/adrs/adr-001-initial-architecture.md",
+      "new_path": "docs/adrs/adr-001-initial-architecture.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 1
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/reference/docent-implementation-spec.md",
+      "new_path": "docs/reference/docent-implementation-spec.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 11
+          }
+        ]
+      },
+      "deletions": {
+        "human": 1,
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 18
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/README.md",
+      "new_path": "src/README.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 2
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 24
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/commands/status.rs",
+      "new_path": "src/commands/status.rs",
+      "deletions": {
+        "human": 4,
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 19
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/model/context.rs",
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 84
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/model/mod.rs",
+      "new_path": "src/model/mod.rs",
+      "deletions": {
+        "human": 2,
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 3
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/rules/context_avoid_term.rs",
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 130
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/rules/mod.rs",
+      "new_path": "src/rules/mod.rs",
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 3
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/rules/walk.rs",
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 144
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "tests/cli.rs",
+      "new_path": "tests/cli.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 11
+          }
+        ]
+      },
+      "deletions": {
+        "human": 7,
+        "ai": [
+          {
+            "session_id": "s_4be32d884c4f65",
+            "lines": 44
+          }
+        ]
+      }
+    }
+  ]
+}
