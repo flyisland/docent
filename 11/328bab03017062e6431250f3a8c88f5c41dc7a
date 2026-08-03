@@ -1,0 +1,110 @@
+tests/cli.rs
+  s_fc9be6e2bd8312::t_c1692ebbf51cc7 212,230-239,247-251
+  s_fc9be6e2bd8312::t_d9616303af5d17 205
+README.md
+  s_fc9be6e2bd8312::t_c1692ebbf51cc7 58
+src/commands/init.rs
+  s_fc9be6e2bd8312::t_c1692ebbf51cc7 14,29
+  s_fc9be6e2bd8312::t_d819fa0cd2f074 13
+docs/reference/docent-implementation-spec.md
+  s_fc9be6e2bd8312::t_c1692ebbf51cc7 173,186
+---
+{
+  "schema_version": "authorship/3.1.0",
+  "tlab_version": "0.8.2",
+  "base_commit_sha": "11328bab03017062e6431250f3a8c88f5c41dc7a",
+  "prompts": {},
+  "sessions": {
+    "s_fc9be6e2bd8312": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fc505-873d-7972-9597-d16ac06abf15",
+        "model": "codex-auto-review"
+      },
+      "human_author": "flyisland <island.chen@outlook.com>",
+      "custom_attributes": {
+        "tlab.token_usage.cache_creation_tokens": "0",
+        "tlab.session_started_at": "2026-08-03T01:13:19Z",
+        "tlab.token_usage.output_tokens": "9366",
+        "tlab.token_usage.input_tokens": "96094",
+        "tlab.token_usage.cache_read_tokens": "990720"
+      }
+    }
+  },
+  "changes": [
+    {
+      "new_path": "docs/README.md",
+      "additions": {
+        "human": 50
+      }
+    },
+    {
+      "old_path": "README.md",
+      "new_path": "README.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_fc9be6e2bd8312",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/reference/docent-implementation-plan.md",
+      "new_path": "docs/reference/_archive/docent-implementation-plan.md",
+      "additions": {
+        "human": 9
+      },
+      "deletions": {
+        "human": 2
+      }
+    },
+    {
+      "old_path": "docs/reference/docent-implementation-spec.md",
+      "new_path": "docs/reference/docent-implementation-spec.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_fc9be6e2bd8312",
+            "lines": 2
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/commands/init.rs",
+      "new_path": "src/commands/init.rs",
+      "additions": {
+        "human": 1,
+        "ai": [
+          {
+            "session_id": "s_fc9be6e2bd8312",
+            "lines": 2
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "tests/cli.rs",
+      "new_path": "tests/cli.rs",
+      "additions": {
+        "human": 1,
+        "ai": [
+          {
+            "session_id": "s_fc9be6e2bd8312",
+            "lines": 16
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_fc9be6e2bd8312",
+            "lines": 1
+          }
+        ]
+      }
+    }
+  ]
+}
