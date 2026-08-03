@@ -136,6 +136,7 @@ Each rule has a unique ID, a severity (`error` or `warning`), and an optional
 | `rfc-index-sync` | `docs/rfcs/README.md` table disagrees with the RFC front matter | error | ✓ |
 | `rfc-accepted-outcome` | An Accepted RFC without a linked ADR lacks an explicit no-ADR reason | error | — |
 | `superseded-backlink-consistency` | A `supersedes` reference has no matching `superseded_by` backlink | error | ✓ |
+| `amendment-backlink-consistency` | A partial ADR amendment lacks a matching `amends`/`amended_by` relation or targets a non-Accepted ADR | error | — |
 | `agents-adr-reference-valid` | `AGENTS.md` references an ADR whose status makes that reference invalid | error | — |
 | `required-source-missing` | A required source (`docs/rfcs`, `docs/adrs`, `docs/architecture.md`, `AGENTS.md`) does not exist | warning | — |
 | `context-avoid-term-violation` | Code uses a term CONTEXT.md marks as Avoid | error | — |

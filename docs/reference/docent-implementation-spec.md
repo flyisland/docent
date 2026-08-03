@@ -114,8 +114,18 @@ created: string          # required, YYYY-MM-DD
 updated: string          # optional, YYYY-MM-DD
 supersedes: array<string>     # optional, defaults to an empty array
 superseded_by: string | null  # optional, defaults to null
+amends: array<{adr: string, decision: string}> # optional, defaults to []
+amended_by: array<string>     # optional, defaults to an empty array
 related_rfc: string | null    # optional, defaults to null
 ```
+
+`supersedes` replaces the target ADR's whole decision scope and requires the
+target to become Superseded. `amends` changes only the non-empty, explicitly
+named lowercase kebab-case `decision` scope in an otherwise-current Accepted ADR; its target remains
+Accepted and lists the source ADR in `amended_by`. An ADR cannot name the same
+target in both relations, amend itself, repeat a target/scope pair, or repeat
+an `amended_by` entry. Only one Accepted ADR may amend a given target/scope
+pair; a later amendment must supersede the previous amendment ADR.
 
 For both RFCs and ADRs, `title` in the front matter is the single source of truth for the document title. The filename is only a stable, human-readable path containing the document ID and an optional slug; its slug does not have to match `title` and may use a different language. Index tables and other generated representations must use the front-matter `title`.
 
@@ -308,6 +318,18 @@ The following rules correspond to the automatable group in the spec document's "
 - **Severity**: error
 - **--fix**: supported — auto-fill any missing reverse field and status value (do not modify a value that already exists but is inconsistent; in that case report an error but don't auto-correct it, to avoid guessing which side is "right").
 
+### `amendment-backlink-consistency`
+- **Description**: are partial ADR amendments explicit, bidirectionally
+  linked, and limited to Accepted target ADRs?
+- **Algorithm**: for each `{adr, decision}` in `amends`, require the target ADR
+  to exist with status Accepted and to list the source in `amended_by`. For
+  each `amended_by` entry, require the source to contain the matching `amends`
+  target. Frontmatter validation rejects empty scopes, malformed IDs,
+  self-relations, duplicates, multiple Accepted amendments of the same scope,
+  and a target present in both `amends` and `supersedes`.
+- **Severity**: error
+- **--fix**: not supported; selecting a decision scope is semantic judgment.
+
 ### `adr-missing-required-sections`
 - **Description**: does the ADR body contain the four required sections defined in Section 3.3?
 - **Severity**: error
@@ -423,7 +445,7 @@ Don't implement every rule in one pass. Work through the phases below in order; 
 **P1**
 - `docent lint --json`
 - `docent lint --fix` (scope defined in Section 6)
-- Add the remaining rules: `agents-adr-reference-valid`, `architecture-module-sync`, `context-avoid-term-violation`, `adr-pending-implementation-report`, `rfc-stale-draft`
+- Add the remaining rules: `agents-adr-reference-valid`, `amendment-backlink-consistency`, `architecture-module-sync`, `context-avoid-term-violation`, `adr-pending-implementation-report`, `rfc-stale-draft`
 
 **P2 (as needed, may be deferred)**
 - `design-doc-existence`

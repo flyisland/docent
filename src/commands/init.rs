@@ -16,7 +16,7 @@ const AGENTS: &str = include_str!("../../docs/templates/project-agents.md");
 
 const RFC_TEMPLATE: &str = "---\nid: rfc-000\ntitle: <one-line title>\nstatus: Draft\ncreated: YYYY-MM-DD\nupdated:\nrelated_adr:\n---\n\n# RFC-000: <Title>\n\n## Motivation\n\n## Options considered\n\n## Technical feasibility analysis\n\n## Decision\n\n## Outcome\n\nFor an Accepted RFC, either link the durable ADR in `related_adr`, or state `ADR not required: <short reason>`.\n";
 
-const ADR_TEMPLATE: &str = "---\nid: adr-000\ntitle: <one-line title>\nstatus: Accepted\nimplementation: pending\ncreated: YYYY-MM-DD\nupdated:\nsupersedes: []\nsuperseded_by:\nrelated_rfc:\n---\n\n# ADR-000: <Title>\n\n## Context\n\n## Decision\n\n## Non-goals\n\n## Consequences\n";
+const ADR_TEMPLATE: &str = "---\nid: adr-000\ntitle: <one-line title>\nstatus: Accepted\nimplementation: pending\ncreated: YYYY-MM-DD\nupdated:\nsupersedes: []\nsuperseded_by:\namends: []\namended_by: []\nrelated_rfc:\n---\n\n# ADR-000: <Title>\n\n## Context\n\n## Decision\n\n## Non-goals\n\n## Consequences\n";
 
 const CONTEXT_TEMPLATE: &str = "# {Module / project name}\n\n{One or two sentences describing what this semantic boundary is and why it exists}\n\n## Language\n\n**{Term}**:\n{One or two sentence definition}\n_Avoid_: {word1}, {word2}\n";
 

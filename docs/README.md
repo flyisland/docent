@@ -17,11 +17,17 @@ text through `docent docs show` and `docent docs export <directory-or-file>`.
 `docs/IDEAS.md` is one-way intake; remove an idea once it has a destination. RFCs
 in `rfcs/` are proposals and seal as Accepted or Rejected. An Accepted RFC
 links its durable ADR or records `ADR not required` with a short reason. ADRs
-in `adrs/` are durable decisions. A major/directional change gets a new ADR
-and supersession links; never erase its history. `architecture.md` is the
+in `adrs/` are durable decisions. Append a dated Amendment only when meaning
+does not change. A new ADR uses `amends`/`amended_by` to replace one named
+decision scope while the target remains Accepted, or `supersedes` to replace
+the target ADR as a whole. Never erase history. `architecture.md` is the
 living module map, and each module README or `.design.md` is living current
 design that may be overwritten to match intended behavior. `AGENTS.md` carries
 only durable cross-cutting guardrails; `CONTEXT.md` owns canonical terminology.
+
+Partial-amendment scopes use stable lowercase kebab-case names. Only one
+Accepted ADR may amend a given target scope; a later amendment supersedes the
+previous amendment ADR.
 
 Run `docent lint` after changing documentation it validates.
 

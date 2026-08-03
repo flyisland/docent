@@ -24,6 +24,11 @@ _Avoid_: Metadata block, Header
 An ADR status meaning the decision has been replaced by a newer ADR — there is a clearly identified replacement.
 _Avoid_: Replaced, Overridden
 
+**Partial amendment**:
+A relation in which a newer ADR changes one explicitly named decision scope in
+an Accepted ADR while the rest of that ADR remains in force.
+_Avoid_: Partial supersession, Override
+
 **Deprecated**:
 An ADR status meaning the decision is no longer valid, but has no replacement. Distinct from Superseded — do not conflate the two. Deprecated has no corresponding new ADR; Superseded does.
 

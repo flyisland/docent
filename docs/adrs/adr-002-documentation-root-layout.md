@@ -7,6 +7,10 @@ created: 2026-08-03
 updated:
 supersedes: []
 superseded_by:
+amends:
+- adr: adr-001
+  decision: documentation-layout
+amended_by: []
 related_rfc:
 ---
 
@@ -22,8 +26,9 @@ the idea-intake location.
 ## Decision
 
 Use `docs/IDEAS.md` as the fixed idea-intake path. `docent init` creates it,
-and `docent status` counts and reports that path. This refines only the
-root-level `IDEAS.md` location in ADR-001; it does not supersede ADR-001.
+and `docent status` counts and reports that path. Through its structured
+`amends` relation, this ADR changes only ADR-001's `documentation-layout`
+decision scope; it does not supersede ADR-001.
 
 ## Non-goals
 

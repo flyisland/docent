@@ -21,9 +21,11 @@
 ## Documentation maintenance rules
 
 - Strictly follow the documentation lifecycle defined in docs/README.md.
-- Major or directional architectural-decision changes require a new ADR and
-  supersession links; historical ADR bodies are not erased. Living detailed
-  designs are overwritten to match current intended behavior.
+- A clarification that does not change meaning may be appended as a dated
+  Amendment. A change to one named decision scope requires a new ADR with
+  `amends`/`amended_by`; a whole-decision replacement uses `supersedes`.
+  Historical ADR bodies are not erased. Living detailed designs are
+  overwritten to match current intended behavior.
 
 ## Rule maintenance
 

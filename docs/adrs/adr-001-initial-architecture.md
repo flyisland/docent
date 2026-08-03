@@ -7,6 +7,8 @@ created: 2026-08-01
 updated: null
 supersedes: []
 superseded_by: null
+amends: []
+amended_by: [adr-002]
 related_rfc: null
 ---
 

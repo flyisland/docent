@@ -18,10 +18,10 @@ errors.
 
 - Follow the policy in `docs/README.md`; keep implementation detail out of
   this file.
-- A major or directional architectural-decision change needs a new ADR with
-  supersession links. Historical ADR bodies are not erased. A permitted minor
-  clarification or numeric change is appended as an Amendment when the
-  project’s ADR convention allows it.
+- A clarification that does not change meaning may be appended as a dated
+  Amendment. A change to one named decision scope needs a new ADR with
+  `amends`/`amended_by`; a whole-decision replacement uses `supersedes`.
+  Historical ADR bodies are not erased.
 - Living module designs are overwritten to describe current intended behavior;
   use the placement rules and templates in `docs/README.md`.
 

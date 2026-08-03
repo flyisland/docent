@@ -59,11 +59,29 @@ is current; Superseded means replaced by a newer ADR; Deprecated means no
 longer applicable without a replacement. Keep implementation status separate
 from decision status. ADR bodies are historical evidence: do not erase them.
 
-A major or directional replacement requires a new ADR and supersession links.
-If a project permits a narrowly scoped minor clarification or numeric change,
-append an Amendment with date and rationale; do not rewrite history. ADRs have
+ADR changes use three distinct mechanisms:
+
+- A clarification, evidence addition, or numeric correction that does not
+  change the decision's meaning may be appended to the same ADR as an
+  `Amendment`, with date and rationale. Do not rewrite its historical text.
+- A newer decision that changes one independently named scope inside an
+  otherwise-current ADR requires a new ADR. The new ADR records an `amends`
+  entry containing the target ADR and a stable lowercase kebab-case
+  decision-scope name; the target records
+  the new ADR in `amended_by` and remains Accepted. Within that named scope,
+  the newer Accepted ADR is authoritative. The relation is invalid when the
+  scope cannot be named precisely or the target is not Accepted. At most one
+  Accepted ADR may amend the same target scope; a later change supersedes the
+  prior amendment ADR while retaining its own `amends` link to the base ADR.
+- A major/directional replacement of the target ADR's whole decision scope
+  requires a new ADR with `supersedes`/`superseded_by`; the target becomes
+  Superseded. `supersedes` must never represent a partial change.
+
+Deprecated means a decision has ended without a replacement. ADRs have
 Context, Decision, Non-goals, and Consequences sections and remain in their
-normal index regardless of status.
+normal index regardless of status. Prefer one independently replaceable
+decision, or one tightly coupled decision group, per ADR; broad bootstrap ADRs
+must use structured partial amendments when only one scope later changes.
 
 ## Layer 3: architecture overview
 
@@ -177,9 +195,9 @@ feasibility analysis, Decision, and Outcome. The Outcome supplies the required
 ADR link or `ADR not required` reason for an Accepted RFC.
 
 ADR front matter includes `id`, `title`, `status`, `implementation`, dates,
-supersession links, and `related_rfc`; its body has Context, Decision,
-Non-goals, and Consequences. The architecture template is the five-column
-table above.
+whole-ADR supersession links, partial-amendment links and scopes, and
+`related_rfc`; its body has Context, Decision, Non-goals, and Consequences.
+The architecture template is the five-column table above.
 
 ## Cleanup and migration playbook
 
@@ -206,8 +224,8 @@ or deletion using the retention rule.”
 
 ## Mechanical checks and human review
 
-Automation should validate front matter, indexes, ADR supersession links,
-active ADR references, declared architecture paths, and other structural
+Automation should validate front matter, indexes, ADR supersession and partial
+amendment backlinks, active ADR references, declared architecture paths, and other structural
 invariants. It must not guess whether prose is phase history, whether an ADR
 was semantically warranted, or who the true owner of a dependency is. Human
 review checks that current design does not duplicate code, that architecture

@@ -200,6 +200,98 @@ fn lint_requires_an_explicit_no_adr_outcome_for_accepted_rfcs() {
     let _ = fs::remove_dir_all(&dir);
 }
 
+#[test]
+fn lint_validates_partial_adr_amendment_backlinks() {
+    let dir = temp_dir("adr-amendment-backlinks");
+    copy_tree(&fixture("valid-project"), &dir);
+
+    let target = dir.join("docs/adrs/adr-001-cache-strategy.md");
+    let target_content = fs::read_to_string(&target).unwrap().replace(
+        "superseded_by: null",
+        "superseded_by: null\namended_by: [adr-003]",
+    );
+    fs::write(&target, target_content).unwrap();
+
+    fs::write(
+        dir.join("docs/adrs/adr-003-cache-ttl.md"),
+        r#"---
+id: adr-003
+title: Cache TTL refinement
+status: Accepted
+implementation: implemented
+created: 2026-08-03
+updated: null
+supersedes: []
+superseded_by: null
+amends:
+- adr: adr-001
+  decision: cache-ttl
+amended_by: []
+related_rfc: null
+---
+
+# ADR-003: Cache TTL Refinement
+
+## Context
+
+The original cache decision needs a narrower TTL contract.
+
+## Decision
+
+Use a five-minute TTL. This changes only adr-001's cache-ttl decision scope.
+
+## Non-goals
+
+No change to the cache technology.
+
+## Consequences
+
+Entries expire predictably.
+"#,
+    )
+    .unwrap();
+
+    let (fix_code, _) = docent(&dir, &["lint", "--fix"]);
+    assert_eq!(fix_code, 0);
+    let json = lint_json(&dir);
+    assert_eq!(
+        count_by_rule(&json, "errors", "amendment-backlink-consistency"),
+        0
+    );
+
+    let missing_backlink = fs::read_to_string(&target)
+        .unwrap()
+        .replace("amended_by: [adr-003]", "amended_by: []");
+    fs::write(&target, missing_backlink).unwrap();
+    let json = lint_json(&dir);
+    assert_eq!(
+        count_by_rule(&json, "errors", "amendment-backlink-consistency"),
+        1
+    );
+
+    let two_backlinks = fs::read_to_string(&target)
+        .unwrap()
+        .replace("amended_by: []", "amended_by: [adr-003, adr-004]");
+    fs::write(&target, two_backlinks).unwrap();
+    let second_amendment = fs::read_to_string(dir.join("docs/adrs/adr-003-cache-ttl.md"))
+        .unwrap()
+        .replace("adr-003", "adr-004")
+        .replace("Cache TTL refinement", "Cache TTL refinement again");
+    fs::write(
+        dir.join("docs/adrs/adr-004-cache-ttl-again.md"),
+        second_amendment,
+    )
+    .unwrap();
+    let (_code, _) = docent(&dir, &["lint", "--fix"]);
+    let json = lint_json(&dir);
+    assert_eq!(
+        count_by_rule(&json, "errors", "amendment-backlink-consistency"),
+        1,
+        "only one Accepted ADR may amend a target decision scope"
+    );
+    let _ = fs::remove_dir_all(&dir);
+}
+
 fn copy_tree(src: &Path, dst: &Path) {
     fs::create_dir_all(dst).unwrap();
     for entry in fs::read_dir(src).unwrap() {
@@ -246,6 +338,8 @@ fn init_creates_template_files_and_skips_existing() {
 
     let adr_template = fs::read_to_string(dir.join("docs/.templates/adr.md")).unwrap();
     assert!(adr_template.contains("## Non-goals"));
+    assert!(adr_template.contains("amends: []"));
+    assert!(adr_template.contains("amended_by: []"));
 
     let architecture = fs::read_to_string(dir.join("docs/architecture.md")).unwrap();
     assert!(architecture.contains("| Module | Path |"));

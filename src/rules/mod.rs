@@ -2,6 +2,7 @@ pub mod adr_index_sync;
 pub mod adr_missing_sections;
 pub mod adr_pending;
 pub mod agents_adr_reference;
+pub mod amendment_backlink;
 pub mod architecture_module_sync;
 pub mod context_avoid_term;
 pub mod document_id_format;
@@ -33,6 +34,7 @@ pub fn run_all(project: &Project) -> Vec<Violation> {
         Box::new(adr_index_sync::AdrIndexSyncRule),
         Box::new(adr_missing_sections::AdrMissingSectionsRule),
         Box::new(superseded_backlink::SupersededBacklinkRule),
+        Box::new(amendment_backlink::AmendmentBacklinkRule),
         Box::new(adr_pending::AdrPendingRule),
         Box::new(required_source::RequiredSourceMissingRule),
         Box::new(architecture_module_sync::ArchitectureModuleSyncRule),

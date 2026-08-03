@@ -38,6 +38,12 @@ impl Implementation {
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct AdrAmendment {
+    pub adr: String,
+    pub decision: String,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct AdrFront {
     pub id: String,
     pub title: String,
@@ -50,10 +56,16 @@ pub struct AdrFront {
     #[serde(default)]
     pub superseded_by: Option<String>,
     #[serde(default)]
+    pub amends: Vec<AdrAmendment>,
+    #[serde(default)]
+    pub amended_by: Vec<String>,
+    #[serde(default)]
     pub related_rfc: Option<String>,
 }
 
 static ID_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^adr-\d{3,4}$").unwrap());
+static DECISION_SCOPE_RE: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$").unwrap());
 
 impl AdrFront {
     pub fn validation_errors(&self) -> Vec<String> {
@@ -78,10 +90,111 @@ impl AdrFront {
         {
             errs.push(format!("updated '{}' is not a valid YYYY-MM-DD date", u));
         }
+        let mut amendment_scopes = std::collections::HashSet::new();
+        for amendment in &self.amends {
+            if !ID_RE.is_match(&amendment.adr) {
+                errs.push(format!(
+                    "amends ADR '{}' does not match the adr-\\d{{3}} or adr-\\d{{4}} form",
+                    amendment.adr
+                ));
+            }
+            if amendment.decision.trim().is_empty() {
+                errs.push(format!(
+                    "amends entry for {} must name a non-empty decision scope",
+                    amendment.adr
+                ));
+            } else if !DECISION_SCOPE_RE.is_match(&amendment.decision) {
+                errs.push(format!(
+                    "amends decision '{}' must be a lowercase kebab-case scope name",
+                    amendment.decision
+                ));
+            }
+            if amendment.adr == self.id {
+                errs.push("an ADR cannot amend itself".to_string());
+            }
+            if self.supersedes.contains(&amendment.adr) {
+                errs.push(format!(
+                    "{} cannot be listed in both supersedes and amends",
+                    amendment.adr
+                ));
+            }
+            if !amendment_scopes.insert((&amendment.adr, &amendment.decision)) {
+                errs.push(format!(
+                    "duplicate amends entry for {} decision '{}'",
+                    amendment.adr, amendment.decision
+                ));
+            }
+        }
+        let mut amended_by = std::collections::HashSet::new();
+        for adr in &self.amended_by {
+            if !ID_RE.is_match(adr) {
+                errs.push(format!(
+                    "amended_by ADR '{}' does not match the adr-\\d{{3}} or adr-\\d{{4}} form",
+                    adr
+                ));
+            }
+            if adr == &self.id {
+                errs.push("an ADR cannot be amended by itself".to_string());
+            }
+            if !amended_by.insert(adr) {
+                errs.push(format!("duplicate amended_by entry for {}", adr));
+            }
+        }
         errs
     }
 
     pub fn index_date(&self) -> String {
         self.updated.clone().unwrap_or_else(|| self.created.clone())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::AdrFront;
+
+    #[test]
+    fn partial_amendments_require_distinct_valid_scopes() {
+        let front: AdrFront = serde_yaml::from_str(
+            r#"
+id: adr-003
+title: Invalid partial amendment
+status: Accepted
+implementation: implemented
+created: 2026-08-03
+updated: null
+supersedes: [adr-001]
+superseded_by: null
+amends:
+- adr: adr-001
+  decision: Documentation Layout
+- adr: adr-003
+  decision: self
+amended_by: [adr-004, adr-004]
+related_rfc: null
+"#,
+        )
+        .unwrap();
+
+        let errors = front.validation_errors();
+        assert!(
+            errors
+                .iter()
+                .any(|error| error.contains("lowercase kebab-case"))
+        );
+        assert!(
+            errors
+                .iter()
+                .any(|error| error.contains("both supersedes and amends"))
+        );
+        assert!(
+            errors
+                .iter()
+                .any(|error| error.contains("cannot amend itself"))
+        );
+        assert!(
+            errors
+                .iter()
+                .any(|error| error.contains("duplicate amended_by"))
+        );
     }
 }

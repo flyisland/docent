@@ -18,7 +18,7 @@ For the complete canonical specification shipped with this Docent build, run
 |---|---|---|
 | `docs/IDEAS.md` | Unclaimed ideas; anyone may add | Remove an entry once it has an owner. It is intake, not a history. |
 | `docs/rfcs/` | Proposal and decision discussion; RFC author owns while Draft | Seal as Accepted or Rejected. An Accepted RFC links its ADR or says why no ADR is required. |
-| `docs/adrs/` | Durable architectural decisions; human decision owner | Do not erase historical bodies. Use a new ADR and supersession links for a major/directional replacement; append a permitted minor Amendment only when the project uses that mechanism. |
+| `docs/adrs/` | Durable architectural decisions; human decision owner | Do not erase historical bodies. Append a dated Amendment only when meaning is unchanged; use a new ADR with `amends`/`amended_by` for one named decision scope; use `supersedes` only for whole-ADR replacement. |
 | `docs/architecture.md` | Current module map and boundaries; architecture owner | Update with module topology, responsibility, or dependency-boundary changes. |
 | Module README / sidecar | Current detailed design; implementation owner | Overwrite to match current intended behavior. Keep current invariants, implicit contracts, rationale, and Non-goals. |
 | `AGENTS.md` | Durable cross-cutting Agent guardrails; maintainers | Keep concise. Point to this policy, active ADRs, and designs rather than copying implementation detail. |
@@ -34,6 +34,11 @@ proposals; Accepted means approved and sealed, not automatically â€œhas an ADR.â
 Create an ADR only for a durable consequential architectural trade-off or a
 responsibility/interface constraint. Every Accepted RFC must either link that
 ADR or record `ADR not required` with a short reason.
+
+For ADR evolution, use a stable lowercase kebab-case name for every partially
+amended decision scope. Only one Accepted ADR may amend a given target scope;
+a later amendment supersedes the prior amendment ADR. `docent lint` validates
+these relations but never invents or auto-fixes their semantic scope.
 
 The architecture overview is the current global map. Its table declares a
 logical `Module` and project-relative implementation `Path`; a path may be a

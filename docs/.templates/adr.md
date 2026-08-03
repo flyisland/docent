@@ -7,6 +7,8 @@ created: YYYY-MM-DD
 updated:
 supersedes: []
 superseded_by:
+amends: []
+amended_by: []
 related_rfc:
 ---
 
