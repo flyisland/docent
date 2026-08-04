@@ -1,0 +1,168 @@
+src/README.md
+  s_d40ff48145002a::t_b70a80c46d363e 8-11
+src/cli.rs
+  s_d40ff48145002a::t_c96103b8aa3704 121,125
+  s_d40ff48145002a::t_0619e9d253a92d 77-78
+  s_d40ff48145002a::t_14461db50a45a9 20-22,25-28
+  s_d40ff48145002a::t_4350970dff35ce 43
+  s_d40ff48145002a::t_1dda7fb1f9e024 113-120,122-124,126-127
+  s_d40ff48145002a::t_38474984bb7353 1,4-19,23-24,29-42,44-56
+  s_d40ff48145002a::t_2428781f1b3605 57
+src/main.rs
+  s_d40ff48145002a::t_117f4353dcf7a3 15-17
+tests/cli.rs
+  s_d40ff48145002a::t_34dc29fe432552 636-682,691-696,710-712,716-725,739
+  s_d40ff48145002a::t_78f831fcd36861 683-690
+  s_d40ff48145002a::t_021c8797cb885f 697-709,713-715,726-734,738
+  s_d40ff48145002a::t_14461db50a45a9 735-737
+docs/reference/docent-implementation-spec.md
+  s_d40ff48145002a::t_5e7e38a981a53b 286-287
+  s_d40ff48145002a::t_ab424278078d63 269-285,288-297
+src/commands/list.rs
+  s_d40ff48145002a::t_f389ac8bb9aece 15-18,23
+  s_d40ff48145002a::t_117f4353dcf7a3 3
+  s_d40ff48145002a::t_017aef4dd2e798 1-2,4-14,19-22,24-125
+README.md
+  s_d40ff48145002a::t_94fc18e27b8078 38-41
+  s_d40ff48145002a::t_fbe4ea4e18f8c2 128-138,143-151
+  s_d40ff48145002a::t_8950ae4c937a36 139-142
+src/commands/mod.rs
+  s_d40ff48145002a::t_9c5838f3ced014 4
+---
+{
+  "schema_version": "authorship/3.1.0",
+  "tlab_version": "0.8.2",
+  "base_commit_sha": "5d277b8bde2273254afd99e31628a827a73c1d0c",
+  "prompts": {},
+  "sessions": {
+    "s_d40ff48145002a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0351a58a5ffeFfLEJbZpGyWhis",
+        "model": "deepseek-v4-flash-free"
+      },
+      "human_author": "flyisland <island.chen@outlook.com>",
+      "custom_attributes": {
+        "tlab.session_started_at": "2026-08-04T04:05:41Z",
+        "tlab.token_usage.output_tokens": "16007",
+        "tlab.token_usage.input_tokens": "143901",
+        "tlab.token_usage.cache_creation_tokens": "0",
+        "tlab.token_usage.cache_read_tokens": "2785024"
+      }
+    }
+  },
+  "changes": [
+    {
+      "new_path": "src/commands/list.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_d40ff48145002a",
+            "lines": 125
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "README.md",
+      "new_path": "README.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_d40ff48145002a",
+            "lines": 28
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_d40ff48145002a",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "docs/reference/docent-implementation-spec.md",
+      "new_path": "docs/reference/docent-implementation-spec.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_d40ff48145002a",
+            "lines": 29
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/README.md",
+      "new_path": "src/README.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_d40ff48145002a",
+            "lines": 4
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_d40ff48145002a",
+            "lines": 3
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/cli.rs",
+      "new_path": "src/cli.rs",
+      "additions": {
+        "human": 1,
+        "ai": [
+          {
+            "session_id": "s_d40ff48145002a",
+            "lines": 71
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/commands/mod.rs",
+      "new_path": "src/commands/mod.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_d40ff48145002a",
+            "lines": 1
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "src/main.rs",
+      "new_path": "src/main.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_d40ff48145002a",
+            "lines": 3
+          }
+        ]
+      }
+    },
+    {
+      "old_path": "tests/cli.rs",
+      "new_path": "tests/cli.rs",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_d40ff48145002a",
+            "lines": 104
+          }
+        ]
+      }
+    }
+  ]
+}
