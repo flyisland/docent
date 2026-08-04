@@ -35,7 +35,10 @@ docent lint --fix
 # 4. Summarize the current state of the documentation.
 docent status
 
-# 5. Read or explicitly export this build's complete documentation policy.
+# 5. List RFCs / ADRs, optionally filtered by status.
+docent list rfc --status draft
+
+# 6. Read or explicitly export this build's complete documentation policy.
 docent docs show
 docent docs export docs/reference/
 ```
@@ -121,6 +124,30 @@ file (`docs/IDEAS.md`, `docs/architecture.md`) or directory
 Below the last line, `docent status` prints a `Violations by rule` breakdown
 with a count per lint rule (rules with zero violations are omitted), sorted by
 count descending.
+
+### `docent list`
+
+Prints one line per RFC or ADR document in the current project. Human output
+only; always exits `0` unless the arguments are invalid.
+
+```sh
+docent list rfc                  # every RFC
+docent list rfc --status draft   # only Draft RFCs
+docent list adr --status accepted --implementation pending
+```
+
+The positional `rfc|adr` argument selects the document type. `-s, --status`
+takes the type's status enum (case-insensitive; `--help` lists the possible
+values): `Draft | Accepted | Rejected` for RFCs,
+`Accepted | Superseded | Deprecated` for ADRs. `-i, --implementation` takes
+`implemented | pending` and is only valid for ADRs.
+
+Each row shows the document id, title, status, and its index date (`updated`
+when present, otherwise `created`); ADR rows also show the implementation
+state. The header line names the applied filters and the row count. Documents
+whose front matter fails to parse are skipped — those are surfaced by
+`docent lint` instead. A missing `docs/rfcs` / `docs/adrs` directory simply
+yields an empty list.
 
 ## The rules
 

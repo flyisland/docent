@@ -266,6 +266,35 @@ After the architecture line, `docent status` prints a `Violations by rule` break
 
 Each line distinguishes a source that exists from one that does not. If the source is missing, the line reports `not found (<path>)` instead of a zero count — `docs/IDEAS.md` (file), `docs/rfcs` (directory), `docs/adrs` (directory), and `docs/architecture.md` (file). A present-but-empty directory still reports a zero count, never "not found".
 
+### 4.4 `docent list`
+
+**Behavior**: lists RFC or ADR documents, optionally filtered by front-matter
+state. Human output only (no `--json` in v1); exits `0` on success and `1` when
+an argument value is invalid.
+
+```
+docent list rfc                  # every RFC
+docent list rfc --status draft   # only Draft RFCs
+docent list adr --status accepted --implementation pending
+```
+
+**Arguments**:
+
+| argument | meaning |
+|---|---|
+| `rfc` \| `adr` (positional) | document type to list |
+| `-s, --status <status>` | keep only documents in this status; case-insensitive. RFC: `Draft` \| `Accepted` \| `Rejected`. ADR: `Accepted` \| `Superseded` \| `Deprecated`. `--help` lists the union of possible values; a status from the other type (or any unknown value) is rejected. |
+| `-i, --implementation <implemented\|pending>` | ADR only; filters on the `implementation` field. Invalid for `rfc`, and only `implemented`/`pending` are accepted. |
+
+Documents whose front matter fails to parse are skipped silently — `docent
+lint` is the surface that reports parse problems. A missing source directory
+(`docs/rfcs` or `docs/adrs`) yields an empty list rather than an error.
+
+**Output**: a header line naming the applied filters and the row count, then
+one aligned row per document with id, title, status, and index date (`updated`
+when present, else `created`); ADR rows additionally show the implementation
+state. Rows are ordered by document id.
+
 ## 5. Lint rule catalog
 
 The following rules correspond to the automatable group in the spec document's "Rollout Checklist," and together form the complete rule set to be implemented for v1 (see Section 9 for the phased implementation order). Each rule lists: rule ID, description, detection algorithm, whether `--fix` is supported, and severity.

@@ -1,4 +1,59 @@
+use clap::builder::{PossibleValue, TypedValueParser};
 use clap::{Args, Parser, Subcommand};
+
+pub const STATUS_VALUES: [&str; 5] = ["Draft", "Accepted", "Rejected", "Superseded", "Deprecated"];
+
+#[derive(Clone, Copy, Debug)]
+pub struct CaseInsensitiveStatus;
+
+impl TypedValueParser for CaseInsensitiveStatus {
+    type Value = String;
+
+    fn parse_ref(
+        &self,
+        cmd: &clap::Command,
+        arg: Option<&clap::Arg>,
+        value: &std::ffi::OsStr,
+    ) -> Result<Self::Value, clap::Error> {
+        let value = match value.to_str() {
+            Some(v) => v,
+            None => {
+                return Err(clap::Error::new(clap::error::ErrorKind::InvalidValue).with_cmd(cmd));
+            }
+        };
+        let lower = value.to_ascii_lowercase();
+        if let Some(canon) = STATUS_VALUES
+            .iter()
+            .find(|v| v.to_ascii_lowercase() == lower)
+        {
+            return Ok((*canon).to_string());
+        }
+        let mut err = clap::Error::new(clap::error::ErrorKind::InvalidValue).with_cmd(cmd);
+        if let Some(arg) = arg {
+            err.insert(
+                clap::error::ContextKind::InvalidArg,
+                clap::error::ContextValue::String(arg.to_string()),
+            );
+        }
+        err.insert(
+            clap::error::ContextKind::InvalidValue,
+            clap::error::ContextValue::String(value.to_string()),
+        );
+        err.insert(
+            clap::error::ContextKind::ValidValue,
+            clap::error::ContextValue::Strings(
+                STATUS_VALUES.iter().map(|s| s.to_string()).collect(),
+            ),
+        );
+        Err(err)
+    }
+
+    fn possible_values(&self) -> Option<Box<dyn Iterator<Item = PossibleValue> + '_>> {
+        Some(Box::new(
+            STATUS_VALUES.iter().copied().map(PossibleValue::new),
+        ))
+    }
+}
 
 #[derive(Parser)]
 #[command(
@@ -19,6 +74,8 @@ pub enum Command {
     Lint(LintArgs),
     /// Summarize the current state of the project's documentation
     Status,
+    /// List RFCs or ADRs, optionally filtered by status
+    List(ListArgs),
     /// Read or explicitly export Docent's bundled canonical documentation specification
     Docs(DocsArgs),
 }
@@ -52,4 +109,19 @@ pub struct LintArgs {
     /// Apply the mechanical fixes defined in the implementation spec
     #[arg(long)]
     pub fix: bool,
+}
+
+#[derive(Args)]
+pub struct ListArgs {
+    /// Which document type to list
+    #[arg(value_parser = ["rfc", "adr"])]
+    pub doc_type: String,
+
+    /// Only list documents in this status (case-insensitive)
+    #[arg(short, long, value_parser = clap::builder::ValueParser::new(CaseInsensitiveStatus))]
+    pub status: Option<String>,
+
+    /// Only list ADRs in this implementation state
+    #[arg(short, long, value_parser = ["implemented", "pending"])]
+    pub implementation: Option<String>,
 }

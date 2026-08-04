@@ -633,3 +633,107 @@ fn fix_round_trips_superseded_backlinks() {
     );
     let _ = fs::remove_dir_all(&dir);
 }
+
+#[test]
+fn list_rfcs_by_status() {
+    let dir = fixture("valid-project");
+    let (code, stdout) = docent(&dir, &["list", "rfc"]);
+    assert_eq!(code, 0);
+    assert!(stdout.contains("RFCs (2)"));
+    assert!(stdout.contains("rfc-001") && stdout.contains("rfc-002"));
+
+    let (code, stdout) = docent(&dir, &["list", "rfc", "--status", "draft"]);
+    assert_eq!(code, 0);
+    assert!(stdout.contains("Draft RFCs (1)"));
+    assert!(stdout.contains("rfc-002"));
+    assert!(!stdout.contains("rfc-001"));
+
+    let (code, stdout) = docent(&dir, &["list", "rfc", "--status", "ACCEPTED"]);
+    assert_eq!(code, 0);
+    assert!(stdout.contains("Accepted RFCs (1)"));
+    assert!(stdout.contains("rfc-001"));
+
+    let (code, stdout) = docent(&dir, &["list", "rfc", "--status", "Rejected"]);
+    assert_eq!(code, 0);
+    assert!(stdout.contains("Rejected RFCs (0)"));
+}
+
+#[test]
+fn list_adrs_by_status_and_implementation() {
+    let dir = fixture("valid-project");
+    let (code, stdout) = docent(&dir, &["list", "adr"]);
+    assert_eq!(code, 0);
+    assert!(stdout.contains("ADRs (2)"));
+    assert!(stdout.contains("adr-001") && stdout.contains("adr-002"));
+    assert!(stdout.contains("Implemented"));
+
+    let (code, stdout) = docent(&dir, &["list", "adr", "--status", "accepted"]);
+    assert_eq!(code, 0);
+    assert!(stdout.contains("Accepted ADRs (1)"));
+    assert!(stdout.contains("adr-001"));
+    assert!(!stdout.contains("adr-002"));
+
+    let (code, stdout) = docent(&dir, &["list", "adr", "--status", "superseded"]);
+    assert_eq!(code, 0);
+    assert!(stdout.contains("Superseded ADRs (1)"));
+    assert!(stdout.contains("adr-002"));
+
+    let (code, stdout) = docent(
+        &dir,
+        &[
+            "list",
+            "adr",
+            "--status",
+            "accepted",
+            "--implementation",
+            "pending",
+        ],
+    );
+    assert_eq!(code, 0);
+    assert!(stdout.contains("Accepted ADRs with implementation pending (0)"));
+}
+
+#[test]
+fn list_accepts_short_flags() {
+    let dir = fixture("valid-project");
+    let (code, stdout) = docent(&dir, &["list", "rfc", "-s", "draft"]);
+    assert_eq!(code, 0);
+    assert!(stdout.contains("Draft RFCs (1)"));
+    assert!(stdout.contains("rfc-002"));
+
+    let (code, stdout) = docent(&dir, &["list", "adr", "-s", "accepted", "-i", "pending"]);
+    assert_eq!(code, 0);
+    assert!(stdout.contains("Accepted ADRs with implementation pending (0)"));
+}
+
+#[test]
+fn list_rejects_invalid_arguments() {
+    let dir = fixture("valid-project");
+    let (code, _) = docent(&dir, &["list", "rfc", "--status", "bogus"]);
+    assert_eq!(code, 2);
+
+    let (code, _) = docent(&dir, &["list", "rfc", "--status", "superseded"]);
+    assert_eq!(code, 1);
+
+    let (code, _) = docent(&dir, &["list", "rfc", "--implementation", "pending"]);
+    assert_eq!(code, 1);
+
+    let (code, _) = docent(&dir, &["list", "idea"]);
+    assert_eq!(code, 2);
+
+    let (code, _) = docent(&dir, &["list", "adr", "--implementation", "bogus"]);
+    assert_eq!(code, 2);
+}
+
+#[test]
+fn list_help_shows_short_flags_and_possible_values() {
+    let dir = fixture("valid-project");
+    let (code, stdout) = docent(&dir, &["list", "--help"]);
+    assert_eq!(code, 0);
+    assert!(stdout.contains("-s, --status <STATUS>"));
+    assert!(stdout.contains("-i, --implementation <IMPLEMENTATION>"));
+    assert!(
+        stdout.contains("[possible values: Draft, Accepted, Rejected, Superseded, Deprecated]")
+    );
+    assert!(stdout.contains("[possible values: implemented, pending]"));
+}
