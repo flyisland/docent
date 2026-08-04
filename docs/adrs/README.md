@@ -5,3 +5,4 @@
 |adr-001|Initial architecture selection|Accepted|Implemented|2026-08-01|
 |adr-002|Documentation-root layout|Accepted|Implemented|2026-08-03|
 |adr-003|Terminology lint removal|Accepted|Implemented|2026-08-03|
+|adr-004|Document ID width progression|Accepted|Implemented|2026-08-04|

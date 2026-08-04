@@ -8,7 +8,7 @@ updated: null
 supersedes: []
 superseded_by: null
 amends: []
-amended_by: [adr-002, adr-003]
+amended_by: [adr-002, adr-003, adr-004]
 related_rfc: null
 ---
 

@@ -142,21 +142,35 @@ fn lint_exit_code_is_one_when_errors_present() {
 }
 
 #[test]
-fn lint_accepts_four_digit_ids_but_rejects_mixed_widths() {
+fn lint_accepts_mixed_three_and_four_digit_ids() {
     let dir = temp_dir("mixed-id-width");
     copy_tree(&fixture("valid-project"), &dir);
     let source = dir.join("docs/rfcs/rfc-001-cache-strategy.md");
     let content = fs::read_to_string(&source)
         .unwrap()
-        .replace("rfc-001", "rfc-0001");
-    fs::write(dir.join("docs/rfcs/rfc-0001-cache-strategy.md"), content).unwrap();
+        .replace("rfc-001", "rfc-1000");
+    fs::write(dir.join("docs/rfcs/rfc-1000-cache-strategy.md"), content).unwrap();
+
+    let json = lint_json(&dir);
+    assert!(!json["errors"].as_array().unwrap().iter().any(|v| {
+        (v["rule"] == "frontmatter-schema-valid" || v["rule"] == "document-filename-id")
+            && v["file"] == "docs/rfcs/rfc-1000-cache-strategy.md"
+    }));
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
+fn lint_rejects_four_digit_ids_below_1000_when_three_digit_ids_exist() {
+    let dir = temp_dir("mixed-id-width-before-boundary");
+    copy_tree(&fixture("valid-project"), &dir);
+    let source = dir.join("docs/rfcs/rfc-001-cache-strategy.md");
+    let content = fs::read_to_string(&source)
+        .unwrap()
+        .replace("rfc-001", "rfc-0011");
+    fs::write(dir.join("docs/rfcs/rfc-0011-cache-strategy.md"), content).unwrap();
 
     let json = lint_json(&dir);
     assert_eq!(count_by_rule(&json, "errors", "document-id-format"), 1);
-    assert!(!json["errors"].as_array().unwrap().iter().any(|v| {
-        v["rule"] == "frontmatter-schema-valid"
-            && v["file"] == "docs/rfcs/rfc-0001-cache-strategy.md"
-    }));
     let _ = fs::remove_dir_all(&dir);
 }
 
@@ -173,6 +187,56 @@ fn lint_reports_duplicate_rfc_numbers() {
     assert!(json["errors"].as_array().unwrap().iter().any(|v| {
         v["file"] == "docs/rfcs/rfc-001-b.md"
             && v["message"].as_str().unwrap().contains("RFC ID rfc-001")
+    }));
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
+fn lint_requires_document_filename_ids_to_match_front_matter() {
+    let dir = temp_dir("filename-id-mismatch");
+    copy_tree(&fixture("valid-project"), &dir);
+    fs::rename(
+        dir.join("docs/rfcs/rfc-001-cache-strategy.md"),
+        dir.join("docs/rfcs/rfc-002-cache-strategy.md"),
+    )
+    .unwrap();
+
+    let json = lint_json(&dir);
+    assert_eq!(count_by_rule(&json, "errors", "document-filename-id"), 1);
+    assert!(json["errors"].as_array().unwrap().iter().any(|v| {
+        v["file"] == "docs/rfcs/rfc-002-cache-strategy.md"
+            && v["message"]
+                .as_str()
+                .unwrap()
+                .contains("does not match front matter id rfc-001")
+    }));
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
+fn lint_requires_rfc_and_adr_filename_prefixes() {
+    let dir = temp_dir("missing-filename-prefix");
+    copy_tree(&fixture("valid-project"), &dir);
+    fs::rename(
+        dir.join("docs/rfcs/rfc-001-cache-strategy.md"),
+        dir.join("docs/rfcs/cache-strategy.md"),
+    )
+    .unwrap();
+    fs::rename(
+        dir.join("docs/adrs/adr-002-initial-cache-layer.md"),
+        dir.join("docs/adrs/rfc-002-initial-cache-layer.md"),
+    )
+    .unwrap();
+
+    let json = lint_json(&dir);
+    assert_eq!(count_by_rule(&json, "errors", "document-filename-id"), 2);
+    assert!(json["errors"].as_array().unwrap().iter().any(|v| {
+        v["file"] == "docs/rfcs/cache-strategy.md"
+            && v["message"].as_str().unwrap().contains("rfc-NNN(-slug).md")
+    }));
+    assert!(json["errors"].as_array().unwrap().iter().any(|v| {
+        v["file"] == "docs/adrs/rfc-002-initial-cache-layer.md"
+            && v["message"].as_str().unwrap().contains("adr-NNN(-slug).md")
     }));
     let _ = fs::remove_dir_all(&dir);
 }

@@ -127,7 +127,7 @@ target in both relations, amend itself, repeat a target/scope pair, or repeat
 an `amended_by` entry. Only one Accepted ADR may amend a given target/scope
 pair; a later amendment must supersede the previous amendment ADR.
 
-For both RFCs and ADRs, `title` in the front matter is the single source of truth for the document title. The filename is only a stable, human-readable path containing the document ID and an optional slug; its slug does not have to match `title` and may use a different language. Index tables and other generated representations must use the front-matter `title`.
+For both RFCs and ADRs, `title` in the front matter is the single source of truth for the document title. Every RFC filename must use `rfc-NNN(-slug).md` and every ADR filename must use `adr-NNN(-slug).md`, where `NNN` is a three- or four-digit number. The ID derived from that filename must exactly equal the front-matter `id`. Three- and four-digit IDs may coexist in a project. The optional slug is only a stable, human-readable path component: it does not have to match `title` and may use a different language. Index tables and other generated representations must use the front-matter `title`.
 
 ### 3.3 Required sections in an ADR body
 
@@ -305,6 +305,12 @@ The following rules correspond to the automatable group in the spec document's "
 - **Severity**: error
 - **--fix**: not supported (requires human judgment about what value to fill in)
 
+### `document-filename-id`
+- **Description**: does each RFC/ADR filename use its directory's required prefix, and does its filename ID equal the front-matter `id`?
+- **Algorithm**: RFC filenames must match `rfc-NNN(-slug).md`; ADR filenames must match `adr-NNN(-slug).md`, where `NNN` has three or four digits. Extract the filename ID and compare it exactly with front-matter `id`. Report a format violation for an unrecognizable or wrong-prefix filename; report a consistency violation when the two IDs differ.
+- **Severity**: error
+- **--fix**: not supported (renaming or changing an ID requires a human decision and relationship updates).
+
 ### `document-id-unique`
 - **Description**: does each RFC/ADR number identify exactly one document within its directory?
 - **Algorithm**: scan RFC and ADR filenames and front matter independently; report an error when a canonical filename ID (for example, `rfc-001` from both `rfc-001-a.md` and `rfc-001-b.md`) or a front matter `id` is used by more than one document.
@@ -312,8 +318,8 @@ The following rules correspond to the automatable group in the spec document's "
 - **--fix**: not supported (renumbering requires a human decision and relationship updates).
 
 ### `document-id-format`
-- **Description**: does the project use one document-number width consistently?
-- **Algorithm**: accept three- or four-digit RFC/ADR numbers, infer the project's width from existing documents, defaulting to three digits when no documents exist, and report any project mixing both widths.
+- **Description**: does a project use a four-digit document ID below the natural `999` → `1000` boundary while also using three-digit IDs?
+- **Algorithm**: accept a project that uses only three-digit IDs, only four-digit IDs, or a mix of three-digit IDs and four-digit IDs from `1000` through `9999`. Report each four-digit ID below `1000` when the project also contains a three-digit ID.
 - **Severity**: error
 - **--fix**: not supported.
 
