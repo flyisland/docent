@@ -1,0 +1,23 @@
+---
+{
+  "schema_version": "authorship/3.1.0",
+  "tlab_version": "0.8.2",
+  "base_commit_sha": "b989526fe05fac20eaf51174fd0d3267980e4965",
+  "prompts": {},
+  "changes": [
+    {
+      "old_path": "README.md",
+      "new_path": "README.md",
+      "additions": {
+        "human": 2
+      }
+    },
+    {
+      "old_path": "docs/reference/software-project-documentation-specification.md",
+      "new_path": "docs/reference/software-project-documentation-specification.md",
+      "additions": {
+        "human": 22
+      }
+    }
+  ]
+}
