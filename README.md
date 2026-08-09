@@ -239,6 +239,8 @@ for people and Agents; Docent does not lint it.
 New RFCs / ADRs are expected to be written from the templates in
 `docs/.templates/`, which already carry a valid front matter skeleton.
 
+PRD/issue storage (e.g. .scratch/) is intentionally outside Docent's checks — see the canonical specification's "PRD/issue and the governance chain" section for why.
+
 ## Development
 
 ```sh

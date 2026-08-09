@@ -161,6 +161,28 @@ run mechanical validation. `CONTEXT.md`, at root or a module boundary,
 defines project-specific canonical terms and Avoid terms; it is not a second
 architecture map.
 
+### PRD/issue and the governance chain
+
+PRD/issue storage sits outside the five-layer governance chain. It records
+acceptance criteria and execution planning, not architectural decisions, and
+carries no authority over Decision status, module boundaries, or contract
+text. A PRD may motivate an RFC or reference one, but it is never a
+substitute for the ADR that a durable architectural trade-off requires: an
+Accepted RFC still needs its `related_adr` link or explicit `ADR not
+required` reason regardless of what a linked PRD says. Architecture.md and
+ADR bodies must not cite a PRD/issue as the authority for a responsibility
+boundary or an architectural decision; if a document does, treat it as a
+misplaced authority and correct the reference.
+
+Because PRD/issue content is business-driven, short-lived, and has no
+canonical schema in this specification — unlike the fixed front matter and
+section structure required of RFCs and ADRs — Docent does not lint its
+structure, index it, or validate its lifecycle. A project that wants
+mechanical checks over its own PRD/issue convention should define that
+convention's schema and lifecycle signals in its own operational policy;
+Docent will only ever validate the five governance-layer sources and
+CONTEXT.md/AGENTS.md references listed in this specification.
+
 ## Parallel artifact classes
 
 | Class | Audience | Authority | Owner and update mode | Retirement |
