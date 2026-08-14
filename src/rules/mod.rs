@@ -9,6 +9,7 @@ pub mod document_id_format;
 pub mod document_id_unique;
 pub mod fix;
 pub mod frontmatter_schema;
+pub mod project_policy_version;
 pub mod required_source;
 pub mod rfc_accepted_outcome;
 pub mod rfc_index_sync;
@@ -39,6 +40,7 @@ pub fn run_all(project: &Project) -> Vec<Violation> {
         Box::new(required_source::RequiredSourceMissingRule),
         Box::new(architecture_module_sync::ArchitectureModuleSyncRule),
         Box::new(agents_adr_reference::AgentsAdrReferenceRule),
+        Box::new(project_policy_version::ProjectPolicyVersionRule),
     ];
     let mut all = Vec::new();
     for r in rules {

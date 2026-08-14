@@ -194,8 +194,8 @@ $ docent init
 
 **Template content requirements**:
 - `docs/.templates/adr.md` must pre-fill the four-section heading skeleton from Section 3.3 and the front matter skeleton (fields from Section 3.2, values left blank or as placeholders).
-- `docs/.templates/rfc.md` and `docs/.templates/context.md` should likewise pre-fill a skeleton per the schemas in Sections 3.1 and 3.4.
-- `docs/README.md` must be a self-contained, generated, project-level operational policy with stable `managed_by`, `policy_version`, and `generated_by` metadata. It covers authority and updates for Idea/RFC/ADR/architecture/detailed design/AGENTS, file- and directory-backed placement, dependency contracts, parallel guide/research/execution/archive categories, archive/deletion criteria, actual-versus-intended conflict handling, Accepted RFC ADR-or-no-ADR outcomes, living-design backlog/history separation, `docent lint`, and access to the complete bundled policy. `init` never rewrites it.
+- `docs/.templates/rfc.md` and `docs/.templates/context.md` should likewise pre-fill a skeleton per the schemas in Sections 3.1 and 3.4. The RFC template explains that a Draft RFC owns a claimed, bounded, unresolved design exploration; a PRD/issue owns concrete acceptance and delivery planning.
+- `docs/README.md` must be a self-contained, generated, project-level operational policy with stable `managed_by`, `policy_version`, and `generated_by` metadata. It covers authority and updates for Idea/RFC/ADR/architecture/detailed design/AGENTS, the Draft-RFC-versus-PRD/issue boundary, file- and directory-backed placement, dependency contracts, parallel guide/research/execution/archive categories, archive/deletion criteria, actual-versus-intended conflict handling, Accepted RFC ADR-or-no-ADR outcomes, living-design backlog/history separation, `docent lint`, and access to the complete bundled policy. `init` never rewrites it. When it skips a managed older policy, it reports the version difference and points to `docent docs project-policy show`.
 - The `AGENTS.md` template must include this fixed reminder: "Before creating or editing any RFC, ADR, or CONTEXT.md, read the corresponding template under `docs/.templates/` first. After finishing, run `docent lint` until it reports no errors."
 
 ### 4.2 `docent docs`
@@ -210,6 +210,13 @@ content identifies the canonical source role, tool version, and policy version.
 An extensionless destination is a directory unless the user passes `--file`.
 `init` does not invoke either behavior. No `path` command is exposed because a
 standalone binary has no reliable readable source path.
+
+`docent docs project-policy show` writes the latest project-level operational
+policy template, rendered with the installed Docent version. `docent docs
+project-policy export <directory-or-file>` explicitly exports it using the same
+create-new and extensionless-path semantics as canonical-spec export; a
+directory receives `project-docs-readme.md`. Neither command alters an
+existing project's project-owned `docs/README.md`.
 
 ### 4.2 `docent lint`
 
@@ -398,6 +405,17 @@ The following rules correspond to the automatable group in the spec document's "
 - **--fix**: not supported.
 - The 60-day threshold is hardcoded for now, not configurable (v1 scope).
 
+### `project-policy-version`
+- **Description**: does a Docent-managed `docs/README.md` declare the policy
+  version bundled by the installed Docent build?
+- **Algorithm**: read only a project policy whose front matter has
+  `managed_by: docent` and a numeric `policy_version`. Warn when that version
+  is lower or higher than the installed policy version. Do not warn for a
+  missing, custom, or malformed project policy.
+- **Severity**: warning.
+- **--fix**: not supported; the project policy is project-owned and must never
+  be overwritten automatically.
+
 ### `design-doc-existence`
 - **Description**: for a `.design.md` file in a module directory, check whether the corresponding implementation file of the same base name is missing (and the reverse: if a module has multiple implementation files following a "parallel strategy" pattern, and some have a `.design.md` while others don't, report the ones that don't).
 - **Algorithm**: this rule's underlying logic ultimately depends on the semantic judgment of "what counts as a parallel strategy pattern," which is prone to a lot of false positives. **The Agent should implement a weakened version for v1**: only check the case of "a `.design.md` exists but no implementation file with the same base name can be found" (e.g., `flex-layout.design.md` exists but no `flex-layout.*` exists in the directory). Don't try to judge the reverse case ("should this file have one").
@@ -472,7 +490,7 @@ Don't implement every rule in one pass. Work through the phases below in order; 
 **P1**
 - `docent lint --json`
 - `docent lint --fix` (scope defined in Section 6)
-- Add the remaining rules: `agents-adr-reference-valid`, `amendment-backlink-consistency`, `architecture-module-sync`, `adr-pending-implementation-report`, `rfc-stale-draft`
+- Add the remaining rules: `agents-adr-reference-valid`, `amendment-backlink-consistency`, `architecture-module-sync`, `adr-pending-implementation-report`, `rfc-stale-draft`, `project-policy-version`
 
 **P2 (as needed, may be deferred)**
 - `design-doc-existence`

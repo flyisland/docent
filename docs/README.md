@@ -1,6 +1,6 @@
 ---
 managed_by: docent
-policy_version: 2
+policy_version: 3
 generated_by: docent 0.1.0
 ---
 
@@ -14,9 +14,11 @@ text through `docent docs show` and `docent docs export <directory-or-file>`.
 
 ## Governance and ownership
 
-`docs/IDEAS.md` is one-way intake; remove an idea once it has a destination. RFCs
-in `rfcs/` are proposals and seal as Accepted or Rejected. An Accepted RFC
-links its durable ADR or records `ADR not required` with a short reason. ADRs
+`docs/IDEAS.md` is one-way intake; remove an idea once it has a destination. A
+Draft RFC owns a claimed, bounded, durable design exploration until its
+decision owner accepts, rejects, or splits it. PRD/issue storage owns concrete
+acceptance and delivery planning, not unresolved design exploration. An
+Accepted RFC links its durable ADR or records `ADR not required` with a short reason. ADRs
 in `adrs/` are durable decisions. Append a dated Amendment only when meaning
 does not change. A new ADR uses `amends`/`amended_by` to replace one named
 decision scope while the target remains Accepted, or `supersedes` to replace
@@ -67,9 +69,10 @@ rationale or costly evidence; delete pure duplication when Git history is
 enough.
 
 Living design is current, not backlog or phase history. Put unclaimed future
-work in `docs/IDEAS.md`, claimed work in an RFC or PRD/issue, and valuable completed
-history in an archive. A deliberate current Non-goal may link to the real
-owner of related planned work.
+work in `docs/IDEAS.md`, claimed bounded unresolved design exploration in a
+Draft RFC, concrete accepted delivery work in a PRD/issue, and valuable
+completed history in an archive. A deliberate current Non-goal may link to the
+real owner of related planned work.
 
 ## Reference documents
 

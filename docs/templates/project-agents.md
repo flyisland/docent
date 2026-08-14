@@ -18,6 +18,9 @@ errors.
 
 - Follow the policy in `docs/README.md`; keep implementation detail out of
   this file.
+- Put a claimed, bounded, unresolved design exploration in a Draft RFC. Use a
+  PRD or issue for concrete acceptance and delivery planning; do not let it
+  become the durable owner of an unresolved design decision.
 - A clarification that does not change meaning may be appended as a dated
   Amendment. A change to one named decision scope needs a new ADR with
   `amends`/`amended_by`; a whole-decision replacement uses `supersedes`.

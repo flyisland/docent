@@ -1,37 +1,44 @@
 ---
 managed_by: docent
-policy_version: 2
+policy_version: 3
 generated_by: docent {tool_version}
 ---
 
 # Documentation Policy
 
-This is the operational documentation policy for this project. It is generated
-once and belongs to the project thereafter: `docent init` never overwrites it.
-For the complete canonical specification shipped with this Docent build, run
-`docent docs show` or explicitly export it with
+This is the operational documentation policy for this project. It belongs to
+the project and is maintained here; `docent init` never overwrites it. Run
+`docent docs show` for the complete canonical specification shipped with the
+installed Docent build, or export it explicitly with
 `docent docs export <directory-or-file>`.
 
 ## Authority and update rules
 
 | Artifact | Authority and owner | Update rule |
 |---|---|---|
-| `docs/IDEAS.md` | Unclaimed ideas; anyone may add | Remove an entry once it has an owner. It is intake, not a history. |
-| `docs/rfcs/` | Proposal and decision discussion; RFC author owns while Draft | Seal as Accepted or Rejected. An Accepted RFC links its ADR or says why no ADR is required. |
-| `docs/adrs/` | Durable architectural decisions; human decision owner | Do not erase historical bodies. Append a dated Amendment only when meaning is unchanged; use a new ADR with `amends`/`amended_by` for one named decision scope; use `supersedes` only for whole-ADR replacement. |
-| `docs/architecture.md` | Current module map and boundaries; architecture owner | Update with module topology, responsibility, or dependency-boundary changes. |
+| `docs/IDEAS.md` | Unclaimed ideas; anyone may add | Remove an entry once it has an owner. It is intake, not history or backlog. |
+| `docs/rfcs/` | Claimed design exploration, proposal, and decision discussion with a bounded question; RFC author while Draft | Revise freely while Draft. Seal as Accepted or Rejected only after the decision is made; an Accepted RFC links its ADR or explains why no ADR is required. |
+| `docs/adrs/` | Durable architectural decisions; human decision owner | Never erase historical bodies. Append a dated clarification only when meaning is unchanged; use a new scoped amendment ADR or whole-decision supersession otherwise. |
+| `docs/architecture.md` | Current module map and responsibility/dependency boundaries; architecture owner | Update topology after its ADR. Detailed-design link maintenance is allowed when no declared module Path, responsibility, or dependency boundary changes. |
 | Module README / sidecar | Current detailed design; implementation owner | Overwrite to match current intended behavior. Keep current invariants, implicit contracts, rationale, and Non-goals. |
 | `AGENTS.md` | Durable cross-cutting Agent guardrails; maintainers | Keep concise. Point to this policy, active ADRs, and designs rather than copying implementation detail. |
 | `CONTEXT.md` | Canonical project terminology; nearest owner | Add only project-specific terms and use the defined terms consistently. |
 
 Run `docent lint` after documentation changes that it validates.
 
-## Core governance chain
+## Governance chain
 
-Idea capture is an intake mechanism, not a governance layer. Claimed work goes
-to direct implementation/design, a project PRD or issue, or an RFC. RFCs are
-proposals; Accepted means approved and sealed, not automatically “has an ADR.”
-Create an ADR only for a durable consequential architectural trade-off or a
+Idea capture is intake, not a governance layer. Claimed work goes to direct
+implementation/design, a project PRD or issue, or an RFC. Use a Draft RFC for
+a claimed, durable design exploration once it has a bounded question, even
+when its preferred option, feasibility, or implementation scope is not yet
+settled. The Draft may accumulate evidence and change freely until the decision
+owner accepts, rejects, or splits it. Use a PRD or issue for concrete acceptance
+and delivery planning, not as the durable owner of an unresolved design
+exploration.
+
+Accepted means approved and sealed, not automatically “has an ADR.” Create an
+ADR only for a durable consequential architectural trade-off or a
 responsibility/interface constraint. Every Accepted RFC must either link that
 ADR or record `ADR not required` with a short reason.
 
@@ -97,7 +104,8 @@ in their own indexes and status lifecycle; do not put arbitrary history under
 Archive only unique rationale or costly evidence. Delete pure duplication when
 Git history is sufficient.
 
-Living design is not a backlog or phase log. Put unclaimed future work in
-`docs/IDEAS.md`, claimed product/interface work in an RFC or project PRD/issue, and
-completed phase history in an archive when it is worth retaining. A current
-Non-goal may name deliberately excluded work and link its real owner.
+Living design is current, not backlog or phase history. Put unclaimed future
+work in `docs/IDEAS.md`; put claimed, bounded, unresolved design exploration in
+a Draft RFC; and put concrete accepted delivery work in a project PRD or issue.
+Preserve valuable completed history in an archive. A current Non-goal may name
+deliberately excluded work and link its real owner.

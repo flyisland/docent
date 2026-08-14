@@ -98,6 +98,28 @@ pub enum DocsCommand {
         #[arg(long)]
         file: bool,
     },
+    /// Read or explicitly export the latest project operational-policy template
+    ProjectPolicy(ProjectPolicyArgs),
+}
+
+#[derive(Args)]
+pub struct ProjectPolicyArgs {
+    #[command(subcommand)]
+    pub command: ProjectPolicyCommand,
+}
+
+#[derive(Subcommand)]
+pub enum ProjectPolicyCommand {
+    /// Write the latest project operational-policy template to standard output
+    Show,
+    /// Export the latest project operational-policy template without overwriting a file
+    Export {
+        /// Destination file (or a directory, which receives project-docs-readme.md)
+        destination: std::path::PathBuf,
+        /// Treat an extensionless destination as a file rather than a directory
+        #[arg(long)]
+        file: bool,
+    },
 }
 
 #[derive(Args)]

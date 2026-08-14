@@ -8,7 +8,7 @@ module layout is:
   `list`, `docs`).
 - `src/commands/` — one file per subcommand; `lint.rs` executes rules,
   `list.rs` filters and prints RFC/ADR front matter, and `docs.rs` owns
-  compile-time bundled-spec rendering plus create-new export.
+  compile-time bundled-spec/project-policy rendering plus create-new export.
 - `src/model/` — project discovery and parsing of the documents docent reads
   (ADR / RFC front matter, indexes, `docs/architecture.md`, `AGENTS.md`).
 - `src/rules/` — one file per lint rule, plus `fix.rs` (the bounded `--fix`

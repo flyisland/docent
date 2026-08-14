@@ -1,6 +1,6 @@
 ---
 description: Complete lifecycle and placement rules for software-project documentation
-policy_version: 2
+policy_version: 3
 status: active
 type: evergreen
 ---
@@ -30,16 +30,23 @@ rewrite code merely because obsolete history disagrees.
 
 ## Intake: `docs/IDEAS.md`
 
-`docs/IDEAS.md` is a one-way funnel for unclaimed, half-formed ideas. Once claimed,
-remove the entry and send it to direct implementation/design, a project PRD or
-issue, or an RFC. Keep it only while scope remains unclear. It is neither a
-backlog nor an archive.
+`docs/IDEAS.md` is a one-way funnel for unclaimed, half-formed ideas. Once
+claimed, remove the entry. Send a claimed, durable design exploration with a
+bounded question to a Draft RFC, even when its preferred option, feasibility,
+or implementation scope remains unsettled. Send concrete acceptance and
+delivery planning to a project PRD or issue. Direct implementation/design may
+own work whose intended behavior is already settled. Keep an idea only while
+its scope or destination remains unclear. It is neither a backlog nor an
+archive.
 
 ## Layer 1: RFCs
 
-RFCs in `docs/rfcs/` record a proposal, material alternatives, feasibility,
-and the decision. Their statuses are Draft, Accepted, or Rejected. Closed RFCs
-are sealed historical decision records, not living design.
+RFCs in `docs/rfcs/` record a claimed design exploration, proposal, material
+alternatives, feasibility, and the decision. A Draft RFC has a bounded question
+and may accumulate evidence or change freely while its preferred option or
+implementation scope remains unsettled. Its statuses are Draft, Accepted, or
+Rejected. Accept or reject it only after the decision owner makes the decision;
+closed RFCs are sealed historical decision records, not living design.
 
 Accepted means **approved and sealed**. It must either:
 
@@ -135,11 +142,11 @@ owner. `architecture.md` must link such a document from every affected module
 path.
 
 Living design is not a backlog or phase history. Unclaimed work belongs in
-`docs/IDEAS.md`; claimed product/interface work belongs in an RFC or project
-PRD/issue; completed phase history belongs in an archive if retention is
-useful. Avoid “first slice”, “initial stage”, “deferred”, and “future
-capability” unless describing a current deliberate Non-goal that links to its
-real owner.
+`docs/IDEAS.md`; claimed, bounded, unresolved design exploration belongs in a
+Draft RFC; concrete accepted delivery work belongs in a project PRD/issue; and
+completed phase history belongs in an archive if retention is useful. Avoid
+“first slice”, “initial stage”, “deferred”, and “future capability” unless
+describing a current deliberate Non-goal that links to its real owner.
 
 ### External dependency contracts
 
@@ -164,9 +171,10 @@ architecture map.
 ### PRD/issue and the governance chain
 
 PRD/issue storage sits outside the five-layer governance chain. It records
-acceptance criteria and execution planning, not architectural decisions, and
-carries no authority over Decision status, module boundaries, or contract
-text. A PRD may motivate an RFC or reference one, but it is never a
+concrete acceptance criteria and execution planning, not unresolved durable
+design exploration or architectural decisions, and carries no authority over
+Decision status, module boundaries, or contract text. A PRD may motivate an
+RFC or reference one, but it is never a
 substitute for the ADR that a durable architectural trade-off requires: an
 Accepted RFC still needs its `related_adr` link or explicit `ADR not
 required` reason regardless of what a linked PRD says. Architecture.md and
@@ -247,12 +255,13 @@ or deletion using the retention rule.”
 ## Mechanical checks and human review
 
 Automation should validate front matter, indexes, ADR supersession and partial
-amendment backlinks, active ADR references, declared architecture paths, and other structural
-invariants. It must not guess whether prose is phase history, whether an ADR
-was semantically warranted, or who the true owner of a dependency is. Human
-review checks that current design does not duplicate code, that architecture
-boundaries have appropriate decisions, and that active documents do not rely
-on archives.
+amendment backlinks, active ADR references, declared architecture paths,
+Docent-managed project-policy versions, and other structural invariants. It
+must not guess whether prose is phase history, whether an ADR was semantically
+warranted, whether an exploration has a sufficiently bounded question, or who
+the true owner of a dependency is. Human review checks that current design does
+not duplicate code, that architecture boundaries have appropriate decisions,
+and that active documents do not rely on archives.
 
 ## Rollout checklist
 

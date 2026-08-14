@@ -41,6 +41,10 @@ docent list rfc --status draft
 # 6. Read or explicitly export this build's complete documentation policy.
 docent docs show
 docent docs export docs/reference/
+
+# 7. Review or export the latest project operational-policy template.
+docent docs project-policy show
+docent docs project-policy export /tmp/docent-policy/
 ```
 
 All commands operate on the current working directory — run them from the
@@ -72,6 +76,9 @@ The generated policy is project-owned and `init` never overwrites it. It
 contains the documentation lifecycle, placement, archive, and conflict rules;
 it is not a copy of Docent's complete canonical specification.
 
+If it skips a Docent-managed policy from an older policy version, `init` prints
+a warning and points to the latest template. It leaves the project file intact.
+
 ### `docent docs show` and `docent docs export`
 
 `docent docs show` writes the complete canonical Software Project Design and
@@ -85,6 +92,14 @@ Docent build, policy version, and its canonical-source role.
 
 An extensionless destination is treated as a directory; use `--file` to export
 to an extensionless filename explicitly.
+
+### `docent docs project-policy show` and `export`
+
+These commands display or export the latest generated project-level
+`docs/README.md` template. They are intended for review and manual migration
+of a project-owned policy, never for overwriting it. An export directory
+receives `project-docs-readme.md`; the same create-new and `--file` behavior
+applies.
 
 ### `docent lint`
 
@@ -168,6 +183,7 @@ Each rule has a unique ID, a severity (`error` or `warning`), and an optional
 | `architecture-module-sync` | A module table entry has no safe relative `Path`, or its declared file or directory does not exist | warning | — |
 | `adr-pending-implementation-report` | An Accepted ADR still records `implementation: pending` | warning | — |
 | `rfc-stale-draft` | An RFC has stayed in Draft past the staleness threshold | warning | — |
+| `project-policy-version` | A Docent-managed project policy differs from the installed policy version | warning | — |
 
 The architecture module table uses `Module` as a stable logical name and
 `Path` as its implementation location relative to the project root. A path may

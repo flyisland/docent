@@ -412,14 +412,18 @@ fn init_creates_template_files_and_skips_existing() {
 
     let docs_guide_path = dir.join("docs/README.md");
     let docs_guide = fs::read_to_string(&docs_guide_path).unwrap();
-    assert!(docs_guide.contains("## Core governance chain"));
+    assert!(docs_guide.contains("## Governance chain"));
     assert!(docs_guide.contains("## Current state, archives, and deletion"));
     assert!(docs_guide.contains("managed_by: docent"));
-    assert!(docs_guide.contains("policy_version: 2"));
+    assert!(docs_guide.contains("policy_version: 3"));
     assert!(docs_guide.contains("file-backed module"));
     assert!(docs_guide.contains("actual state"));
     assert!(docs_guide.contains("ADR not required"));
     assert!(docs_guide.contains("docent docs show"));
+
+    let rfc_template = fs::read_to_string(dir.join("docs/.templates/rfc.md")).unwrap();
+    assert!(rfc_template.contains("bounded question"));
+    assert!(rfc_template.contains("concrete acceptance and delivery planning"));
 
     fs::write(&docs_guide_path, "# Project-specific documentation guide\n").unwrap();
     let agents_path = dir.join("AGENTS.md");
@@ -451,7 +455,7 @@ fn docs_show_and_export_are_identical_and_export_never_overwrites() {
     let (show_code, shown) = docent(&dir, &["docs", "show"]);
     assert_eq!(show_code, 0);
     assert!(shown.contains("Canonical source: Docent bundled specification"));
-    assert!(shown.contains("policy version: 2"));
+    assert!(shown.contains("policy version: 3"));
     assert!(shown.contains("# Software Project Design and Documentation Management Specification"));
 
     let export_dir = dir.join("nested/reference");
@@ -470,6 +474,65 @@ fn docs_show_and_export_are_identical_and_export_never_overwrites() {
     let (second_code, _) = docent(&dir, &["docs", "export", &destination]);
     assert_eq!(second_code, 1);
     assert_eq!(fs::read_to_string(&exported).unwrap(), shown);
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
+fn project_policy_show_and_export_are_identical_and_do_not_overwrite() {
+    let dir = temp_dir("project-policy-export");
+    fs::create_dir_all(&dir).unwrap();
+    let (show_code, shown) = docent(&dir, &["docs", "project-policy", "show"]);
+    assert_eq!(show_code, 0);
+    assert!(shown.contains("policy_version: 3"));
+    assert!(shown.contains("claimed, durable design exploration"));
+
+    let export_dir = dir.join("nested/policy");
+    let destination = export_dir.to_string_lossy().into_owned();
+    let (export_code, _) = docent(&dir, &["docs", "project-policy", "export", &destination]);
+    assert_eq!(export_code, 0);
+    let exported = export_dir.join("project-docs-readme.md");
+    assert_eq!(fs::read_to_string(&exported).unwrap(), shown);
+
+    let (second_code, _) = docent(&dir, &["docs", "project-policy", "export", &destination]);
+    assert_eq!(second_code, 1);
+    assert_eq!(fs::read_to_string(&exported).unwrap(), shown);
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
+fn managed_outdated_project_policy_warns_without_being_overwritten() {
+    let dir = temp_dir("outdated-project-policy");
+    fs::create_dir_all(dir.join("docs")).unwrap();
+    let policy = "---\nmanaged_by: docent\npolicy_version: 2\ngenerated_by: docent 0.1.0\n---\n\n# Project policy\n";
+    fs::write(dir.join("docs/README.md"), policy).unwrap();
+
+    let (code, stdout) = docent(&dir, &["init"]);
+    assert_eq!(code, 0);
+    assert!(stdout.contains("project policy is v2; installed Docent provides v3"));
+    assert_eq!(
+        fs::read_to_string(dir.join("docs/README.md")).unwrap(),
+        policy
+    );
+
+    let json = lint_json(&dir);
+    assert_eq!(
+        count_by_rule(&json, "warnings", "project-policy-version"),
+        1
+    );
+    let _ = fs::remove_dir_all(&dir);
+}
+
+#[test]
+fn custom_project_policy_does_not_trigger_a_version_warning() {
+    let dir = temp_dir("custom-project-policy");
+    fs::create_dir_all(dir.join("docs")).unwrap();
+    fs::write(dir.join("docs/README.md"), "# Our policy\n").unwrap();
+
+    let json = lint_json(&dir);
+    assert_eq!(
+        count_by_rule(&json, "warnings", "project-policy-version"),
+        0
+    );
     let _ = fs::remove_dir_all(&dir);
 }
 
