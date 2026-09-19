@@ -1,0 +1,40 @@
+README.md
+  s_2f477a24b42b75::t_52856732c141f7 44-46
+---
+{
+  "schema_version": "authorship/3.1.0",
+  "tlab_version": "0.13.0",
+  "base_commit_sha": "7b553368b9846a0a43b58c3043b8750e9198d6d5",
+  "prompts": {},
+  "sessions": {
+    "s_2f477a24b42b75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0ba01-77c2-76a3-8dce-b4e51dd1594f",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "flyisland <island.chen@outlook.com>",
+      "custom_attributes": {
+        "tlab.token_usage.input_tokens": "101413",
+        "tlab.token_usage.cache_read_tokens": "2549248",
+        "tlab.token_usage.cache_creation_tokens": "0",
+        "tlab.token_usage.output_tokens": "13704",
+        "tlab.session_started_at": "2026-09-19T14:24:16Z"
+      }
+    }
+  },
+  "changes": [
+    {
+      "old_path": "README.md",
+      "new_path": "README.md",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_2f477a24b42b75",
+            "lines": 3
+          }
+        ]
+      }
+    }
+  ]
+}
