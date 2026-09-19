@@ -41,6 +41,9 @@ git push origin v0.1.0
 The tag starts the GitHub Actions release workflow, which builds the archives,
 publishes the GitHub Release, and updates the Homebrew tap formula.
 
+The repository must have a `HOMEBREW_TAP_TOKEN` Actions secret with permission
+to push to `flyisland/homebrew-tap` for the formula update step to succeed.
+
 ## Quick start
 
 ```sh
