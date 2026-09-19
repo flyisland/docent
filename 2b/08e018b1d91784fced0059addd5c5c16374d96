@@ -1,0 +1,48 @@
+.github/workflows/release.yml
+  s_2f477a24b42b75::t_ce44b6c45269bc 130-131,133,138-140
+---
+{
+  "schema_version": "authorship/3.1.0",
+  "tlab_version": "0.13.0",
+  "base_commit_sha": "2b08e018b1d91784fced0059addd5c5c16374d96",
+  "prompts": {},
+  "sessions": {
+    "s_2f477a24b42b75": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0ba01-77c2-76a3-8dce-b4e51dd1594f",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "flyisland <island.chen@outlook.com>",
+      "custom_attributes": {
+        "tlab.token_usage.input_tokens": "194360",
+        "tlab.token_usage.cache_creation_tokens": "0",
+        "tlab.token_usage.output_tokens": "17098",
+        "tlab.token_usage.cache_read_tokens": "3237120",
+        "tlab.session_started_at": "2026-09-19T15:58:26Z"
+      }
+    }
+  },
+  "changes": [
+    {
+      "old_path": ".github/workflows/release.yml",
+      "new_path": ".github/workflows/release.yml",
+      "additions": {
+        "ai": [
+          {
+            "session_id": "s_2f477a24b42b75",
+            "lines": 6
+          }
+        ]
+      },
+      "deletions": {
+        "ai": [
+          {
+            "session_id": "s_2f477a24b42b75",
+            "lines": 1
+          }
+        ]
+      }
+    }
+  ]
+}
