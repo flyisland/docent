@@ -127,12 +127,17 @@ jobs:
       - name: Compute SHA256 for each platform
         id: sha
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
+          set -euo pipefail
           tag="${GITHUB_REF_NAME}"
           base="https://github.com/flyisland/docent/releases/download/${tag}"
 
           get_sha() {
-            curl --fail --silent --show-error --location "$1" | sha256sum | awk '{print $1}'
+            curl --fail --silent --show-error --location \
+              --header "Authorization: Bearer ${GH_TOKEN}" "$1" \
+              | sha256sum | awk '{print $1}'
           }
 
           echo "aarch64_darwin=$(get_sha "${base}/docent-${tag}-aarch64-apple-darwin.tar.gz")" >> "${GITHUB_OUTPUT}"
