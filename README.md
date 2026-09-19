@@ -20,6 +20,27 @@ cargo build --release
 The binary is `target/release/docent`. It has no runtime dependencies and can
 be copied anywhere.
 
+## Installation
+
+On macOS or Linux, install the latest release with Homebrew:
+
+```sh
+brew install flyisland/tap/docent
+```
+
+Release archives for macOS (Intel and Apple Silicon) and Linux (x86_64 and
+ARM64) are available on the [GitHub Releases page](https://github.com/flyisland/docent/releases).
+
+Maintainers publish a release by pushing a semantic-version tag, for example:
+
+```sh
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+The tag starts the GitHub Actions release workflow, which builds the archives,
+publishes the GitHub Release, and updates the Homebrew tap formula.
+
 ## Quick start
 
 ```sh
